@@ -5,6 +5,10 @@ import * as asr from '../services/asr.js';
 import * as notion from '../services/notion.js';
 import { todayQueue, reviewCard, addCard } from '../cards.js';
 import * as roleplay from '../roleplay.js';
+import fs from 'node:fs';
+import path from 'node:path';
+import { config } from '../config.js';
+import { run as dbRun } from '../db.js';
 
 export const api = express.Router();
 
@@ -60,10 +64,23 @@ api.get('/roleplay/:id', (req, res) => {
 api.post('/roleplay/:id/turn', wrap(async (req, res) => {
   const text = req.body?.text?.trim();
   if (!text) return res.status(400).json({ error: '内容不能为空' });
-  const r = await roleplay.turn(Number(req.params.id), text);
+  const r = await roleplay.turn(Number(req.params.id), text, req.body?.recordingId);
   return r ? res.json(r) : res.status(404).json({ error: '对话不存在' });
 }));
 api.post('/roleplay/:id/finish', wrap(async (req, res) => {
   const r = await roleplay.finish(Number(req.params.id));
   return r ? res.json(r) : res.status(404).json({ error: '对话不存在' });
+}));
+
+// ---- 语音识别：前端上传 16kHz 单声道 wav（PRD 5.2）----
+api.post('/asr', express.raw({ type: ['audio/wav', 'application/octet-stream'], limit: '25mb' }), wrap(async (req, res) => {
+  if (!req.body?.length) return res.status(400).json({ error: '没有收到录音' });
+  const dir = path.join(config.dataDir, 'audio');
+  fs.mkdirSync(dir, { recursive: true });
+  const file = path.join(dir, `${new Date().toISOString().replace(/[:.]/g, '-')}.wav`);
+  fs.writeFileSync(file, req.body);
+  const r = await asr.transcribe(file, { modelFile: getSettings().asrModel });
+  const { lastId } = dbRun('INSERT INTO recording (audio_path, transcript, words) VALUES (?,?,?)',
+    [path.relative(config.dataDir, file), r.text, JSON.stringify(r.words)]);
+  res.json({ id: lastId, ...r });
 }));

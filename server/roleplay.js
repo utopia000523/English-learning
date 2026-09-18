@@ -52,7 +52,7 @@ You are talking with an adult Chinese learner of English who reads well but is s
 Rules:
 - Keep every reply under 20 words. Ask at most one question per reply. ${level}
 - Never correct the learner's grammar during the conversation; just respond naturally.
-- If the learner writes Chinese or asks how to say something, put a short natural English phrase they can use in "coach", and in "reply" briefly encourage them to try saying it.
+- ONLY if the learner writes Chinese or explicitly asks how to say something, put a short natural English phrase they can use in "coach", and in "reply" briefly encourage them to try saying it. In every other case "coach" MUST be an empty string, even if the learner's English has small mistakes.
 - Gently steer the conversation so the learner gets chances to complete their tasks, but do not list the tasks.
 The learner's tasks (numbered):
 ${sc.tasks.map((t, i) => `${i + 1}. ${t.check}`).join('\n')}
@@ -60,11 +60,11 @@ After each learner message, list the numbers of ALL tasks the learner has comple
 Respond ONLY with JSON: {"reply": "your in-character reply", "reply_zh": "Simplified Chinese translation of reply", "coach": "", "completed": [numbers]}`;
 }
 
-export async function turn(id, text) {
+export async function turn(id, text, recordingId) {
   const rp = get('SELECT * FROM roleplay WHERE id = ?', [id]);
   if (!rp) return null;
   const v = view(rp);
-  const messages = [...v.messages, { role: 'user', content: text }];
+  const messages = [...v.messages, { role: 'user', content: text, ...(recordingId ? { recordingId: Number(recordingId) } : {}) }];
   const out = await llm.chatJSON(
     [{ role: 'system', content: systemPrompt(v.scene) }, ...messages.map((m) => ({ role: m.role, content: m.content }))],
     { model: getSettings().llmModel, kind: 'turn' },
@@ -72,7 +72,9 @@ export async function turn(id, text) {
   );
   const n = v.scene.tasks.length;
   const done = [...new Set([...v.tasksDone, ...(out.completed || []).map(Number).filter((x) => x >= 1 && x <= n)])].sort();
-  messages.push({ role: 'assistant', content: String(out.reply || '').trim(), zh: out.reply_zh || '', coach: out.coach || '' });
+  // 兜底：用户没打中文、也没问“怎么说”时，不显示「可以说…」提示
+  const askedHelp = /[\u4e00-\u9fff]/.test(text) || /how (do|can|would|should) (i|you) say|what('s| is) .* in english/i.test(text);
+  messages.push({ role: 'assistant', content: String(out.reply || '').trim(), zh: out.reply_zh || '', coach: askedHelp ? (out.coach || '') : '' });
   run('UPDATE roleplay SET messages = ?, tasks_done = ? WHERE id = ?', [JSON.stringify(messages), JSON.stringify(done), id]);
   return load(id);
 }

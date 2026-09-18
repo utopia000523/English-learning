@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { api } from '../services/api.js';
 import { speak } from '../services/tts.js';
+import { startRecording, transcribe } from '../services/recorder.js';
 import { Icon } from '../icons.jsx';
 
 const LEVEL = { basic: '基础版', advanced: '进阶版' };
@@ -93,6 +94,10 @@ export function RoleplayChat() {
   const [showZh, setShowZh] = useState({});
   const [showReview, setShowReview] = useState(false);
   const endRef = useRef(null);
+  const inputRef = useRef(null);
+  const recRef = useRef(null);
+  const [rec, setRec] = useState(0);        // 录音中：已录秒数；0 = 未录音
+  const [recId, setRecId] = useState(null); // 最近一次识别的录音 id，随本轮发送
   const say = (t, r = rate) => t && speak(t, { voice: voice.voice, rate: r * (voice.rate || 1) });
 
   useEffect(() => {
@@ -106,13 +111,44 @@ export function RoleplayChat() {
   }, [id]);
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [rp?.messages.length, busy]);
 
+  useEffect(() => {
+    if (!rec) return undefined;
+    const t = setInterval(() => {
+      const sec = recRef.current?.seconds() || 0;
+      setRec(Math.max(0.1, sec));
+      if (sec >= 60) toggleMic(); // 最长 60 秒自动结束
+    }, 200);
+    return () => clearInterval(t);
+  });
+  useEffect(() => () => recRef.current?.cancel(), []);
+
+  const toggleMic = async () => {
+    setErr('');
+    if (!recRef.current) {
+      try { recRef.current = await startRecording(); setRec(0.1); }
+      catch { setErr('无法使用麦克风：请在浏览器地址栏左侧允许麦克风权限后重试。'); }
+      return;
+    }
+    const r = recRef.current; recRef.current = null; setRec(0);
+    if (r.seconds() < 0.6) { r.cancel(); return; }
+    setBusy('asr');
+    try {
+      const out = await transcribe(await r.stop());
+      if (!out.text) setErr('没有听清，请再说一遍。');
+      else { setText((t) => (t ? t + ' ' : '') + out.text); setRecId(out.id); }
+    } catch (e) { setErr(e.message); }
+    setBusy('');
+    setTimeout(() => inputRef.current?.focus(), 0);
+  };
+
   const send = async () => {
     const t = text.trim();
-    if (!t || busy) return;
-    setErr(''); setBusy('reply'); setText('');
+    if (!t || busy || rec) return;
+    const recordingId = recId;
+    setErr(''); setBusy('reply'); setText(''); setRecId(null);
     setRp((r) => ({ ...r, messages: [...r.messages, { role: 'user', content: t }] }));
     try {
-      const r = await api.post(`/roleplay/${id}/turn`, { text: t });
+      const r = await api.post(`/roleplay/${id}/turn`, { text: t, recordingId });
       setRp(r);
       say(r.messages[r.messages.length - 1].content);
     } catch (e) {
@@ -172,14 +208,17 @@ export function RoleplayChat() {
         {err && <p style={{ color: 'var(--bad)', fontSize: 13, marginBottom: 8 }}>{err}</p>}
         {!rp.ended && (
           <div className="composer">
-            <input value={text} onChange={(e) => setText(e.target.value)} disabled={!!busy} autoFocus
+            <input ref={inputRef} value={text} onChange={(e) => setText(e.target.value)} disabled={!!busy || !!rec} autoFocus
               onKeyDown={(e) => { if (e.key === 'Enter' && !e.nativeEvent.isComposing) send(); }}
-              placeholder="用英语输入你的回复，按回车发送" />
+              placeholder={rec ? `正在听… ${Math.floor(rec)} 秒，说完再点一次麦克风` : busy === 'asr' ? '正在识别…' : '点麦克风用英语说，识别后可修改；也可以直接输入，按回车发送'} />
             <div className="bar2">
               <span className="faint">说不出来可以直接打中文，AI 会告诉你英文怎么说</span>
-              <button className="send" onClick={send} disabled={!!busy || !text.trim()}>
+              <div className="row" style={{ gap: 6 }}>
+              <button className={`micbtn ${rec ? 'rec' : ''}`} onClick={toggleMic} disabled={busy === 'reply' || busy === 'review' || busy === 'asr'} title={rec ? '结束录音' : '开始说话'}>{Icon.mic}</button>
+              <button className="send" onClick={send} disabled={!!busy || !!rec || !text.trim()}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 19V5M6 11l6-6 6 6" /></svg>
               </button>
+              </div>
             </div>
           </div>
         )}

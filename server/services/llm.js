@@ -58,5 +58,5 @@ function fakeReply(kind) {
   if (kind === 'review') {
     return JSON.stringify({ comment_zh: '任务都完成了，表达基本清楚。', fixes: [{ you: 'Can I have a oat latte?', better: 'Can I get an oat latte?', zh: '我要一杯燕麦拿铁。' }] });
   }
-  return JSON.stringify({ reply: 'Sure! Anything else?', reply_zh: '好的！还需要别的吗？', coach: '', completed: [1, 2, 3, 4] });
+  return JSON.stringify({ reply: 'Sure! Anything else?', reply_zh: '好的！还需要别的吗？', coach: 'Nice to meet you', completed: [1, 2, 3, 4] });
 }

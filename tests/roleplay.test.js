@@ -47,6 +47,12 @@ test('轮数不足不通关', async () => {
   assert.equal(fin.passed, false);
 });
 
+test('英文正常发言不出现「可以说」提示；打中文才出现', async () => {
+  const rp = await (await post('/roleplay', { sceneId: 'w01-s1' })).json();
+  const a = await (await post(`/roleplay/${rp.id}/turn`, { text: 'Hi, nice to meet you!' })).json();
+  assert.equal(a.messages.at(-1).coach, '');
+});
+
 test('参数校验', async () => {
   assert.equal((await post('/roleplay', { sceneId: 'nope' })).status, 404);
   assert.equal((await post('/roleplay/1/turn', { text: ' ' })).status, 400);

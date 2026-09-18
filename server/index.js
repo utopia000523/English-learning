@@ -21,7 +21,7 @@ export async function createApp({ dbFile } = {}) {
 
   // eslint-disable-next-line no-unused-vars
   app.use((err, _req, res, _next) => {
-    const status = err.code === 'NOT_IMPLEMENTED' ? 501 : err.code === 'LLM_UNAVAILABLE' ? 503 : 500;
+    const status = err.code === 'NOT_IMPLEMENTED' ? 501 : ['LLM_UNAVAILABLE', 'ASR_UNAVAILABLE'].includes(err.code) ? 503 : 500;
     res.status(status).json({ error: err.message, code: err.code });
   });
   return app;
