@@ -1,9 +1,10 @@
 // 划词查询与笔记本（PRD 3.7）
 import { all, get, run, getSettings } from './db.js';
 import * as llm from './services/llm.js';
+import { ipaOf } from './services/ipa.js';
 
 const parse = (s, d) => { try { return JSON.parse(s) ?? d; } catch { return d; } };
-const toClient = (r) => ({ id: r.id, en: r.en, zh: r.zh, source: r.source, scene: r.scene, context: r.context || '',
+const toClient = (r) => ({ id: r.id, en: r.en, zh: r.zh, ipa: ipaOf(r.en), source: r.source, scene: r.scene, context: r.context || '',
   detail: parse(r.detail, {}), createdAt: r.created_at, starred: !!r.starred, synced: !!r.synced });
 
 /** 结合上下文解释一个词或短语 */
@@ -15,7 +16,7 @@ Respond ONLY with JSON:
 {"zh": "简体中文意思（这句里的意思，简短）", "pos": "词性或类型，如 adj. / phrasal verb / idiom", "usage_zh": "一句简体中文说明用法或语气，不超过40字", "example": "one short natural everyday example sentence", "example_zh": "例句的简体中文"}` },
     { role: 'user', content: `Selected: ${text}\nSentence: ${context || text}` },
   ], { model: getSettings().llmModel, temperature: 0.2, kind: 'lookup' }, () => ({ zh: '' }));
-  return { text, zh: out.zh || '', pos: out.pos || '', usage_zh: out.usage_zh || '', example: out.example || '', example_zh: out.example_zh || '' };
+  return { text, ipa: ipaOf(text), zh: out.zh || '', pos: out.pos || '', usage_zh: out.usage_zh || '', example: out.example || '', example_zh: out.example_zh || '' };
 }
 
 export function listNotes({ q = '', source = '' } = {}) {

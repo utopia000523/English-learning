@@ -20,11 +20,13 @@ after(() => server.close());
 test('划词查询返回释义和例句', async () => {
   const r = await (await post('/lookup', { text: 'hectic', context: "Work's been pretty hectic lately." })).json();
   assert.ok(r.zh && r.example);
+  assert.equal(r.ipa, '/ˈhɛktɪk/');
   assert.equal((await post('/lookup', { text: '' })).status, 400);
 });
 
 test('笔记本：加入、去重、搜索、筛选、删除', async () => {
   const a = await (await post('/notes', { en: 'hectic', zh: '忙乱的', source: '表达卡', context: "Work's been pretty hectic lately." })).json();
+  assert.equal(a.ipa, '/ˈhɛktɪk/');
   const dup = await (await post('/notes', { en: 'Hectic' })).json();
   assert.equal(dup.duplicate, true);
   await post('/notes', { en: 'grab lunch', zh: '随便吃个午饭', source: 'AI 对话' });

@@ -46,6 +46,8 @@ bash scripts/start.sh
 
 **也可以让 AI 帮你写：**把上面的格式和主题（比如"展厅接待外宾，30 张"）发给 Claude 或 WorkBuddy，让它生成 JSON 文件放进 `content/`。
 
+**音标数据：**`server/data/ipa_en_US.txt` 来自 [open-dict-data/ipa-dict](https://github.com/open-dict-data/ipa-dict)（MIT），用于笔记本和划词显示美式音标。
+
 **暂不支持：**不按周解锁的「自选卡组」（单独每日额度、可暂停），已记入 `开发进度.md` 待办。
 
 ## 给接手开发者（WorkBuddy 等）

@@ -1,0 +1,1 @@
+ipa_en_US.txt 来自 open-dict-data/ipa-dict（https://github.com/open-dict-data/ipa-dict），MIT License，Copyright (c) 2016 dohliam。

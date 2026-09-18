@@ -76,6 +76,7 @@ export default function SelectionLookup() {
             <b style={{ fontFamily: 'var(--serif)', fontSize: 17 }}>{pick.text}</b>
             <button className="link" onClick={() => speak(pick.text)}>{Icon.speaker}</button>
           </div>
+          {info?.ipa && <div className="faint">{info.ipa}</div>}
           {!info && !err && <p className="faint" style={{ marginTop: 6 }}>查询中…</p>}
           {err && <p style={{ color: 'var(--bad)', fontSize: 13, marginTop: 6 }}>{err}</p>}
           {info && <>

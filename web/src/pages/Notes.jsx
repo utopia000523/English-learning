@@ -62,10 +62,12 @@ export default function Notes() {
               <tr key={n.id}>
                 <td>
                   <span style={{ fontFamily: 'var(--serif)', fontSize: 15, cursor: 'pointer' }} onClick={() => setOpen((o) => ({ ...o, [n.id]: !o[n.id] }))}>{n.en}</span>
+                  {n.ipa && <span className="faint" style={{ marginLeft: 8 }}>{n.ipa}</span>}
+                  {n.detail?.pos && <span className="faint" style={{ marginLeft: 8, fontStyle: 'italic' }}>{n.detail.pos}</span>}
                   {n.context && <div className="faint" style={{ marginTop: 2 }}>{n.context.length > 90 ? n.context.slice(0, 90) + '…' : n.context}</div>}
                   {open[n.id] && n.detail && (
                     <div className="muted" style={{ fontSize: 13, marginTop: 6 }}>
-                      {n.detail.pos && <span>{n.detail.pos} · </span>}{n.detail.usage_zh}
+                      {n.detail.usage_zh}
                       {n.detail.example && <div style={{ marginTop: 2 }}><span style={{ fontFamily: 'var(--serif)' }}>{n.detail.example}</span> {n.detail.example_zh}</div>}
                     </div>
                   )}
