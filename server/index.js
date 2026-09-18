@@ -21,7 +21,7 @@ export async function createApp({ dbFile } = {}) {
 
   // eslint-disable-next-line no-unused-vars
   app.use((err, _req, res, _next) => {
-    const status = err.code === 'NOT_IMPLEMENTED' ? 501 : ['LLM_UNAVAILABLE', 'ASR_UNAVAILABLE'].includes(err.code) ? 503 : 500;
+    const status = err.code === 'NOT_IMPLEMENTED' ? 501 : err.code === 'NOTION_ERROR' ? 400 : err.code === 'NOTION_OFFLINE' ? 503 : ['LLM_UNAVAILABLE', 'ASR_UNAVAILABLE'].includes(err.code) ? 503 : 500;
     res.status(status).json({ error: err.message, code: err.code });
   });
   return app;
@@ -32,5 +32,9 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   app.listen(config.port, '127.0.0.1', () => {
     console.log(`开口 90 天 已启动：http://localhost:${config.port}`);
   });
+  // Notion 自动同步：每 10 分钟一次，未同步的内容自动排队（断网时跳过）
+  const { autoSync } = await import('./autosync.js');
+  setInterval(autoSync, 10 * 60 * 1000);
+  setTimeout(autoSync, 30 * 1000);
   for (const sig of ['SIGINT', 'SIGTERM']) process.on(sig, () => { saveNow(); process.exit(0); });
 }

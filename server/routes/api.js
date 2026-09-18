@@ -8,6 +8,7 @@ import * as roleplay from '../roleplay.js';
 import * as practice from '../practice.js';
 import * as notes from '../notes.js';
 import * as plan from '../plan.js';
+import { autoSync } from '../autosync.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import { config } from '../config.js';
@@ -125,6 +126,14 @@ api.delete('/notes/:id', (req, res) => (notes.deleteNote(Number(req.params.id)) 
 api.get('/plan/today', (_req, res) => res.json(plan.todayPlan()));
 api.post('/plan/swap', (_req, res) => { const r = plan.swap(); return r.error ? res.status(400).json(r) : res.json(r); });
 api.get('/plan/wrap', (_req, res) => res.json(plan.wrapItems()));
-api.post('/plan/wrap', (_req, res) => res.json(plan.finishWrap()));
+api.post('/plan/wrap', (_req, res) => { const r = plan.finishWrap(); autoSync(); res.json(r); }); // 收尾后自动同步 Notion
 api.get('/plan', (_req, res) => res.json(plan.planOverview()));
 api.get('/progress', (_req, res) => res.json(plan.progress()));
+
+// ---- Notion 同步（PRD 3.9）----
+api.post('/notion/setup', wrap(async (req, res) => {
+  const { notionToken, ...rest } = await notion.setup(req.body?.parent);
+  res.json({ ...rest, notionTokenSet: Boolean(notionToken) });
+}));
+api.post('/notion/sync', wrap(async (_req, res) => res.json(await notion.sync(plan.ratioOf))));
+api.get('/notion/pending', (_req, res) => res.json({ notes: notion.pendingCount() }));

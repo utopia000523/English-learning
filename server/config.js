@@ -28,4 +28,6 @@ export const DEFAULT_SETTINGS = {
   notionNotesDb: '',
   notionLogDb: '',
   notionAutoSync: true,
+  notionParentPage: '',
+  notionLastSync: '',
 };

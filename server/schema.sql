@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS plan_day (
 CREATE TABLE IF NOT EXISTS daily_log (
   date TEXT NOT NULL, module TEXT NOT NULL, count INTEGER DEFAULT 0, PRIMARY KEY (date, module)
 );
+CREATE TABLE IF NOT EXISTS notion_sync (date TEXT PRIMARY KEY, page_id TEXT, hash TEXT);
 CREATE TABLE IF NOT EXISTS session (
   id INTEGER PRIMARY KEY AUTOINCREMENT, day_no INTEGER, module TEXT,
   started_at TEXT, ended_at TEXT, metrics TEXT

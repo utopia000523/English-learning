@@ -24,6 +24,9 @@ export default function Settings() {
   const [token, setToken] = useState('');
   const [saved, setSaved] = useState('');
   const [voiceMsg, setVoiceMsg] = useState('');
+  const [parent, setParent] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [notionMsg, setNotionMsg] = useState('');
 
   const check = async () => {
     setHealth(null);
@@ -119,14 +122,37 @@ export default function Settings() {
 
       <div className="set-group">
         <h3>Notion 同步</h3>
+        <p className="faint" style={{ marginBottom: 4 }}>把笔记本和每日练习记录单向同步到 Notion，手机上用 Notion 查看。本地数据为准，Notion 里改动不会同步回来。</p>
         <div className="field">
-          <div><div>Integration Token</div><div className="d">{s.notionTokenSet ? '已填写，如需更换请重新输入' : '在 Notion 设置 → 集成 中创建'}</div></div>
+          <div><div>1. Integration Token</div><div className="d">{s.notionTokenSet ? '已填写，如需更换请重新输入' : '在 notion.so/my-integrations 新建一个 Internal 集成，复制 Token'}</div></div>
           <div className="row">
-            <input className="in" type="password" placeholder="secret_..." value={token} onChange={(e) => setToken(e.target.value)} style={{ width: 200 }} />
+            <input className="in" type="password" placeholder="ntn_... 或 secret_..." value={token} onChange={(e) => setToken(e.target.value)} style={{ width: 200 }} />
             <button className="link" onClick={async () => { await save({ notionToken: token.trim() }); setToken(''); check(); }}>保存</button>
           </div>
         </div>
-        <div className="fixhint">选择数据库、自动同步在阶段 5 实现。</div>
+        <div className="field">
+          <div><div>2. 放数据库的页面</div><div className="d">{s.notionNotesDb ? '已创建「口语笔记」「每日练习记录」两个数据库' : '在 Notion 新建一个页面，右上角 ··· → 连接 → 选择你的集成，然后粘贴页面链接'}</div></div>
+          <div className="row">
+            <input className="in" placeholder="Notion 页面链接" value={parent} onChange={(e) => setParent(e.target.value)} style={{ width: 200 }} />
+            <button className="link" disabled={!s.notionTokenSet || !parent.trim() || busy} onClick={async () => {
+              setBusy(true); setNotionMsg('');
+              try { setS(await api.post('/notion/setup', { parent })); setParent(''); setNotionMsg('数据库已创建'); check(); } catch (e) { setNotionMsg(e.message); }
+              setBusy(false);
+            }}>{s.notionNotesDb ? '重新创建' : '创建数据库'}</button>
+          </div>
+        </div>
+        <div className="field">
+          <div><div>3. 同步</div><div className="d">{s.notionLastSync ? `上次同步 ${s.notionLastSync}` : '还没同步过'}；每 10 分钟和完成每日收尾时自动同步，断网时排队</div></div>
+          <div className="row">
+            <label className="row faint" style={{ gap: 6 }}><input type="checkbox" checked={!!s.notionAutoSync} onChange={(e) => save({ notionAutoSync: e.target.checked })} />自动同步</label>
+            <button className="link" disabled={!s.notionNotesDb || busy} onClick={async () => {
+              setBusy(true); setNotionMsg('');
+              try { const r = await api.post('/notion/sync'); setNotionMsg(`已同步：笔记 ${r.notes} 条，每日记录 ${r.days} 天`); setS(await api.get('/settings')); } catch (e) { setNotionMsg(e.message); }
+              setBusy(false);
+            }}>{busy ? '处理中…' : '立即同步'}</button>
+          </div>
+        </div>
+        {notionMsg && <div className="fixhint">{notionMsg}</div>}
       </div>
     </div>
   );

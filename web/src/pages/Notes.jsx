@@ -15,6 +15,7 @@ export default function Notes() {
   const [adding, setAdding] = useState(false);
   const [form, setForm] = useState({ en: '', zh: '' });
   const [err, setErr] = useState('');
+  const [syncMsg, setSyncMsg] = useState('');
 
   const load = () => api.get(`/notes?q=${encodeURIComponent(q)}&source=${encodeURIComponent(source)}`).then(setList)
     .catch(() => setErr('无法连接本地服务：请在终端重新运行 bash scripts/start.sh，并保持窗口开着。'));
@@ -35,7 +36,13 @@ export default function Notes() {
     <>
       <div className="head">
         <div><h1>笔记本</h1><p className="sub">在任何页面选中不认识的英文词或短语，点「查词」即可查询并加入这里。</p></div>
-        <button className="btn line sm" onClick={() => setAdding((a) => !a)}>{Icon.plus}手动添加</button>
+        <div className="row">
+          <button className="btn line sm" onClick={() => setAdding((a) => !a)}>{Icon.plus}手动添加</button>
+          <button className="btn sm" onClick={async () => {
+            setSyncMsg('同步中…');
+            try { const r = await api.post('/notion/sync'); setSyncMsg(`已同步 ${r.notes} 条笔记`); load(); } catch (e) { setSyncMsg(e.message); }
+          }}>同步到 Notion</button>
+        </div>
       </div>
       {adding && (
         <div className="row" style={{ marginBottom: 16 }}>
@@ -50,7 +57,7 @@ export default function Notes() {
           <option value="">全部来源</option>
           {SOURCES.map((s) => <option key={s} value={s}>{s}</option>)}
         </select>
-        {list && <span className="faint" style={{ marginLeft: 'auto' }}>共 {list.length} 条</span>}
+        {list && <span className="faint" style={{ marginLeft: 'auto' }}>{syncMsg && `${syncMsg} · `}共 {list.length} 条{list.some((n) => !n.synced) ? ` · ${list.filter((n) => !n.synced).length} 条未同步` : ''}</span>}
       </div>
       {err && <div className="todo-note">{err}</div>}
       {list && list.length === 0 && <div className="todo-note">还没有笔记。去表达卡或 AI 对话里，选中不认识的词试试。</div>}

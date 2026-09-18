@@ -188,6 +188,12 @@ export function planOverview(today = todayStr()) {
   };
 }
 
+/** 某天完成度（Notion 同步用） */
+export function ratioOf(date) {
+  const r = get('SELECT * FROM plan_day WHERE date = ?', [date]);
+  return r ? withStatus(r, date === todayStr()).ratio : 0;
+}
+
 /** 进度页（PRD 1.1、3.8） */
 export function progress(today = todayStr()) {
   const pos = planPosition(today);
