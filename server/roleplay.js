@@ -54,7 +54,8 @@ You are talking with an adult Chinese learner of English who reads well but is s
 Rules:
 - Keep every reply under 20 words. Ask at most one question per reply. ${level}
 - Never correct the learner's grammar during the conversation; just respond naturally.
-- ONLY if the learner writes Chinese or explicitly asks how to say something, put a short natural English phrase they can use in "coach", and in "reply" briefly encourage them to try saying it. In every other case "coach" MUST be an empty string, even if the learner's English has small mistakes.
+- If the learner writes in Chinese, understand it and reply naturally in English as usual.
+- ONLY if the learner explicitly asks in English how to say something, put the English phrase they asked for in "coach". In every other case "coach" MUST be an empty string.
 - Gently steer the conversation so the learner gets chances to complete their tasks, but do not list the tasks.
 The learner's tasks (numbered):
 ${sc.tasks.map((t, i) => `${i + 1}. ${t.check}`).join('\n')}
@@ -62,10 +63,27 @@ After each learner message, list the numbers of ALL tasks the learner has comple
 Respond ONLY with JSON: {"reply": "your in-character reply", "reply_zh": "Simplified Chinese translation of reply", "coach": "", "completed": [numbers]}`;
 }
 
+const hasCJK = (t) => /[\u4e00-\u9fff]/.test(t);
+
+/** 把用户说的中文翻成在当前语境下自然的口语英文 */
+async function translateLine(text, prevLine, scene) {
+  const out = await llm.chatJSON([
+    { role: 'system', content: `You help a Chinese learner in an English role-play (scene: ${scene.title}).
+Translate what the LEARNER wants to say (written in Chinese, possibly mixed with English) into ONE short, natural spoken American English reply that fits the context.
+Translate the learner's own words only — do not answer the other person or add new ideas.
+Respond ONLY with JSON: {"en": "..."}` },
+    { role: 'user', content: `${scene.role} said: ${prevLine}\nLearner wants to say: ${text}` },
+  ], { model: getSettings().llmModel, temperature: 0.2, kind: 'translate' }, (t) => ({ en: t }));
+  return String(out.en || '').trim();
+}
+
 export async function turn(id, text, recordingId) {
   const rp = get('SELECT * FROM roleplay WHERE id = ?', [id]);
   if (!rp) return null;
   const v = view(rp);
+  // 用户打中文：先翻译成英文，作为「可以说」提示和这句的点评
+  const prevAI = [...v.messages].reverse().find((m) => m.role === 'assistant')?.content || '';
+  const zhHelp = hasCJK(text) ? await translateLine(text, prevAI, v.scene) : '';
   const messages = [...v.messages, { role: 'user', content: text, ...(recordingId ? { recordingId: Number(recordingId) } : {}) }];
   const out = await llm.chatJSON(
     [{ role: 'system', content: systemPrompt(v.scene) }, ...messages.map((m) => ({ role: m.role, content: m.content }))],
@@ -74,10 +92,16 @@ export async function turn(id, text, recordingId) {
   );
   const n = v.scene.tasks.length;
   const done = [...new Set([...v.tasksDone, ...(out.completed || []).map(Number).filter((x) => x >= 1 && x <= n)])].sort();
-  // 兜底：用户没打中文、也没问“怎么说”时，不显示「可以说…」提示
-  const askedHelp = /[\u4e00-\u9fff]/.test(text) || /how (do|can|would|should) (i|you) say|what('s| is) .* in english/i.test(text);
-  messages.push({ role: 'assistant', content: String(out.reply || '').trim(), zh: out.reply_zh || '', coach: askedHelp ? (out.coach || '') : '' });
+  // 「可以说」：中文输入用翻译结果；英文里明确问“怎么说”才用模型给的；其余一律不显示
+  const askedHow = /how (do|can|would|should) (i|you) say|what('s| is) .* in english/i.test(text);
+  const coach = zhHelp || (askedHow ? String(out.coach || '').trim() : '');
+  messages.push({ role: 'assistant', content: String(out.reply || '').trim(), zh: out.reply_zh || '', coach });
   run('UPDATE roleplay SET messages = ?, tasks_done = ? WHERE id = ?', [JSON.stringify(messages), JSON.stringify(done), id]);
+  if (zhHelp) {
+    const fb = parse(get('SELECT feedback FROM roleplay WHERE id = ?', [id]).feedback, {});
+    fb[messages.length - 2] = { ok: false, better: zhHelp, issue_zh: '用英语可以这样说', zh: text };
+    run('UPDATE roleplay SET feedback = ? WHERE id = ?', [JSON.stringify(fb), id]);
+  }
   return load(id);
 }
 
