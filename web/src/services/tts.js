@@ -17,15 +17,20 @@ function pickVoice(name) {
     || list.find((v) => v.lang === 'en-US' && /Samantha|Ava|Allison/.test(v.name))
     || list.find((v) => v.lang === 'en-US') || list[0];
 }
+// 在线声音（如 Google 系列）需联网；无法使用时返回 { ok: false, online: true }，由页面提示
 export function speak(text, { voice = '', rate = 1 } = {}) {
   return new Promise((resolve) => {
-    if (!window.speechSynthesis) return resolve();
+    if (!window.speechSynthesis) return resolve({ ok: false });
+    const v = pickVoice(voice);
+    const online = v ? !v.localService : false;
+    if (online && !navigator.onLine) return resolve({ ok: false, online });
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
-    u.voice = pickVoice(voice) || null;
+    u.voice = v || null;
     u.lang = u.voice?.lang || 'en-US';
     u.rate = rate;
-    u.onend = u.onerror = () => resolve();
+    u.onend = () => resolve({ ok: true });
+    u.onerror = (e) => resolve({ ok: e.error === 'interrupted' || e.error === 'canceled', online });
     window.speechSynthesis.speak(u);
   });
 }

@@ -23,6 +23,7 @@ export default function Settings() {
   const [s, setS] = useState(null);
   const [token, setToken] = useState('');
   const [saved, setSaved] = useState('');
+  const [voiceMsg, setVoiceMsg] = useState('');
 
   const check = async () => {
     setHealth(null);
@@ -48,7 +49,7 @@ export default function Settings() {
       <div className="set-group">
         <div className="row between"><h3>本地模型与服务</h3><button className="link" onClick={check}>重新检测</button></div>
         {health?.error
-          ? <div className="field"><div>本地服务</div><span className="st go">无法连接</span></div>
+          ? <div className="field"><div><div>本地服务</div><div className="fixhint">解决方法：在终端重新运行 bash scripts/start.sh，使用期间保持该终端窗口开着</div></div><span className="st go">无法连接</span></div>
           : <>
               <StatusRow name="对话模型" st={health?.llm} />
               <StatusRow name="语音识别" st={health?.asr} />
@@ -70,9 +71,14 @@ export default function Settings() {
               <option value="">自动（美音女声）</option>
               {voices.map((v) => <option key={v.name} value={v.name}>{v.name} · {v.lang}</option>)}
             </select>
-            <button className="link" onClick={() => speak('Hi there! What can I get for you today?', { voice: s.ttsVoice, rate: s.ttsRate })}>试听</button>
+            <button className="link" onClick={async () => {
+              setVoiceMsg('');
+              const r = await speak('Hi there! What can I get for you today?', { voice: s.ttsVoice, rate: s.ttsRate });
+              if (!r.ok) setVoiceMsg(r.online ? '这个声音需要联网，当前无法使用。请联网，或换成本机声音（名称不带 Google 的）。' : '朗读失败，请换一个声音再试。');
+            }}>试听</button>
           </div>
         </div>
+        {voiceMsg && <div className="fixhint" style={{ color: 'var(--bad)' }}>{voiceMsg}</div>}
         <div className="field">
           <div>默认语速</div>
           <div className="seg">
