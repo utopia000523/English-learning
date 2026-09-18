@@ -3,6 +3,7 @@ import { all, get, run, getSettings } from './db.js';
 import { planPosition } from './cards.js';
 import * as llm from './services/llm.js';
 import { fluency, mergeFluency } from './services/score.js';
+import { logEvent } from './activity.js';
 
 export const PASS_TURNS = 8; // 通关：任务全部完成 且 用户发言 ≥ 8 轮
 
@@ -97,6 +98,7 @@ export async function turn(id, text, recordingId) {
   const coach = zhHelp || (askedHow ? String(out.coach || '').trim() : '');
   messages.push({ role: 'assistant', content: String(out.reply || '').trim(), zh: out.reply_zh || '', coach });
   run('UPDATE roleplay SET messages = ?, tasks_done = ? WHERE id = ?', [JSON.stringify(messages), JSON.stringify(done), id]);
+  logEvent('roleplay_turn');
   if (zhHelp) {
     const fb = parse(get('SELECT feedback FROM roleplay WHERE id = ?', [id]).feedback, {});
     fb[messages.length - 2] = { ok: false, better: zhHelp, issue_zh: '用英语可以这样说', zh: text };
@@ -161,5 +163,6 @@ export async function finish(id) {
   }
   const passed = v.tasksDone.length === v.scene.tasks.length && v.turns >= PASS_TURNS ? 1 : 0;
   run("UPDATE roleplay SET review = ?, passed = ?, ended_at = datetime('now','localtime') WHERE id = ?", [JSON.stringify(review), passed, id]);
+  logEvent('roleplay');
   return load(id);
 }

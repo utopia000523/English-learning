@@ -7,6 +7,7 @@ import { todayQueue, reviewCard, addCard } from '../cards.js';
 import * as roleplay from '../roleplay.js';
 import * as practice from '../practice.js';
 import * as notes from '../notes.js';
+import * as plan from '../plan.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import { config } from '../config.js';
@@ -119,3 +120,11 @@ api.post('/notes', (req, res) => {
   res.json(notes.addNote(req.body));
 });
 api.delete('/notes/:id', (req, res) => (notes.deleteNote(Number(req.params.id)) ? res.json({ ok: true }) : res.status(404).json({ error: '笔记不存在' })));
+
+// ---- 每日课程、学习计划、进度（PRD 2.3、3.1、3.6、3.8）----
+api.get('/plan/today', (_req, res) => res.json(plan.todayPlan()));
+api.post('/plan/swap', (_req, res) => { const r = plan.swap(); return r.error ? res.status(400).json(r) : res.json(r); });
+api.get('/plan/wrap', (_req, res) => res.json(plan.wrapItems()));
+api.post('/plan/wrap', (_req, res) => res.json(plan.finishWrap()));
+api.get('/plan', (_req, res) => res.json(plan.planOverview()));
+api.get('/progress', (_req, res) => res.json(plan.progress()));

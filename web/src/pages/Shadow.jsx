@@ -1,5 +1,6 @@
 // 跟读（PRD 3.4）：逐句跟读 / 影子跟读。界面参考 docs/prototype.html「跟读」
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { api } from '../services/api.js';
 import { speak } from '../services/tts.js';
 import { transcribe } from '../services/recorder.js';
@@ -27,9 +28,10 @@ export default function Shadow() {
   const [busy, setBusy] = useState('');
   const [err, setErr] = useState('');
   const mic = useMic({ maxSeconds: 90 });
+  const [params] = useSearchParams();
 
   useEffect(() => {
-    api.get('/shadow').then((l) => { setList(l); const first = l.find((m) => !m.locked); if (first) setMid(first.id); })
+    api.get('/shadow').then((l) => { setList(l); const want = l.find((m) => m.id === params.get('m') && !m.locked); const first = want || l.find((m) => !m.locked); if (first) setMid(first.id); })
       .catch(() => setErr('无法连接本地服务：请在终端重新运行 bash scripts/start.sh，并保持窗口开着。'));
     api.get('/settings').then((s) => setVoice({ voice: s.ttsVoice })).catch(() => {});
   }, []);

@@ -2,6 +2,7 @@
 import { all, get, run, getSettings, updateSettings } from './db.js';
 import { todayStr, diffDays } from './util/date.js';
 import { schedule, preview } from './services/srs.js';
+import { logEvent } from './activity.js';
 
 /** 第几天、第几周。首次使用时以当天为第 1 天（入门测评在阶段 6 会重设） */
 export function planPosition(today = todayStr()) {
@@ -53,6 +54,7 @@ export function reviewCard(id, rating, today = todayStr()) {
   run(`UPDATE card SET interval_days=?, streak=?, due_date=?, mastered=?, last_rating=?, reviewed_at=?,
        introduced_at = COALESCE(introduced_at, ?) WHERE id = ?`,
     [u.interval_days, u.streak, u.due_date, u.mastered, u.last_rating, u.reviewed_at, today, id]);
+  logEvent('cards', 1, today);
   return toClient(get('SELECT * FROM card WHERE id = ?', [id]));
 }
 

@@ -12,5 +12,7 @@ export const Icon = {
   gear: <svg {...P}><circle cx="12" cy="12" r="3" /><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" /></svg>,
   back: <svg {...P} strokeWidth={1.8} width={15} height={15}><path d="M15 6l-6 6 6 6" /></svg>,
   plus: <svg {...P} strokeWidth={1.8} width={15} height={15}><path d="M12 5v14M5 12h14" /></svg>,
+  play: <svg viewBox="0 0 24 24" fill="currentColor" width={15} height={15}><path d="M7 4l13 8-13 8z" /></svg>,
+  shuffle: <svg {...P} width={14} height={14}><path d="M3 7h4l10 10h4M3 17h4l3-3M14 10l3-3h4M18 4l3 3-3 3M18 14l3 3-3 3" /></svg>,
   speaker: <svg {...P}><path d="M4 9h4l5-4v14l-5-4H4z" /><path d="M16 9a4 4 0 0 1 0 6" /></svg>,
 };

@@ -4,6 +4,7 @@ import { planPosition } from './cards.js';
 import * as llm from './services/llm.js';
 import { align, fluency } from './services/score.js';
 import { todayStr } from './util/date.js';
+import { logEvent } from './activity.js';
 
 const parse = (s, d) => { try { return JSON.parse(s) ?? d; } catch { return d; } };
 
@@ -29,6 +30,7 @@ export function scoreShadow(recordingId, reference) {
   if (!words) return null;
   const f = fluency(words);
   saveMetrics(recordingId, f);
+  logEvent('shadow');
   return { ...align(reference, words), ...f };
 }
 
@@ -63,5 +65,6 @@ Respond ONLY with JSON: {"rewrite": "...", "phrases": [{"en": "...", "zh": "..."
   const { dayNo } = planPosition();
   run("INSERT INTO session (day_no, module, started_at, ended_at, metrics) VALUES (?, 'mono', ?, datetime('now','localtime'), ?)",
     [dayNo, todayStr(), JSON.stringify({ ...result, recordingId })]);
+  logEvent('mono');
   return result;
 }

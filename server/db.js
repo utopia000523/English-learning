@@ -28,6 +28,7 @@ const COLUMNS = {
   content_scene: ['data TEXT'],
   roleplay: ['ended_at TEXT', 'feedback TEXT'],
   note: ['context TEXT', 'detail TEXT'],
+  plan_day: ['cards_target INTEGER DEFAULT 0', 'wrap_done INTEGER DEFAULT 0'],
 };
 function migrate() {
   for (const [table, cols] of Object.entries(COLUMNS)) {

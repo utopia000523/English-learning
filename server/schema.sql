@@ -5,6 +5,9 @@ CREATE TABLE IF NOT EXISTS plan_day (
   day_no INTEGER PRIMARY KEY, date TEXT, phase INTEGER, week INTEGER,
   modules TEXT, status TEXT DEFAULT 'todo', minutes_spent INTEGER DEFAULT 0, swapped INTEGER DEFAULT 0
 );
+CREATE TABLE IF NOT EXISTS daily_log (
+  date TEXT NOT NULL, module TEXT NOT NULL, count INTEGER DEFAULT 0, PRIMARY KEY (date, module)
+);
 CREATE TABLE IF NOT EXISTS session (
   id INTEGER PRIMARY KEY AUTOINCREMENT, day_no INTEGER, module TEXT,
   started_at TEXT, ended_at TEXT, metrics TEXT
