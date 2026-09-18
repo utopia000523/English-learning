@@ -301,5 +301,119 @@
     }
    ]
   }
+ ],
+ "shadow": [
+  {
+   "id": "w03-sh1",
+   "title": "咖啡店",
+   "sentences": [
+    {
+     "en": "Hi, can I get an oat latte, please?",
+     "zh": "你好，我要一杯燕麦拿铁。"
+    },
+    {
+     "en": "Iced, with light ice.",
+     "zh": "冰的，少冰。"
+    },
+    {
+     "en": "Do you have anything sugar-free?",
+     "zh": "你们有无糖的吗？"
+    },
+    {
+     "en": "For here, please.",
+     "zh": "在这儿喝。"
+    },
+    {
+     "en": "Can I pay by card?",
+     "zh": "可以刷卡吗？"
+    },
+    {
+     "en": "Thanks, have a nice day!",
+     "zh": "谢谢，祝你今天愉快！"
+    }
+   ]
+  },
+  {
+   "id": "w03-sh2",
+   "title": "餐厅",
+   "sentences": [
+    {
+     "en": "Hi, I have a reservation for seven, for two people.",
+     "zh": "你好，我预订了七点的位子，两位。"
+    },
+    {
+     "en": "Could we sit by the window?",
+     "zh": "能坐靠窗的位子吗？"
+    },
+    {
+     "en": "What do you recommend?",
+     "zh": "你们有什么推荐的？"
+    },
+    {
+     "en": "I'll have the salmon, but I can't handle spicy food.",
+     "zh": "我要三文鱼，不过我不太能吃辣。"
+    },
+    {
+     "en": "Could we get the check, please?",
+     "zh": "麻烦买单。"
+    },
+    {
+     "en": "Can we split the bill?",
+     "zh": "我们可以分开付吗？"
+    }
+   ]
+  }
+ ],
+ "topics": [
+  {
+   "id": "w03-t1",
+   "zh": "你最喜欢的餐厅",
+   "en": "Talk about your favorite restaurant.",
+   "hints": [
+    "where",
+    "what you order",
+    "why you like it"
+   ]
+  },
+  {
+   "id": "w03-t2",
+   "zh": "你常点的饮料",
+   "en": "What's your usual coffee or drink order?",
+   "hints": [
+    "what",
+    "how you like it",
+    "when"
+   ]
+  },
+  {
+   "id": "w03-t3",
+   "zh": "一次难忘的饭",
+   "en": "Describe a memorable meal.",
+   "hints": [
+    "when",
+    "who with",
+    "what happened"
+   ]
+  },
+  {
+   "id": "w03-t4",
+   "zh": "你会做的一道菜",
+   "en": "Talk about a dish you can cook.",
+   "hints": [
+    "what it is",
+    "how to make it",
+    "who taught you"
+   ]
+  },
+  {
+   "id": "w03-t5",
+   "zh": "外面吃还是在家做",
+   "en": "Do you prefer eating out or cooking at home?",
+   "hints": [
+    "your choice",
+    "reasons",
+    "an example"
+   ]
+  }
  ]
 }

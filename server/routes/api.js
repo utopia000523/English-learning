@@ -5,6 +5,7 @@ import * as asr from '../services/asr.js';
 import * as notion from '../services/notion.js';
 import { todayQueue, reviewCard, addCard } from '../cards.js';
 import * as roleplay from '../roleplay.js';
+import * as practice from '../practice.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import { config } from '../config.js';
@@ -89,4 +90,18 @@ api.post('/asr', express.raw({ type: ['audio/wav', 'application/octet-stream'], 
   const { lastId } = dbRun('INSERT INTO recording (audio_path, transcript, words) VALUES (?,?,?)',
     [path.relative(config.dataDir, file), r.text, JSON.stringify(r.words)]);
   res.json({ id: lastId, ...r });
+}));
+
+// ---- 跟读、独白（PRD 3.4、3.5）----
+api.get('/shadow', (_req, res) => res.json(practice.shadowList()));
+api.post('/shadow/score', (req, res) => {
+  const { recordingId, reference } = req.body || {};
+  if (!reference?.trim()) return res.status(400).json({ error: '缺少原文' });
+  const r = practice.scoreShadow(Number(recordingId), reference);
+  return r ? res.json(r) : res.status(404).json({ error: '录音不存在' });
+});
+api.get('/mono/topics', (_req, res) => res.json(practice.topicList()));
+api.post('/mono', wrap(async (req, res) => {
+  const r = await practice.scoreMono(req.body?.topicId, Number(req.body?.recordingId));
+  return r ? res.json(r) : res.status(404).json({ error: '话题或录音不存在' });
 }));

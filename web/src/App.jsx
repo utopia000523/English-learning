@@ -5,6 +5,8 @@ import Settings from './pages/Settings.jsx';
 import Placeholder from './pages/Placeholder.jsx';
 import Cards from './pages/Cards.jsx';
 import { RoleplayList, RoleplayChat } from './pages/Roleplay.jsx';
+import Shadow from './pages/Shadow.jsx';
+import Mono from './pages/Mono.jsx';
 
 // 导航结构与 docs/prototype.html 保持一致
 const NAV = [
@@ -12,8 +14,8 @@ const NAV = [
   { sep: '练习' },
   { to: '/roleplay', label: 'AI 对话', icon: Icon.chat },
   { to: '/cards', label: '表达卡', icon: Icon.card },
-  { to: '/shadow', label: '跟读', icon: Icon.wave, stage: 4 },
-  { to: '/mono', label: '独白', icon: Icon.mic, stage: 4 },
+  { to: '/shadow', label: '跟读', icon: Icon.wave },
+  { to: '/mono', label: '独白', icon: Icon.mic },
   { sep: '记录' },
   { to: '/plan', label: '学习计划', icon: Icon.cal, stage: 5 },
   { to: '/notes', label: '笔记本', icon: Icon.note, stage: 5 },
@@ -40,6 +42,8 @@ export default function App() {
           <Route path="/today" element={<Today />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/cards" element={<Cards />} />
+          <Route path="/shadow" element={<Shadow />} />
+          <Route path="/mono" element={<Mono />} />
           <Route path="/roleplay" element={<RoleplayList />} />
           <Route path="/roleplay/:id" element={<RoleplayChat />} />
           {NAV.filter((n) => n.stage).map((n) => (

@@ -59,6 +59,7 @@ function Review({ rp, onClose, onAgain }) {
         <p className="sub">{rp.passed ? '已通关' : '未通关'} · 任务 {rp.tasksDone.length}/{n} · {rp.turns} 轮
           {!rp.passed && <span className="faint">（通关需完成全部任务，且对话 ≥ {rp.passTurns} 轮）</span>}</p>
         {r.comment_zh && <p style={{ marginTop: 10 }}>{r.comment_zh}</p>}
+        {r.fluency && <p className="muted" style={{ marginTop: 6, fontSize: 13 }}>语音部分：语速 {r.fluency.wpm} 词/分 · 长停顿 {r.fluency.longPauses} 次 · 口头禅 {r.fluency.fillers} 次（{r.fluency.segments} 句语音）</p>}
         {r.fixes.length === 0 && rp.turns > 0 && <p className="muted" style={{ marginTop: 16 }}>这次说的句子都很自然，没有需要改的。</p>}
         {r.fixes.length > 0 && <>
           <div className="sec-t" style={{ marginTop: 22 }}>需要改进的句子（{r.fixes.length}）</div>

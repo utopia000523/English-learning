@@ -301,5 +301,111 @@
     }
    ]
   }
+ ],
+ "shadow": [
+  {
+   "id": "w02-sh1",
+   "title": "周末怎么过",
+   "sentences": [
+    {
+     "en": "How was your weekend?",
+     "zh": "你周末过得怎么样？"
+    },
+    {
+     "en": "It was great. I went to the beach with some friends.",
+     "zh": "很棒，我和几个朋友去了海边。"
+    },
+    {
+     "en": "The weather was perfect, not too hot.",
+     "zh": "天气很好，不太热。"
+    },
+    {
+     "en": "We had seafood for lunch and walked along the coast.",
+     "zh": "我们午饭吃了海鲜，然后沿着海边散步。"
+    },
+    {
+     "en": "I didn't want to come back to work today!",
+     "zh": "今天真不想回来上班！"
+    }
+   ]
+  },
+  {
+   "id": "w02-sh2",
+   "title": "天气和安排",
+   "sentences": [
+    {
+     "en": "It looks like it's going to rain this afternoon.",
+     "zh": "看起来今天下午要下雨。"
+    },
+    {
+     "en": "Did you bring an umbrella?",
+     "zh": "你带伞了吗？"
+    },
+    {
+     "en": "No, I forgot. I'll just wait it out at the office.",
+     "zh": "没有，忘了。我就在办公室等雨停吧。"
+    },
+    {
+     "en": "Any plans for the weekend?",
+     "zh": "周末有什么安排吗？"
+    },
+    {
+     "en": "Not yet. I might just stay in and relax.",
+     "zh": "还没有，可能就在家休息。"
+    }
+   ]
+  }
+ ],
+ "topics": [
+  {
+   "id": "w02-t1",
+   "zh": "说说你最近的一个周末",
+   "en": "Talk about a recent weekend.",
+   "hints": [
+    "where",
+    "who with",
+    "how you felt"
+   ]
+  },
+  {
+   "id": "w02-t2",
+   "zh": "最近在看的剧或书",
+   "en": "Something you've been watching or reading lately.",
+   "hints": [
+    "what it is",
+    "what it's about",
+    "would you recommend it"
+   ]
+  },
+  {
+   "id": "w02-t3",
+   "zh": "你理想中的周末",
+   "en": "Describe your ideal weekend.",
+   "hints": [
+    "morning",
+    "afternoon",
+    "evening"
+   ]
+  },
+  {
+   "id": "w02-t4",
+   "zh": "说说你昨天的一天",
+   "en": "Describe your day yesterday.",
+   "hints": [
+    "morning",
+    "work",
+    "evening"
+   ]
+  },
+  {
+   "id": "w02-t5",
+   "zh": "天气会影响你的心情吗",
+   "en": "Does the weather affect your mood?",
+   "hints": [
+    "sunny days",
+    "rainy days",
+    "an example"
+   ]
+  }
  ]
 }

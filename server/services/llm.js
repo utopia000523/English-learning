@@ -55,6 +55,9 @@ export async function chatJSON(messages, opts = {}, fallback = (text) => ({ text
 }
 
 function fakeReply(kind) {
+  if (kind === 'mono') {
+    return JSON.stringify({ rewrite: 'Last weekend I went to Dameisha with a couple of friends.', phrases: [{ en: 'a couple of friends', zh: '几个朋友' }], comment_zh: '说得很完整，注意用过去时。' });
+  }
   if (kind === 'feedback') {
     return JSON.stringify({ ok: false, better: 'How do you know so much about both?', issue_zh: 'familiar 是形容词，要说 be familiar with', zh: '你怎么对两者都这么了解？' });
   }

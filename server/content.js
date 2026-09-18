@@ -24,6 +24,17 @@ export function importContent(dir = path.join(config.root, 'content')) {
         added++;
       }
     }
+    // 跟读材料、独白话题：存 content_item（type = shadow / topic），细节放 extra
+    for (const sh of pack.shadow || []) {
+      run(`INSERT INTO content_item (id, week, type, en, zh, extra, approved) VALUES (?,?,?,?,?,?,?)
+           ON CONFLICT(id) DO UPDATE SET week=excluded.week, en=excluded.en, zh=excluded.zh, extra=excluded.extra`,
+        [sh.id, pack.week, 'shadow', sh.title, sh.title, JSON.stringify({ sentences: sh.sentences }), pack.reviewed ? 1 : 0]);
+    }
+    for (const t of pack.topics || []) {
+      run(`INSERT INTO content_item (id, week, type, en, zh, extra, approved) VALUES (?,?,?,?,?,?,?)
+           ON CONFLICT(id) DO UPDATE SET week=excluded.week, en=excluded.en, zh=excluded.zh, extra=excluded.extra`,
+        [t.id, pack.week, 'topic', t.en, t.zh, JSON.stringify({ hints: t.hints || [] }), pack.reviewed ? 1 : 0]);
+    }
     for (const sc of pack.scenes || []) {
       run(`INSERT INTO content_scene (id, week, title, level, role, brief, tasks, hints, approved, data) VALUES (?,?,?,?,?,?,?,?,?,?)
            ON CONFLICT(id) DO UPDATE SET week=excluded.week, title=excluded.title, level=excluded.level, role=excluded.role,

@@ -2,6 +2,7 @@
 import { all, get, run, getSettings } from './db.js';
 import { planPosition } from './cards.js';
 import * as llm from './services/llm.js';
+import { fluency, mergeFluency } from './services/score.js';
 
 export const PASS_TURNS = 8; // 通关：任务全部完成 且 用户发言 ≥ 8 轮
 
@@ -128,6 +129,11 @@ export async function finish(id) {
       { role: 'user', content: transcript },
     ], { model: getSettings().llmModel, temperature: 0.3, kind: 'review' }, () => ({ comment_zh: '' }));
     review.comment_zh = c.comment_zh || '';
+    // 流利度：只统计用语音说的句子
+    const flu = v.messages.filter((m) => m.role === 'user' && m.recordingId)
+      .map((m) => parse(get('SELECT words FROM recording WHERE id = ?', [m.recordingId])?.words, []))
+      .map((w) => fluency(w));
+    review.fluency = mergeFluency(flu);
   }
   const passed = v.tasksDone.length === v.scene.tasks.length && v.turns >= PASS_TURNS ? 1 : 0;
   run("UPDATE roleplay SET review = ?, passed = ?, ended_at = datetime('now','localtime') WHERE id = ?", [JSON.stringify(review), passed, id]);

@@ -301,5 +301,119 @@
     }
    ]
   }
+ ],
+ "shadow": [
+  {
+   "id": "w01-sh1",
+   "title": "自我介绍",
+   "sentences": [
+    {
+     "en": "Hi, I'm Utopia. Nice to meet you.",
+     "zh": "你好，我是 Utopia，很高兴认识你。"
+    },
+    {
+     "en": "I work in product at a tech company in Shenzhen.",
+     "zh": "我在深圳一家科技公司做产品。"
+    },
+    {
+     "en": "I've been doing this for a few years now.",
+     "zh": "我做这行已经好几年了。"
+    },
+    {
+     "en": "In my free time, I like to explore the city.",
+     "zh": "空闲时我喜欢在城市里逛逛。"
+    },
+    {
+     "en": "I'm also working on my spoken English.",
+     "zh": "我也在练英语口语。"
+    },
+    {
+     "en": "How about you? What do you do?",
+     "zh": "你呢？你是做什么的？"
+    }
+   ]
+  },
+  {
+   "id": "w01-sh2",
+   "title": "好久不见",
+   "sentences": [
+    {
+     "en": "Hey, long time no see! How have you been?",
+     "zh": "嘿，好久不见！最近怎么样？"
+    },
+    {
+     "en": "Pretty good, just a bit busy with work.",
+     "zh": "挺好的，就是工作有点忙。"
+    },
+    {
+     "en": "We're launching a new product next month.",
+     "zh": "我们下个月要发布一个新产品。"
+    },
+    {
+     "en": "So I've been working late a lot.",
+     "zh": "所以最近经常加班。"
+    },
+    {
+     "en": "But I'm trying to take it easy on weekends.",
+     "zh": "不过周末我尽量放松一下。"
+    },
+    {
+     "en": "Let's grab coffee sometime.",
+     "zh": "找时间一起喝杯咖啡吧。"
+    }
+   ]
+  }
+ ],
+ "topics": [
+  {
+   "id": "w01-t1",
+   "zh": "介绍一下你自己",
+   "en": "Introduce yourself.",
+   "hints": [
+    "your name",
+    "your job",
+    "your city"
+   ]
+  },
+  {
+   "id": "w01-t2",
+   "zh": "说说你的工作",
+   "en": "Talk about your job.",
+   "hints": [
+    "what you do",
+    "what you like",
+    "one challenge"
+   ]
+  },
+  {
+   "id": "w01-t3",
+   "zh": "你的一个爱好",
+   "en": "Talk about one of your hobbies.",
+   "hints": [
+    "what it is",
+    "how often",
+    "why you like it"
+   ]
+  },
+  {
+   "id": "w01-t4",
+   "zh": "你为什么学英语",
+   "en": "Why are you learning English?",
+   "hints": [
+    "reason",
+    "goal",
+    "what's hard"
+   ]
+  },
+  {
+   "id": "w01-t5",
+   "zh": "你住的城市",
+   "en": "Talk about the city you live in.",
+   "hints": [
+    "where",
+    "what you like",
+    "one favorite place"
+   ]
+  }
  ]
 }

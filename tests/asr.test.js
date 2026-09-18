@@ -5,12 +5,12 @@ import assert from 'node:assert/strict';
 import os from 'node:os';
 import path from 'node:path';
 import fs from 'node:fs';
-import { createApp } from '../server/index.js';
-import { tokensToWords } from '../server/services/asr.js';
+const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'speak90-asr-'));
+process.env.SPEAK90_DATA_DIR = tmp; // 录音写到临时目录，不污染 data/
+const { createApp } = await import('../server/index.js');
+const { tokensToWords } = await import('../server/services/asr.js');
 
 let server; let base;
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'speak90-asr-'));
-process.env.SPEAK90_DATA_DIR = tmp;
 
 before(async () => {
   const app = await createApp({ dbFile: path.join(tmp, 'a.db') });

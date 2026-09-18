@@ -14,8 +14,8 @@ function encodeWav(samples, rate) {
 }
 
 /** 开始录音，返回 { stop(): Promise<Blob>, cancel(), seconds() } */
-export async function startRecording() {
-  window.speechSynthesis?.cancel(); // 录音时停止朗读，避免录进 AI 的声音
+export async function startRecording({ keepSpeech = false } = {}) {
+  if (!keepSpeech) window.speechSynthesis?.cancel(); // 录音时停止朗读，避免录进 AI 的声音（影子跟读除外）
   const stream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true } });
   const ctx = new AudioContext({ sampleRate: RATE });
   const src = ctx.createMediaStreamSource(stream);
