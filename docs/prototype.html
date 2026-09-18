@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>开口 90 天 · 界面原型</title>
+<style>
+:root{
+  --bg:#faf9f5; --panel:#ffffff; --hover:#f0eee6; --sel:#ebe9e0;
+  --ink:#1f1e1d; --ink2:#6b6a66; --ink3:#a3a19a; --line:#e6e3d9;
+  --accent:#c6613f; --accent-soft:#f6e9e3; --ok:#5b8a61; --warn:#b98a2a; --bad:#b9533f;
+  --serif:"Songti SC","Noto Serif SC","Source Han Serif SC",Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue","Microsoft YaHei",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+svg{flex:none}
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+
+/* sidebar */
+.side{border-right:1px solid var(--line);padding:14px 10px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column}
+.brand{font-family:var(--serif);font-size:20px;font-weight:600;padding:4px 10px 18px;letter-spacing:.01em}
+.nav button{display:flex;align-items:center;gap:10px;width:100%;padding:7px 10px;border-radius:8px;color:var(--ink);text-align:left}
+.nav button:hover{background:var(--hover)}
+.nav button.on{background:var(--sel)}
+.nav svg{width:17px;height:17px;color:var(--ink2)}
+.nav .sep{font-size:12px;color:var(--ink2);padding:18px 10px 6px}
+.side-foot{margin-top:auto;display:flex;align-items:center;gap:10px;padding:10px;border-top:1px solid var(--line);font-size:13px}
+.avatar{width:26px;height:26px;border-radius:50%;background:var(--sel);display:grid;place-items:center;font-size:12px}
+
+/* main */
+.main{padding:40px 48px 80px;max-width:1080px;width:100%;margin:0 auto}
+.narrow{max-width:760px;margin:0 auto}
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:28px}
+h1{font-family:var(--serif);font-size:28px;font-weight:600;letter-spacing:.01em}
+h2{font-family:var(--serif);font-size:20px;font-weight:600}
+.sub{color:var(--ink2);margin-top:6px}
+.sec{margin-top:36px}
+.sec-t{font-size:13px;color:var(--ink2);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.muted{color:var(--ink2)} .faint{color:var(--ink3);font-size:13px}
+.row{display:flex;align-items:center;gap:12px}
+.between{justify-content:space-between}
+.hide{display:none!important}
+hr{border:none;border-top:1px solid var(--line);margin:28px 0}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:8px;font-weight:500;background:var(--ink);color:#fff}
+.btn:hover{background:#3a3936}
+.btn.accent{background:var(--accent)} .btn.accent:hover{background:#b3553a}
+.btn.line{background:var(--panel);color:var(--ink);border:1px solid var(--line)}
+.btn.line:hover{background:var(--hover)}
+.btn.sm{padding:5px 10px;font-size:13px}
+.btn svg{width:15px;height:15px}
+.link{color:var(--ink2);font-size:13px;display:inline-flex;align-items:center;gap:6px;padding:4px 6px;border-radius:6px}
+.link:hover{background:var(--hover);color:var(--ink)}
+.link svg{width:14px;height:14px}
+
+/* list rows */
+.list{border-top:1px solid var(--line)}
+.li{display:flex;align-items:center;gap:16px;padding:14px 4px;border-bottom:1px solid var(--line)}
+.li:hover{background:rgba(0,0,0,.015)}
+.li .t{flex:1;min-width:0}
+.li .t b{font-weight:500}
+.st{font-size:13px;color:var(--ink2);display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.st::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ink3)}
+.st.ok::before{background:var(--ok)} .st.go::before{background:var(--accent)} .st.lock{color:var(--ink3)}
+.num{width:22px;color:var(--ink3);font-size:13px;font-variant-numeric:tabular-nums}
+
+.bar{height:4px;border-radius:4px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ink);border-radius:4px}
+.bar.a i{background:var(--accent)}
+
+.seg{display:inline-flex;background:var(--hover);border-radius:8px;padding:2px}
+.seg button{padding:4px 10px;font-size:13px;border-radius:6px;color:var(--ink2)}
+.seg button.on{background:var(--panel);color:var(--ink);box-shadow:0 0 0 1px var(--line)}
+
+/* today */
+.today-meta{display:flex;align-items:center;gap:18px;margin-top:18px}
+.today-meta .bar{flex:1;max-width:320px}
+
+/* chat */
+.chat-page{display:grid;grid-template-columns:1fr 280px;gap:28px;min-height:calc(100vh - 120px)}
+.chat-col{display:flex;flex-direction:column;max-width:720px;width:100%;margin:0 auto}
+.chat-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:14px}
+.chat-head .ttl{font-size:15px;display:flex;align-items:center;gap:6px}
+.msgs{flex:1;display:flex;flex-direction:column;gap:22px;padding:20px 0 30px}
+.ai{font-family:var(--serif);font-size:16.5px;line-height:1.75}
+.ai .who{font-family:var(--sans);font-size:12px;color:var(--ink3);margin-bottom:2px}
+.ai .tools{font-family:var(--sans);display:flex;gap:4px;margin-top:4px;margin-left:-6px}
+.ai .zh{font-family:var(--sans);font-size:13px;color:var(--ink2);margin-top:2px}
+.me{align-self:flex-end;max-width:75%}
+.me .bub{background:var(--sel);padding:10px 14px;border-radius:12px;font-size:15px}
+.me .tools{text-align:right;margin-top:2px}
+.aside-note{font-family:var(--sans);font-size:14px;color:var(--ink2);border-left:2px solid var(--accent);padding:2px 0 2px 12px}
+.composer{position:sticky;bottom:16px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px 12px 10px 16px;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.composer input{width:100%;border:none;outline:none;font:inherit;font-size:15px;background:transparent;padding:4px 0 10px}
+.composer .bar2{display:flex;align-items:center;justify-content:space-between}
+.micbtn{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;color:var(--ink2)}
+.micbtn:hover{background:var(--hover)}
+.micbtn svg{width:18px;height:18px}
+.micbtn.rec{background:var(--accent);color:#fff;animation:pulse 1.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(198,97,63,.4)}100%{box-shadow:0 0 0 10px rgba(198,97,63,0)}}
+.send{width:32px;height:32px;border-radius:8px;background:var(--accent);color:#fff;display:grid;place-items:center}
+.send svg{width:16px;height:16px}
+
+.panel{border:1px solid var(--line);border-radius:12px;background:var(--panel);align-self:start;position:sticky;top:24px}
+.panel details{border-bottom:1px solid var(--line)}
+.panel details:last-child{border-bottom:none}
+.panel summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;font-weight:500}
+.panel summary::-webkit-details-marker{display:none}
+.panel summary .chev{transition:transform .2s;color:var(--ink3)}
+.panel details[open] summary .chev{transform:rotate(90deg)}
+.panel .pb{padding:0 14px 14px;font-size:13.5px}
+.chk{display:flex;gap:10px;padding:5px 0;align-items:flex-start}
+.cb{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--ink3);flex:none;margin-top:3px;display:grid;place-items:center;font-size:11px;color:#fff}
+.cb.on{background:var(--ok);border-color:var(--ok)}
+.cb.on::after{content:"✓"}
+.chk.on span{color:var(--ink2);text-decoration:line-through;text-decoration-color:var(--ink3)}
+.hintline{padding:6px 0;border-top:1px dashed var(--line)}
+.hintline:first-child{border-top:none}
+.hintline details summary{padding:2px 0;font-weight:400;color:var(--ink2);font-size:12.5px}
+
+/* modal */
+.mask{position:fixed;inset:0;background:rgba(31,30,29,.3);display:grid;place-items:center;z-index:20}
+.modal{background:var(--bg);border:1px solid var(--line);border-radius:16px;width:640px;max-width:92vw;max-height:88vh;overflow:auto;padding:28px 30px}
+.fix{padding:14px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;align-items:center}
+.fix .o{color:var(--ink2);text-decoration:line-through;text-decoration-color:var(--ink3)}
+.fix .n{font-family:var(--serif);font-size:16px;margin-top:2px}
+
+/* flashcard */
+.fc-wrap{perspective:1400px;max-width:600px;margin:0 auto}
+.fc{height:280px;position:relative;transform-style:preserve-3d;transition:transform .55s;cursor:pointer}
+.fc.flipped{transform:rotateY(180deg)}
+.fc .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center}
+.fc .back{transform:rotateY(180deg)}
+.fc .big{font-family:var(--serif);font-size:26px;margin:12px 0 8px;line-height:1.5}
+.rate{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+.rate button{padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--panel);text-align:center}
+.rate button:hover{background:var(--hover)}
+.rate small{display:block;color:var(--ink3);font-size:12px}
+
+/* shadow */
+.sent{font-family:var(--serif);font-size:26px;line-height:1.7;margin:22px 0 4px}
+.w-ok{color:var(--ink)} .w-mid{color:var(--warn);text-decoration:underline dotted;text-underline-offset:5px} .w-bad{color:var(--bad);text-decoration:line-through}
+.wave{display:flex;align-items:center;gap:3px;height:40px;margin:24px 0}
+.wave i{width:3px;border-radius:2px;background:var(--line)}
+.wave i.p{background:var(--ink2)}
+.two{display:grid;grid-template-columns:1.4fr 1fr;gap:48px}
+
+/* mono */
+.timer{font-family:var(--serif);font-size:64px;text-align:center;font-variant-numeric:tabular-nums;margin:18px 0 0}
+.rewrite p{font-size:15px;line-height:1.85;margin:6px 0 18px}
+.rewrite .serif{font-family:var(--serif);font-size:16.5px}
+mark{background:var(--accent-soft);color:inherit;padding:0 2px;border-radius:3px}
+
+/* plan */
+.phases{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.phases .cur b{color:var(--accent)}
+.cal{display:grid;grid-template-columns:repeat(15,1fr);gap:5px}
+.cal div{aspect-ratio:1;border-radius:4px;background:var(--hover);font-size:10px;display:grid;place-items:center;color:var(--ink3)}
+.cal .l1{background:#ecd9cf}.cal .l2{background:#dca58f;color:#fff}.cal .l3{background:var(--accent);color:#fff}
+.cal .today{box-shadow:0 0 0 1.5px var(--ink)}
+.weeks{display:grid;grid-template-columns:1fr 1fr;column-gap:40px}
+
+/* table */
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;color:var(--ink3);font-weight:500}
+.filters{display:flex;gap:10px;margin-bottom:12px;align-items:center;flex-wrap:wrap}
+input.in,select.in{border:1px solid var(--line);border-radius:8px;padding:7px 10px;font:inherit;font-size:13px;background:var(--panel);color:var(--ink)}
+
+/* progress */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.kpis>div{padding:18px 16px;border-right:1px solid var(--line)}
+.kpis>div:last-child{border-right:none}
+.kpis b{font-family:var(--serif);font-size:28px;font-weight:600;display:block;line-height:1.2}
+.kpis span{font-size:13px;color:var(--ink2)}
+.kpis .bar{margin:10px 0 4px}
+.chart{width:100%;height:190px}
+.badges{display:flex;flex-wrap:wrap;gap:8px}
+.badge{font-size:13px;padding:5px 11px;border-radius:20px;border:1px solid var(--line);background:var(--panel)}
+.badge.lock{color:var(--ink3);background:transparent;border-style:dashed}
+
+/* settings */
+.set-group{margin-bottom:34px}
+.set-group h3{font-size:15px;font-weight:600;margin-bottom:4px}
+.field{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);gap:16px}
+.field .d{font-size:13px;color:var(--ink2)}
+.sw{width:36px;height:20px;border-radius:12px;background:var(--ink);position:relative;flex:none}
+.sw::after{content:"";position:absolute;right:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#fff}
+.proto-note{position:fixed;right:16px;bottom:12px;color:var(--ink3);font-size:12px}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand">开口 90 天</div>
+    <nav class="nav" id="nav"></nav>
+    <div class="side-foot"><div class="avatar">U</div><div style="flex:1">Utopia<div class="faint" style="font-size:12px">第 17 天 / 90</div></div></div>
+  </aside>
+  <main class="main" id="main"></main>
+</div>
+<div class="proto-note">界面原型 · 数据为示例</div>
+
+<script>
+const I = {
+  home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',
+  chat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5h16v11H9l-5 4z"/></svg>',
+  card:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="14" height="13" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v11"/></svg>',
+  wave:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h2M7 8v8M11 5v14M15 8v8M19 10v4"/></svg>',
+  mic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
+  cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+  note:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h7"/></svg>',
+  chart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+  gear:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>',
+  play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg>',
+  speaker:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>',
+  shuffle:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h4l10 10h4M3 17h4l3-3M14 10l3-3h4M18 4l3 3-3 3M18 14l3 3-3 3"/></svg>',
+  sync:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 12a8 8 0 0 1-14 5M4 12a8 8 0 0 1 14-5M18 3v4h-4M6 21v-4h4"/></svg>',
+  plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>',
+  up:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M6 11l6-6 6 6"/></svg>',
+  chev:'<svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>',
+  back:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg>',
+  copy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M4 16V5a1 1 0 0 1 1-1h11"/></svg>',
+};
+const NAV = [
+  ['today','今日',I.home],
+  ['sep','练习'],
+  ['roleplay','AI 对话',I.chat],['cards','表达卡',I.card],['shadow','跟读',I.wave],['mono','独白',I.mic],
+  ['sep','记录'],
+  ['plan','学习计划',I.cal],['notes','笔记本',I.note],['progress','进度',I.chart],
+  ['sep',''],
+  ['settings','设置',I.gear],
+];
+const MOD = {cards:'表达卡复习',roleplay:'AI 情景对话',shadow:'影子跟读',mono:'话题独白',review:'今日收尾'};
+let state = {page:'today', swapped:false, rpView:'list'};
+
+function renderNav(){
+  document.getElementById('nav').innerHTML = NAV.map(n=> n[0]==='sep'
+    ? `<div class="sep">${n[1]}</div>`
+    : `<button class="${state.page===n[0]?'on':''}" onclick="go('${n[0]}')">${n[2]}${n[1]}</button>`).join('');
+}
+function go(p){state.page=p; if(p==='roleplay') state.rpView='list'; renderNav(); render(); window.scrollTo(0,0)}
+function head(t,s,right=''){return `<div class="head"><div><h1>${t}</h1>${s?`<p class="sub">${s}</p>`:''}</div><div class="row">${right}</div></div>`}
+function stTxt(s){return {done:'<span class="st ok">已完成</span>',doing:'<span class="st go">进行中</span>',todo:'<span class="st">未开始</span>'}[s]}
+
+/* ---------- 今日 ---------- */
+function today(){
+  const B = state.swapped ? 'mono' : 'shadow';
+  const tasks = [
+    {k:'热身',t:'5 分钟',m:'cards',d:'12 张到期卡',s:'done'},
+    {k:'随机',t:'10 分钟',m:'roleplay',d:'咖啡店点单',s:'doing'},
+    {k:'随机',t:'10 分钟',m:B,d:B==='mono'?'你最近的一个周末':'Ordering at a café',s:'todo',swap:1},
+    {k:'收尾',t:'5 分钟',m:'review',d:'错句回顾，存入笔记',s:'todo'},
+  ];
+  return `<div class="narrow">
+   <h1>早上好，Utopia</h1>
+   <p class="sub">第 3 周 · 吃饭点餐</p>
+   <div class="today-meta"><span>第 <b>17</b> 天 / 90</span><div class="bar a"><i style="width:30%"></i></div><span class="faint">今日 9 / 30 分钟</span></div>
+   <div class="sec"><div class="sec-t"><span>今日练习 · 中间两项随机抽取</span>
+     <button class="link" onclick="swapTask()" ${state.swapped?'disabled style="opacity:.5"':''}>${I.shuffle}${state.swapped?'今日已换过':'换一个'}</button></div>
+   <div class="list">${tasks.map((t,i)=>`
+     <div class="li" style="cursor:pointer" onclick="go('${t.m==='review'?'notes':t.m}')" id="task${i}">
+       <span class="num">${i+1}</span>
+       <div class="t"><b>${MOD[t.m]}</b> <span class="faint">· ${t.d}</span></div>
+       <span class="faint" style="width:96px;white-space:nowrap">${t.k} ${t.t}</span>
+       <span style="width:70px">${stTxt(t.s)}</span></div>`).join('')}</div></div>
+   <div style="margin-top:28px"><button class="btn accent" onclick="openChat()">${I.play}继续今日练习</button></div>
+  </div>`;
+}
+function swapTask(){ if(state.swapped) return; state.swapped=true; render(); const t=document.getElementById('task2'); t.animate([{opacity:0,transform:'translateY(4px)'},{opacity:1,transform:'none'}],{duration:400}); }
+
+/* ---------- AI 对话 ---------- */
+const SCENES=[
+  [1,'认识新朋友','派对上的陌生人',2],[2,'周末聊什么','同事 Mia',2],[3,'咖啡店点单','咖啡师 Sam',1],
+  [3,'餐厅点菜与结账','服务员 Leo',0],[4,'买衣服换尺码','店员 Ana',-1],[5,'问路去地铁站','路人 Tom',-1],
+];
+function roleplay(){
+  if(state.rpView==='chat') return chatView();
+  const sm={2:'<span class="st ok">已通关</span>',1:'<span class="st go">练习中</span>',0:'<span class="st">可练</span>','-1':'<span class="st lock">未解锁</span>'};
+  return `<div class="narrow">`+head('AI 情景对话','AI 扮演角色，你用英语完成任务。对话中不打断纠错，结束后统一复盘。')+
+  `<div class="list">${SCENES.map(s=>`<div class="li" style="${s[3]<0?'opacity:.55':'cursor:pointer'}" ${s[3]>=0?'onclick="openChat()"':''}>
+     <span class="faint" style="width:48px">第 ${s[0]} 周</span>
+     <div class="t"><b>${s[1]}</b><div class="faint">AI 角色：${s[2]} · 基础版 / 进阶版</div></div>
+     ${sm[s[3]]}</div>`).join('')}</div>
+  <p class="faint" style="margin-top:12px">当前周及以前的场景可练，之后的可预览。</p></div>`;
+}
+function openChat(){state.page='roleplay';state.rpView='chat';renderNav();render();window.scrollTo(0,0)}
+function aiMsg(en,zh){return `<div class="ai"><div class="who">Sam · 咖啡师</div>${en}
+  <div class="tools"><button class="link">${I.speaker}再听</button><button class="link">慢速</button><button class="link" onclick="this.closest('.ai').querySelector('.zh').classList.toggle('hide')">中文</button></div>
+  <div class="zh hide">${zh}</div></div>`}
+function chatView(){
+  return `<div class="chat-page"><div class="chat-col">
+    <div class="chat-head"><div class="ttl"><button class="link" onclick="state.rpView='list';render()">${I.back}</button><b style="font-weight:500">咖啡店点单 · 基础版</b><span class="faint">第 3 周</span></div>
+      <div class="row"><div class="seg"><button onclick="seg(this)">0.8x</button><button class="on" onclick="seg(this)">1.0x</button></div><button class="btn line sm" onclick="showReview()">结束并复盘</button></div></div>
+    <div class="msgs" id="msgs">
+      ${aiMsg('Hi there! What can I get for you today?','你好！今天想喝点什么？')}
+      <div class="me"><div class="bub">Can I have a oat latte, please?</div><div class="tools"><button class="link">回放录音</button></div></div>
+      ${aiMsg('Sure! Hot or iced?','好的！热的还是冰的？')}
+      <div class="me"><div class="bub">Iced. And… 少冰怎么说？</div></div>
+      <div class="ai"><div class="aside-note">可以说 <b style="color:var(--ink)">“Light ice, please.”</b> 试着把整句再说一遍。</div></div>
+    </div>
+    <div class="composer">
+      <input id="inp" placeholder="按住空格或点麦克风说话，识别结果可修改后发送">
+      <div class="bar2"><div class="row" style="gap:4px"><button class="link" onclick="document.getElementById('hintBox').open=true">提示</button><span class="faint">说不出来可以直接说中文</span></div>
+        <div class="row" style="gap:6px"><button class="micbtn" id="mic" onclick="toggleMic()">${I.mic}</button><button class="send" onclick="sendMsg()">${I.up}</button></div></div>
+    </div>
+  </div>
+  <aside class="panel">
+    <details open><summary>任务 <span class="row" style="gap:6px"><span class="faint" id="tcount">2 / 4</span>${I.chev}</span></summary>
+      <div class="pb" id="tasks">
+        <div class="chk on"><span class="cb on"></span><span>点一杯燕麦拿铁</span></div>
+        <div class="chk on"><span class="cb on"></span><span>要冰的</span></div>
+        <div class="chk"><span class="cb"></span><span>少冰</span></div>
+        <div class="chk"><span class="cb"></span><span>问有没有无糖选项</span></div>
+        <p class="faint" style="margin-top:8px">通关：任务全部完成，且对话 ≥ 8 轮（当前 3 轮）</p></div></details>
+    <details id="hintBox"><summary>提示 ${I.chev}</summary>
+      <div class="pb">
+        <div class="hintline">少冰，谢谢<details><summary>看英文</summary><b>Light ice, please.</b></details></div>
+        <div class="hintline">你们有无糖的吗？<details><summary>看英文</summary><b>Do you have any sugar-free options?</b></details></div></div></details>
+    <details><summary>场景 ${I.chev}</summary><div class="pb muted">你在一家咖啡店，想点一杯少冰的燕麦拿铁，并问问有没有无糖选项。</div></details>
+  </aside></div>`;
+}
+function toggleMic(){const m=document.getElementById('mic');m.classList.toggle('rec');const i=document.getElementById('inp');
+  i.value = m.classList.contains('rec') ? '正在听…' : 'Light ice, please. Do you have any sugar free options?';}
+function sendMsg(){const i=document.getElementById('inp');if(!i.value||i.value==='正在听…')return;const box=document.getElementById('msgs');
+  box.insertAdjacentHTML('beforeend',`<div class="me"><div class="bub">${i.value}</div></div>`);i.value='';
+  setTimeout(()=>{box.insertAdjacentHTML('beforeend',aiMsg('Of course. We have sugar-free vanilla syrup. Would you like to add some?','当然。我们有无糖香草糖浆，要加一点吗？'));
+    document.querySelectorAll('#tasks .chk').forEach(c=>{c.classList.add('on');c.querySelector('.cb').classList.add('on')});
+    document.getElementById('tcount').textContent='4 / 4';window.scrollTo(0,document.body.scrollHeight)},600);}
+function showReview(){
+  document.body.insertAdjacentHTML('beforeend',`<div class="mask" onclick="if(event.target===this)this.remove()"><div class="modal">
+   <h2>对话复盘 · 咖啡店点单</h2>
+   <p class="sub">已通关 · 任务 4/4 · 9 轮 · 语速 86 词/分 · 长停顿 3 次</p>
+   <div class="sec-t" style="margin-top:22px">更地道的说法</div>
+   <div style="border-top:1px solid var(--line)">
+   ${[['Can I have a oat latte?','Can I get an oat latte?'],['Iced. And… 少冰怎么说？','Iced, with light ice, please.'],['Is there no sugar one?','Do you have anything sugar-free?']].map(f=>`<div class="fix"><div><div class="o">${f[0]}</div><div class="n">${f[1]}</div></div><button class="link">${I.plus}加入表达卡</button></div>`).join('')}</div>
+   <div class="row" style="justify-content:flex-end;margin-top:22px"><button class="btn line" onclick="this.closest('.mask').remove()">再练一次</button><button class="btn accent" onclick="this.closest('.mask').remove();go('today')">完成，下一项</button></div>
+  </div></div>`);
+}
+
+/* ---------- 表达卡 ---------- */
+function cards(){
+  return `<div class="narrow">`+head('表达卡复习','先看中文自己说，再翻面对照。',`<span class="faint">今日到期 12 张 · 剩 7 张</span>`)+
+  `<div class="bar a" style="max-width:600px;margin:0 auto 26px"><i style="width:42%"></i></div>
+  <div class="fc-wrap"><div class="fc" id="fc" onclick="this.classList.toggle('flipped')">
+    <div class="face"><span class="faint">第 2 周 · 日常闲聊</span><div class="big">我可能要晚到十分钟。</div><div class="faint">用英语说出来，再点卡片翻面</div>
+      <button class="micbtn" style="margin-top:16px;border:1px solid var(--line)" onclick="event.stopPropagation();this.classList.toggle('rec')">${I.mic}</button></div>
+    <div class="face back"><div class="faint">你说的：I maybe late ten minutes.</div><div class="big">I might be running about ten minutes late.</div>
+      <div class="muted">也可以：I'm running a bit late — be there in five.</div>
+      <div class="row" style="margin-top:14px;gap:4px"><button class="link" onclick="event.stopPropagation()">${I.speaker}朗读</button><button class="link" onclick="event.stopPropagation()">回放我的录音</button></div></div>
+  </div>
+  <div class="rate"><button>没想起<small>今天再出现</small></button><button>想起但卡<small>约 2 天后</small></button><button>脱口而出<small>约 6 天后</small></button></div>
+  <p class="faint" style="text-align:center;margin-top:26px">熟练 46 · 学习中 71 · 新卡 12</p></div></div>`;
+}
+
+/* ---------- 跟读 ---------- */
+function shadow(){
+  const bars = Array.from({length:70},(_,i)=>`<i class="${i<30?'p':''}" style="height:${8+Math.abs(Math.sin(i*1.7))*30}px"></i>`).join('');
+  return head('跟读','Ordering at a café · 10 句 · 美音女声',
+    `<div class="seg"><button class="on" onclick="seg(this)">逐句跟读</button><button onclick="seg(this)">影子跟读</button></div>`)+
+  `<div class="two"><div>
+      <div class="row between"><span class="faint">第 4 / 10 句</span><div class="row" style="gap:6px"><div class="seg"><button onclick="seg(this)">0.75x</button><button class="on" onclick="seg(this)">1.0x</button><button onclick="seg(this)">1.2x</button></div><button class="link">单句循环</button><button class="link">隐藏原文</button></div></div>
+      <div class="sent">Could I get <span class="w-mid">that</span> <span class="w-bad">with</span> oat milk instead?</div>
+      <div class="muted">我能把它换成燕麦奶吗？</div>
+      <div class="wave">${bars}</div>
+      <div class="row"><button class="btn line">${I.speaker}听原句</button><button class="btn accent">${I.mic}我来跟读</button><button class="btn line">回放我的</button><button class="link" style="margin-left:auto">下一句 →</button></div>
+      <hr>
+      <p><b style="font-weight:500">本句</b> <span class="muted">完整度 88 · 漏读 1 词 · 最长停顿 0.6 秒</span></p>
+      <p class="muted" style="margin-top:6px">「with」被跳过了，注意 that with 连读，别吞掉。</p>
+      <p class="faint" style="margin-top:14px"><span class="w-mid">黄色</span> 识别不确定　<span class="w-bad">红色</span> 漏读或读错　· 评分仅作练习参考</p>
+    </div>
+    <div><div class="sec-t">本组进度</div><div class="list">
+      ${['What can I get for you?','A medium latte, please.','For here or to go?','Could I get that with oat milk instead?'].map((s,i)=>`<div class="li" style="padding:11px 2px"><span class="num">${i+1}</span><div class="t">${s}</div><span class="${i<3?'faint':'st go'}">${i<3?[92,95,90][i]:'当前'}</span></div>`).join('')}
+      ${['Anything else?','That\'ll be $5.50.'].map((s,i)=>`<div class="li" style="padding:11px 2px;color:var(--ink3)"><span class="num">${i+5}</span><div class="t">${s}</div></div>`).join('')}
+    </div></div></div>`;
+}
+function seg(b){b.parentElement.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on')}
+
+/* ---------- 独白 ---------- */
+let monoStep = 0;
+function mono(){
+  const left = `<div style="text-align:center;padding-top:10px">
+      <p class="faint">1 分钟 · 准备 30 秒</p>
+      <h2 style="font-size:24px;margin:10px 0 4px">说说你最近的一个周末</h2><p class="muted">Talk about a recent weekend.</p>
+      <p class="faint" style="margin-top:12px">可以说说：where · who with · how you felt</p>
+      <div class="timer">${monoStep===0?'0:30':monoStep===1?'0:42':'1:00'}</div>
+      <p class="faint">${monoStep===0?'准备中':monoStep===1?'正在录音…':'已完成'}</p>
+      <div class="row" style="justify-content:center;margin-top:18px">
+        ${monoStep===0?`<button class="btn line">${I.shuffle}换个话题</button><button class="btn accent" onclick="monoStep=1;render()">${I.mic}开始说</button>`:
+          monoStep===1?`<button class="btn accent" onclick="monoStep=2;render()">结束</button>`:`<button class="btn line" onclick="monoStep=0;render()">重新来</button>`}
+      </div></div>`;
+  const right = monoStep<2 ? `<p class="muted" style="padding-top:14px">说完后，这里会显示识别文字、语速和停顿，以及 AI 改写的地道版本。</p>` :
+   `<div class="rewrite">
+      <p class="muted" style="margin:0 0 18px">语速 78 词/分 · 长停顿 4 次 · 口头禅 6 次</p>
+      <div class="sec-t">你说的</div>
+      <p class="muted">Last weekend I go to Dameisha with my friend. Um… the weather is very good, and we, uh, eat some seafood. I feel very relax.</p>
+      <div class="sec-t">地道版本</div>
+      <p class="serif">Last weekend I <mark>went</mark> to Dameisha with <mark>a couple of friends</mark>. The weather was <mark>perfect</mark>, and we <mark>grabbed</mark> some seafood <mark>by the beach</mark>. It was <mark>so relaxing</mark>.</p>
+      <div class="row" style="gap:4px"><button class="link">${I.speaker}朗读</button><button class="link">跟读一遍</button><button class="link">${I.plus}加入表达卡</button></div>
+    </div>`;
+  return head('话题独白','30 秒准备，说满 1 分钟。重点是说得久，不怕说错。')+`<div class="two" style="grid-template-columns:1fr 1fr">${left}<div style="border-left:1px solid var(--line);padding-left:40px">${right}</div></div>`;
+}
+
+/* ---------- 学习计划 ---------- */
+function plan(){
+  const cells = Array.from({length:90},(_,i)=>{const d=i+1;let c='';if(d<17){c=[3,3,2,3,3,1,3,3,3,2,3,3,1,3,3,2][i]}return `<div class="${c?'l'+c:''} ${d===17?'today':''}" title="第 ${d} 天">${d}</div>`}).join('');
+  const W=['自我介绍与近况','日常闲聊','吃饭点餐','购物','问路与交通','酒店与旅行','工作寒暄','电话与约时间','表达观点','讲一段经历','解决问题','综合复盘'];
+  return head('学习计划','每天 30 分钟 · 每周 6 天 · 周日轻复习',`<button class="btn line sm">调整计划</button>`)+
+  `<div class="phases">
+    <div class="cur"><b>第 1 阶段 · 敢开口</b><div class="faint">第 1–4 周 · 句型和跟读为主</div><div class="bar a" style="margin-top:10px"><i style="width:60%"></i></div></div>
+    <div><b>第 2 阶段 · 能对话</b><div class="faint">第 5–8 周 · 场景对话为主</div><div class="bar" style="margin-top:10px"><i style="width:0"></i></div></div>
+    <div><b>第 3 阶段 · 说得久</b><div class="faint">第 9–12 周 · 独白和观点</div><div class="bar" style="margin-top:10px"><i style="width:0"></i></div></div></div>
+  <hr>
+  <div class="two">
+    <div><div class="sec-t"><span>90 天日历</span><span class="faint">颜色越深完成度越高</span></div><div class="cal">${cells}</div></div>
+    <div><div class="sec-t">本阶段练习比例（随机抽取权重）</div>
+      ${[['表达卡',35],['跟读',35],['AI 对话',15],['独白',15]].map(x=>`<div style="margin-bottom:12px"><div class="row between" style="font-size:13.5px"><span>${x[0]}</span><span class="faint">${x[1]}%</span></div><div class="bar" style="margin-top:4px"><i style="width:${x[1]*2}%"></i></div></div>`).join('')}
+      <p class="faint">连续 2 天没出现的练习，下次抽中概率翻倍。</p>
+      <p class="faint" style="margin-top:6px">测评：第 30 天 · 第 60 天 · 第 90 天</p></div>
+  </div>
+  <div class="sec"><div class="sec-t">12 周路线</div>
+  <div class="weeks">${W.map((w,i)=>`<div class="li" style="padding:11px 2px"><span class="faint" style="width:48px">第 ${i+1} 周</span><div class="t" style="${i===2?'font-weight:600':''}">${w}</div>${i<2?'<span class="st ok">完成</span>':i===2?'<span class="st go">本周</span>':''}</div>`).join('')}</div></div>`;
+}
+
+/* ---------- 笔记本 ---------- */
+function notes(){
+  const N=[['I might be running about ten minutes late.','我可能要晚到十分钟','表达卡','日常闲聊','9/17',1],
+    ['Iced, with light ice, please.','冰的，少冰','AI 对话','吃饭点餐','9/17',0],
+    ['Do you have anything sugar-free?','有无糖的吗？','AI 对话','吃饭点餐','9/17',0],
+    ['We grabbed some seafood by the beach.','我们在海边吃了点海鲜','独白','日常闲聊','9/16',1],
+    ['Could I get that with oat milk instead?','能换成燕麦奶吗？','跟读','吃饭点餐','9/16',1],
+    ['What have you been up to lately?','你最近在忙什么？','手动','日常闲聊','9/14',1]];
+  return head('笔记本','练习中的错句、地道改写和新表达都收在这里，同步到 Notion 后手机可看。',
+    `<button class="btn line sm">${I.plus}添加</button><button class="btn sm" onclick="this.innerHTML='已同步'">${I.sync}同步到 Notion</button>`)+
+  `<div class="filters"><input class="in" placeholder="搜索英文或中文" style="width:240px"><select class="in"><option>全部来源</option><option>AI 对话</option><option>独白</option><option>跟读</option><option>表达卡</option><option>手动</option></select><select class="in"><option>全部周</option><option>第 3 周</option></select><label class="row faint" style="gap:6px"><input type="checkbox">只看收藏</label><span class="faint" style="margin-left:auto">共 128 条 · 2 条待同步</span></div>
+  <table><tr><th>英文</th><th>中文</th><th>来源</th><th>场景</th><th>日期</th><th>Notion</th><th></th></tr>
+  ${N.map(n=>`<tr><td style="font-family:var(--serif);font-size:15px">${n[0]}</td><td class="muted">${n[1]}</td><td class="muted">${n[2]}</td><td class="muted">${n[3]}</td><td class="faint">${n[4]}</td><td>${n[5]?'<span class="st ok">已同步</span>':'<span class="st go">待同步</span>'}</td><td><button class="link">${I.speaker}</button></td></tr>`).join('')}</table>`;
+}
+
+/* ---------- 进度 ---------- */
+function progress(){
+  const pts=[62,65,64,70,72,71,75,78,77,80,82,84];
+  const x=i=>34+i*(560/11), y=v=>170-(v-50)*2.2;
+  const path=pts.map((v,i)=>`${i?'L':'M'}${x(i)},${y(v)}`).join(' ');
+  return head('进度','对照 90 天目标看变化，每 30 天测评一次。',`<button class="btn line sm" onclick="assess()">入门测评（首次启动引导）</button>`)+
+  `<div class="kpis">
+    ${[['84','语速 词/分','目标 ≥ 100',84],['3','1 分钟长停顿','目标 ≤ 2',60],['4 / 12','场景通关','目标 12',33],['46','熟练表达','目标 ≥ 300',15]].map(s=>`<div><b>${s[0]}</b><span>${s[1]}</span><div class="bar a"><i style="width:${s[3]}%"></i></div><span class="faint">${s[2]}</span></div>`).join('')}
+  </div>
+  <p class="faint" style="margin-top:10px">累计开口 284 分钟 · 连续打卡 16 天 · 本周练习 4 天</p>
+  <div class="two sec">
+    <div><div class="sec-t"><span>语速趋势（词/分）</span><span class="faint">虚线为目标</span></div>
+      <svg class="chart" viewBox="0 0 620 190">
+        ${[60,80,100].map(v=>`<line x1="34" x2="600" y1="${y(v)}" y2="${y(v)}" stroke="#e6e3d9"/><text x="4" y="${y(v)+4}" font-size="11" fill="#a3a19a">${v}</text>`).join('')}
+        <line x1="34" x2="600" y1="${y(100)}" y2="${y(100)}" stroke="#c6613f" stroke-dasharray="4 4"/>
+        <path d="${path}" fill="none" stroke="#1f1e1d" stroke-width="1.8"/>
+        ${pts.map((v,i)=>`<circle cx="${x(i)}" cy="${y(v)}" r="3" fill="#faf9f5" stroke="#1f1e1d" stroke-width="1.5"/>`).join('')}
+        <text x="${x(11)-8}" y="${y(84)-10}" font-size="12" fill="#1f1e1d">84</text>
+      </svg></div>
+    <div><div class="sec-t">测评记录</div>
+      <table><tr><th>测评</th><th>语速</th><th>长停顿</th><th>口头禅</th></tr>
+      <tr><td>入门 · 第 0 天</td><td>58</td><td>7</td><td>11</td></tr>
+      <tr><td class="faint">第 30 天</td><td class="faint" colspan="3">13 天后</td></tr>
+      <tr><td class="faint">第 60 天</td><td colspan="3"></td></tr>
+      <tr><td class="faint">第 90 天</td><td colspan="3"></td></tr></table></div>
+  </div>
+  <div class="sec"><div class="sec-t">徽章 · 经验值 1,720</div>
+    <div class="badges">${[['连续 7 天'],['连续 14 天'],['首次通关'],['50 张熟练卡',1],['连续 30 天',1],['全场景通关',1],['语速破百',1]].map(b=>`<span class="badge ${b[1]?'lock':''}">${b[0]}</span>`).join('')}</div></div>`;
+}
+function assess(){
+  document.body.insertAdjacentHTML('beforeend',`<div class="mask" onclick="if(event.target===this)this.remove()"><div class="modal">
+    <h2>入门测评：先摸清你的起点</h2>
+    <p class="sub">约 8 分钟，只做一次。测完生成基线，第 30 / 60 / 90 天用同样题型对比。</p>
+    <div class="list" style="margin-top:20px">
+    ${[['跟读 3 句','看能否完整、流畅地读出日常句子','2 分钟'],['1 分钟自我介绍','测语速、停顿、口头禅','2 分钟'],['和 AI 聊 3 轮','测理解和接话反应','4 分钟']].map((s,i)=>`<div class="li"><span class="num">${i+1}</span><div class="t"><b>${s[0]}</b><div class="faint">${s[1]}</div></div><span class="faint">${s[2]}</span></div>`).join('')}</div>
+    <p class="faint" style="margin-top:10px">开始前会先测试麦克风。</p>
+    <div class="row" style="justify-content:flex-end;margin-top:20px"><button class="btn line" onclick="this.closest('.mask').remove()">稍后</button><button class="btn accent">开始测评</button></div>
+  </div></div>`);
+}
+
+/* ---------- 设置 ---------- */
+function settings(){
+  const svc=[['对话模型','Ollama · 7B–8B 指令模型 · 4.9 GB'],['语音识别','whisper.cpp · small.en · 466 MB'],['朗读声音','macOS 系统声音 · Samantha（增强版）'],['跟读评分','词级对齐 + 置信度（本地）']];
+  return `<div class="narrow">`+head('设置','所有练习能力都在本机运行，断网也能用。')+
+  `<div class="set-group"><div class="row between"><h3>本地模型与服务</h3><button class="link">一键检测</button></div>
+      ${svc.map(s=>`<div class="field"><div><div>${s[0]}</div><div class="d">${s[1]}</div></div><div class="row"><span class="st ok">已就绪</span><button class="link">更换</button></div></div>`).join('')}
+      <p class="faint" style="margin-top:8px">跟读评分为练习参考，非专业发音测评。</p></div>
+    <div class="set-group"><h3>Notion 同步</h3>
+      <div class="field"><div><div>Integration Token</div><div class="d">在 Notion 设置 → 集成 中创建</div></div><input class="in" type="password" value="secret_xxxxxxxx" style="width:200px"></div>
+      <div class="field"><div><div>笔记数据库</div><div class="d">口语笔记 · 128 条</div></div><button class="link">重新选择</button></div>
+      <div class="field"><div><div>练习记录数据库</div><div class="d">每日练习记录 · 16 条</div></div><button class="link">重新选择</button></div>
+      <div class="field"><div><div>练完自动同步</div><div class="d">断网时排队，联网后补同步</div></div><span class="sw"></span></div></div>
+    <div class="set-group"><h3>学习</h3>
+      <div class="field"><div>每日时长</div><select class="in"><option>20 分钟</option><option selected>30 分钟</option><option>45 分钟</option></select></div>
+      <div class="field"><div>练习日</div><span class="muted">周一至周六 · 周日轻复习</span></div>
+      <div class="field"><div>每日提醒</div><input class="in" type="time" value="21:00"></div>
+      <div class="field"><div><div>内置内容审核</div><div class="d">AI 生成的内容包需你审核后启用</div></div><span class="st go">第 4 周待审核</span></div></div>
+    <div class="set-group"><h3>声音与麦克风</h3>
+      <div class="field"><div>口音</div><div class="seg"><button class="on" onclick="seg(this)">美音</button><button onclick="seg(this)">英音</button></div></div>
+      <div class="field"><div>声音</div><div class="seg"><button class="on" onclick="seg(this)">女声</button><button onclick="seg(this)">男声</button></div></div>
+      <div class="field"><div>默认语速</div><div class="seg"><button onclick="seg(this)">0.75x</button><button class="on" onclick="seg(this)">1.0x</button></div></div>
+      <div class="field"><div>麦克风</div><div class="row"><select class="in"><option>MacBook Pro 麦克风</option></select><button class="link">测试</button></div></div></div>
+    <div class="set-group"><h3>数据</h3>
+      <div class="field"><div>导出 / 导入</div><div class="row"><button class="link">导出 JSON</button><button class="link">导入</button></div></div>
+      <div class="field"><div><div>卸载</div><div class="d">运行卸载脚本清除本地全部内容，Notion 数据保留</div></div><button class="link" style="color:var(--bad)">查看卸载说明</button></div></div>
+  </div>`;
+}
+
+function render(){
+  const m={today,roleplay,cards,shadow,mono,plan,notes,progress,settings};
+  document.getElementById('main').innerHTML=m[state.page]();
+}
+renderNav();render();
+</script>
+</body>
+</html>

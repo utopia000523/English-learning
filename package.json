@@ -1,0 +1,26 @@
+{
+  "name": "speak90",
+  "version": "0.1.0",
+  "private": true,
+  "description": "开口 90 天：本地英语口语练习工具",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "concurrently -n api,web -c blue,green \"PORT=5180 node --watch server/index.js\" \"vite\"",
+    "build": "vite build",
+    "start": "node server/index.js",
+    "test": "node --test \"tests/**/*.test.js\""
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "sql.js": "^1.12.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0",
+    "vite": "^6.0.7"
+  }
+}
