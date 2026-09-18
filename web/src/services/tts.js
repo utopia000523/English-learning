@@ -29,8 +29,12 @@ export function speak(text, { voice = '', rate = 1 } = {}) {
     u.voice = v || null;
     u.lang = u.voice?.lang || 'en-US';
     u.rate = rate;
-    u.onend = () => resolve({ ok: true });
-    u.onerror = (e) => resolve({ ok: e.error === 'interrupted' || e.error === 'canceled', online });
+    // 兜底：个别情况下浏览器不触发 onend，按文本长度超时结束，避免流程卡住
+    let settled = false;
+    const finish = (r) => { if (!settled) { settled = true; clearTimeout(guard); resolve(r); } };
+    const guard = setTimeout(() => finish({ ok: true, timeout: true }), 4000 + text.length * 120 / rate);
+    u.onend = () => finish({ ok: true });
+    u.onerror = (e) => finish({ ok: e.error === 'interrupted' || e.error === 'canceled', online });
     window.speechSynthesis.speak(u);
   });
 }

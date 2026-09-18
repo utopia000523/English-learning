@@ -1,5 +1,5 @@
 // 跟读（PRD 3.4）：逐句跟读 / 影子跟读。界面参考 docs/prototype.html「跟读」
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { api } from '../services/api.js';
 import { speak } from '../services/tts.js';
@@ -26,6 +26,8 @@ export default function Shadow() {
   const [results, setResults] = useState({}); // key: 句子序号 或 'all'
   const [myUrl, setMyUrl] = useState({});
   const [busy, setBusy] = useState('');
+  const [turn, setTurn] = useState(null); // 影子跟读进行中：{ phase: 'listen' | 'speak', left }
+  const skipRef = useRef(null);
   const [err, setErr] = useState('');
   const mic = useMic({ maxSeconds: 90 });
   const [params] = useSearchParams();
@@ -61,14 +63,26 @@ export default function Shadow() {
     if (rec && rec.seconds > 0.5) score(idx, cur.en, rec);
   };
 
-  // 影子：开始录音，同时连续播放全部句子，播完自动结束评分
+  // 影子跟读：逐句播放，每句播完留出跟说的时间（按句子长度估算，可点「说完了」提前进入下一句），全程录音，结束后整段评分
+  const wait = (ms) => new Promise((resolve) => {
+    let left = Math.ceil(ms / 1000);
+    setTurn({ phase: 'speak', left });
+    const tick = setInterval(() => { left -= 1; setTurn({ phase: 'speak', left: Math.max(0, left) }); }, 1000);
+    const done = () => { clearInterval(tick); clearTimeout(t); skipRef.current = null; resolve(); };
+    const t = setTimeout(done, ms);
+    skipRef.current = done;
+  });
   const runShadow = async () => {
     setErr(''); setResults({});
     try { await mic.start(); } catch { setErr('无法使用麦克风：请在地址栏左侧允许麦克风权限。'); return; }
     setBusy('playing');
-    for (let i = 0; i < sents.length; i++) { setIdx(i); await play(sents[i].en); }
-    await new Promise((r) => setTimeout(r, 1500));
-    setBusy('');
+    for (let i = 0; i < sents.length; i++) {
+      setIdx(i); setTurn({ phase: 'listen' });
+      await play(sents[i].en);
+      const words = sents[i].en.split(/\s+/).length;
+      await wait(Math.round((words * 450) / rate + 1500)); // 约为原句时长 + 1.5 秒
+    }
+    setTurn(null); setBusy('');
     const rec = await mic.stop();
     if (rec) score('all', sents.map((s) => s.en).join(' '), rec);
   };
@@ -96,7 +110,7 @@ export default function Shadow() {
         <div className="two">
           <div>
             <div className="row between">
-              <span className="faint">{mode === 'line' ? `第 ${idx + 1} / ${sents.length} 句` : '影子跟读：原文隐藏，跟着音频同步说（请戴耳机）'}</span>
+              <span className="faint">{mode === 'line' ? `第 ${idx + 1} / ${sents.length} 句` : '影子跟读：每句先听，再跟着说一遍，全部说完后整段评分（建议戴耳机）'}</span>
               <div className="row" style={{ gap: 6 }}>
                 <div className="seg">{[0.75, 1, 1.2].map((x) => <button key={x} className={rate === x ? 'on' : ''} onClick={() => setRate(x)}>{x === 1 ? '1.0' : x}x</button>)}</div>
                 <button className="link" onClick={() => setHide((h) => !h)}>{hide ? '显示原文' : '隐藏原文'}</button>
@@ -116,9 +130,13 @@ export default function Shadow() {
                 </span>
               </div>
             </> : <>
-              <div className="sent">{hide && !r ? <span className="faint">（原文已隐藏）第 {idx + 1} / {sents.length} 句</span> : r ? <span>{r.align.map((w, i) => <span key={i} className={CLS[w.status]}>{w.word} </span>)}</span> : sents.map((s) => s.en).join(' ')}</div>
+              <div className="sent">{hide && !r ? <span className="faint">（原文已隐藏）第 {idx + 1} / {sents.length} 句</span> : busy === 'playing' ? sents[idx].en : r ? <span>{r.align.map((w, i) => <span key={i} className={CLS[w.status]}>{w.word} </span>)}</span> : sents.map((s) => s.en).join(' ')}</div>
               <div className="row" style={{ marginTop: 24 }}>
-                <button className="btn accent" onClick={runShadow} disabled={mic.recording || !!busy}>{Icon.mic}{busy === 'playing' ? `跟着说…（${Math.floor(mic.seconds)} 秒）` : busy === 'score' ? '评分中…' : r ? '再来一遍' : '开始影子跟读'}</button>
+                {busy === 'playing' ? (
+                  turn?.phase === 'speak'
+                    ? <button className="btn accent" onClick={() => skipRef.current?.()}>{Icon.mic}轮到你说（{turn.left} 秒）· 说完了</button>
+                    : <button className="btn line" disabled>{Icon.speaker}先听第 {idx + 1} / {sents.length} 句…</button>
+                ) : <button className="btn accent" onClick={runShadow} disabled={mic.recording || !!busy}>{Icon.mic}{busy === 'score' ? '评分中…' : r ? '再来一遍' : '开始影子跟读'}</button>}
                 {myUrl.all && <button className="btn line" onClick={() => new Audio(myUrl.all).play()}>回放我的</button>}
               </div>
             </>}
@@ -141,6 +159,7 @@ export default function Shadow() {
                   <span className="num">{i + 1}</span>
                   <div className="t">{hide && mode === 'shadow' ? '· · ·' : s.en}</div>
                   {mode === 'line' && (i === idx ? <span className="st go">当前</span> : results[i] ? <span className="faint">{results[i].completeness}</span> : null)}
+                  {mode === 'shadow' && busy === 'playing' && i === idx && <span className="st go">{turn?.phase === 'speak' ? '跟说' : '听'}</span>}
                 </div>
               ))}
             </div>
