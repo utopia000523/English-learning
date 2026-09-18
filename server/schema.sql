@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS roleplay (
 CREATE TABLE IF NOT EXISTS note (
   id INTEGER PRIMARY KEY AUTOINCREMENT, en TEXT NOT NULL, zh TEXT, source TEXT, scene TEXT,
   created_at TEXT DEFAULT (datetime('now','localtime')), starred INTEGER DEFAULT 0,
-  synced INTEGER DEFAULT 0, notion_page_id TEXT
+  synced INTEGER DEFAULT 0, notion_page_id TEXT, context TEXT, detail TEXT
 );
 CREATE TABLE IF NOT EXISTS assessment (
   id INTEGER PRIMARY KEY AUTOINCREMENT, day_no INTEGER, wpm REAL, long_pauses INTEGER,

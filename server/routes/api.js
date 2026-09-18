@@ -6,6 +6,7 @@ import * as notion from '../services/notion.js';
 import { todayQueue, reviewCard, addCard } from '../cards.js';
 import * as roleplay from '../roleplay.js';
 import * as practice from '../practice.js';
+import * as notes from '../notes.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import { config } from '../config.js';
@@ -105,3 +106,16 @@ api.post('/mono', wrap(async (req, res) => {
   const r = await practice.scoreMono(req.body?.topicId, Number(req.body?.recordingId));
   return r ? res.json(r) : res.status(404).json({ error: '话题或录音不存在' });
 }));
+
+// ---- 划词查询、笔记本（PRD 3.7）----
+api.post('/lookup', wrap(async (req, res) => {
+  const text = req.body?.text?.trim();
+  if (!text || text.length > 80) return res.status(400).json({ error: '请选择一个词或短语' });
+  res.json(await notes.lookup(text, (req.body?.context || '').slice(0, 300)));
+}));
+api.get('/notes', (req, res) => res.json(notes.listNotes({ q: req.query.q || '', source: req.query.source || '' })));
+api.post('/notes', (req, res) => {
+  if (!req.body?.en?.trim()) return res.status(400).json({ error: '英文不能为空' });
+  res.json(notes.addNote(req.body));
+});
+api.delete('/notes/:id', (req, res) => (notes.deleteNote(Number(req.params.id)) ? res.json({ ok: true }) : res.status(404).json({ error: '笔记不存在' })));

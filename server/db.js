@@ -27,6 +27,7 @@ const COLUMNS = {
   card: ['content_id TEXT', 'introduced_at TEXT', 'reviewed_at TEXT', 'last_rating INTEGER'],
   content_scene: ['data TEXT'],
   roleplay: ['ended_at TEXT', 'feedback TEXT'],
+  note: ['context TEXT', 'detail TEXT'],
 };
 function migrate() {
   for (const [table, cols] of Object.entries(COLUMNS)) {

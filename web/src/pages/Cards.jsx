@@ -1,6 +1,6 @@
 // 表达卡复习（PRD 3.3）。界面参考 docs/prototype.html「表达卡」
 // 快捷键：空格 翻面；翻面后 1 没想起 / 2 想起但卡 / 3 脱口而出
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../services/api.js';
 import { speak } from '../services/tts.js';
@@ -27,6 +27,14 @@ export default function Cards() {
   useEffect(() => { load(); api.get('/settings').then((s) => setVoice({ voice: s.ttsVoice, rate: s.ttsRate })).catch(() => {}); }, []);
 
   const card = queue[0];
+  // 单击翻面；双击或拖动选词（划词查询）时不翻面
+  const clickTimer = useRef(null);
+  const onCardClick = (e) => {
+    if (e.detail > 1) { clearTimeout(clickTimer.current); return; }
+    clickTimer.current = setTimeout(() => {
+      if (!window.getSelection()?.toString().trim()) setFlipped((f) => !f);
+    }, 250);
+  };
 
   const rate = useCallback(async (rating) => {
     if (!card || !flipped || busy) return;
@@ -84,7 +92,7 @@ export default function Cards() {
       {head}
       <div className="bar a" style={{ maxWidth: 600, margin: '0 auto 26px' }}><i style={{ width: pct + '%' }} /></div>
       <div className="fc-wrap">
-        <div className={`fc ${flipped ? 'flipped' : ''}`} onClick={() => setFlipped((f) => !f)}>
+        <div className={`fc ${flipped ? 'flipped' : ''}`} onClick={onCardClick}>
           <div className="face">
             <span className="faint">第 {card.week} 周 · {card.scene || card.source}{card.isNew ? ' · 新卡' : ''}{card.again ? ' · 再来一次' : ''}</span>
             <div className="big">{card.zh || card.en}</div>

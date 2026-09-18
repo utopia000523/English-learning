@@ -7,6 +7,8 @@ import Cards from './pages/Cards.jsx';
 import { RoleplayList, RoleplayChat } from './pages/Roleplay.jsx';
 import Shadow from './pages/Shadow.jsx';
 import Mono from './pages/Mono.jsx';
+import Notes from './pages/Notes.jsx';
+import SelectionLookup from './components/SelectionLookup.jsx';
 
 // 导航结构与 docs/prototype.html 保持一致
 const NAV = [
@@ -18,7 +20,7 @@ const NAV = [
   { to: '/mono', label: '独白', icon: Icon.mic },
   { sep: '记录' },
   { to: '/plan', label: '学习计划', icon: Icon.cal, stage: 5 },
-  { to: '/notes', label: '笔记本', icon: Icon.note, stage: 5 },
+  { to: '/notes', label: '笔记本', icon: Icon.note },
   { to: '/progress', label: '进度', icon: Icon.chart, stage: 5 },
   { sep: '' },
   { to: '/settings', label: '设置', icon: Icon.gear },
@@ -42,6 +44,7 @@ export default function App() {
           <Route path="/today" element={<Today />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/cards" element={<Cards />} />
+          <Route path="/notes" element={<Notes />} />
           <Route path="/shadow" element={<Shadow />} />
           <Route path="/mono" element={<Mono />} />
           <Route path="/roleplay" element={<RoleplayList />} />
@@ -51,6 +54,7 @@ export default function App() {
           ))}
         </Routes>
       </main>
+      <SelectionLookup />
     </div>
   );
 }

@@ -196,3 +196,8 @@ a.btn{text-decoration:none}
 .me .fb{margin-top:6px;background:var(--panel);border:1px solid var(--line);border-left:2px solid var(--accent);border-radius:8px;padding:8px 12px;font-size:13.5px}
 .me .fb .n{font-family:var(--serif);font-size:16px;margin:2px 0}
 .me .fb-ok{text-align:right;font-size:12px;color:var(--ok);margin-top:4px}
+
+/* 划词查询浮窗 */
+.lookup{position:fixed;z-index:40;width:300px;display:flex;justify-content:center}
+.lookup-pill{background:var(--ink);color:#fff;border-radius:16px;padding:4px 12px;font-size:12.5px;box-shadow:0 4px 14px rgba(0,0,0,.15)}
+.lookup-card{width:300px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;box-shadow:0 8px 28px rgba(0,0,0,.12);font-size:14px;text-align:left}

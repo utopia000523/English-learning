@@ -55,6 +55,9 @@ export async function chatJSON(messages, opts = {}, fallback = (text) => ({ text
 }
 
 function fakeReply(kind) {
+  if (kind === 'lookup') {
+    return JSON.stringify({ zh: '忙乱的', pos: 'adj.', usage_zh: '形容事情多、节奏快、忙得团团转', example: 'It was a hectic day.', example_zh: '那天忙得不可开交。' });
+  }
   if (kind === 'mono') {
     return JSON.stringify({ rewrite: 'Last weekend I went to Dameisha with a couple of friends.', phrases: [{ en: 'a couple of friends', zh: '几个朋友' }], comment_zh: '说得很完整，注意用过去时。' });
   }
