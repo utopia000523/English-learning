@@ -55,6 +55,9 @@ export async function chatJSON(messages, opts = {}, fallback = (text) => ({ text
 }
 
 function fakeReply(kind) {
+  if (kind === 'feedback') {
+    return JSON.stringify({ ok: false, better: 'How do you know so much about both?', issue_zh: 'familiar 是形容词，要说 be familiar with', zh: '你怎么对两者都这么了解？' });
+  }
   if (kind === 'review') {
     return JSON.stringify({ comment_zh: '任务都完成了，表达基本清楚。', fixes: [{ you: 'Can I have a oat latte?', better: 'Can I get an oat latte?', zh: '我要一杯燕麦拿铁。' }] });
   }

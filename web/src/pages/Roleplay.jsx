@@ -59,12 +59,13 @@ function Review({ rp, onClose, onAgain }) {
         <p className="sub">{rp.passed ? '已通关' : '未通关'} · 任务 {rp.tasksDone.length}/{n} · {rp.turns} 轮
           {!rp.passed && <span className="faint">（通关需完成全部任务，且对话 ≥ {rp.passTurns} 轮）</span>}</p>
         {r.comment_zh && <p style={{ marginTop: 10 }}>{r.comment_zh}</p>}
+        {r.fixes.length === 0 && rp.turns > 0 && <p className="muted" style={{ marginTop: 16 }}>这次说的句子都很自然，没有需要改的。</p>}
         {r.fixes.length > 0 && <>
-          <div className="sec-t" style={{ marginTop: 22 }}>更地道的说法</div>
+          <div className="sec-t" style={{ marginTop: 22 }}>需要改进的句子（{r.fixes.length}）</div>
           <div style={{ borderTop: '1px solid var(--line)' }}>
             {r.fixes.map((f, i) => (
               <div className="fix" key={i}>
-                <div><div className="o">{f.you}</div><div className="n">{f.better}</div><div className="faint">{f.zh}</div></div>
+                <div><div className="o">{f.you}</div><div className="n">{f.better}</div>{f.issue_zh && <div className="muted" style={{ fontSize: 13 }}>{f.issue_zh}</div>}<div className="faint">{f.zh}</div></div>
                 <div className="row" style={{ gap: 2 }}>
                   <button className="link" onClick={() => speak(f.better)}>{Icon.speaker}</button>
                   <button className="link" disabled={added[i]} onClick={() => add(f, i)}>{added[i] ? '已加入' : '+ 加入表达卡'}</button>
@@ -98,6 +99,22 @@ export function RoleplayChat() {
   const recRef = useRef(null);
   const [rec, setRec] = useState(0);        // 录音中：已录秒数；0 = 未录音
   const [recId, setRecId] = useState(null); // 最近一次识别的录音 id，随本轮发送
+  const [fbPending, setFbPending] = useState({}); // 正在点评的消息序号
+  const [added, setAdded] = useState({});
+
+  const addCard = async (i, fb) => {
+    await api.post('/cards', { en: fb.better, zh: fb.zh, source: 'AI 对话', scene: rp.scene.title });
+    setAdded((a) => ({ ...a, [i]: true }));
+  };
+  // 每句点评：AI 回复后再在后台检查（不拖慢回复），结果直接展开
+  const runFeedback = async (idx) => {
+    setFbPending((p) => ({ ...p, [idx]: true }));
+    try {
+      const fb = await api.post(`/roleplay/${id}/feedback`, { index: idx });
+      setRp((r) => ({ ...r, feedback: { ...r.feedback, [idx]: fb } }));
+    } catch { /* 点评失败不影响对话 */ }
+    setFbPending((p) => ({ ...p, [idx]: false }));
+  };
   const say = (t, r = rate) => t && speak(t, { voice: voice.voice, rate: r * (voice.rate || 1) });
 
   useEffect(() => {
@@ -151,6 +168,7 @@ export function RoleplayChat() {
       const r = await api.post(`/roleplay/${id}/turn`, { text: t, recordingId });
       setRp(r);
       say(r.messages[r.messages.length - 1].content);
+      runFeedback(r.messages.length - 2);
     } catch (e) {
       setErr(e.message); setText(t);
       setRp((r) => ({ ...r, messages: r.messages.slice(0, -1) }));
@@ -185,7 +203,22 @@ export function RoleplayChat() {
         </div>
         <div className="msgs">
           {rp.messages.map((m, i) => m.role === 'user' ? (
-            <div className="me" key={i}><div className="bub">{m.content}</div></div>
+            <div className="me" key={i}>
+              <div className="bub">{m.content}</div>
+              {fbPending[i] && <div className="fb-ok faint">检查表达中…</div>}
+              {rp.feedback?.[i]?.ok && <div className="fb-ok">✓ 表达自然</div>}
+              {rp.feedback?.[i] && !rp.feedback[i].ok && (
+                <div className="fb">
+                  <div className="faint">可以更地道</div>
+                  <div className="n">{rp.feedback[i].better}</div>
+                  {rp.feedback[i].issue_zh && <div className="muted">{rp.feedback[i].issue_zh}</div>}
+                  <div className="row" style={{ gap: 2, marginTop: 2, marginLeft: -6 }}>
+                    <button className="link" onClick={() => say(rp.feedback[i].better)}>{Icon.speaker}朗读</button>
+                    <button className="link" disabled={added[i]} onClick={() => addCard(i, rp.feedback[i])}>{added[i] ? '已加入表达卡' : '+ 加入表达卡'}</button>
+                  </div>
+                </div>
+              )}
+            </div>
           ) : (
             <div className="ai" key={i}>
               {m.content && <>

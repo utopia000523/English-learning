@@ -53,6 +53,19 @@ test('英文正常发言不出现「可以说」提示；打中文才出现', as
   assert.equal(a.messages.at(-1).coach, '');
 });
 
+test('单句点评：返回更地道说法；复盘汇总所有问题句', async () => {
+  const rp = await (await post('/roleplay', { sceneId: 'w01-s1' })).json();
+  const a = await (await post(`/roleplay/${rp.id}/turn`, { text: 'how do you familiar to both of them?' })).json();
+  const fb = await (await post(`/roleplay/${rp.id}/feedback`, { index: a.messages.length - 2 })).json();
+  assert.equal(fb.ok, false);
+  assert.ok(fb.better && fb.issue_zh);
+  assert.equal((await post(`/roleplay/${rp.id}/feedback`, { index: 0 })).status, 400);
+  await post(`/roleplay/${rp.id}/turn`, { text: 'second line' });
+  const fin = await (await post(`/roleplay/${rp.id}/finish`)).json();
+  assert.equal(fin.review.fixes.length, 2);
+  assert.ok(fin.review.comment_zh);
+});
+
 test('参数校验', async () => {
   assert.equal((await post('/roleplay', { sceneId: 'nope' })).status, 404);
   assert.equal((await post('/roleplay/1/turn', { text: ' ' })).status, 400);

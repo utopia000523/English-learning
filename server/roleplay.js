@@ -6,7 +6,7 @@ import * as llm from './services/llm.js';
 export const PASS_TURNS = 8; // 通关：任务全部完成 且 用户发言 ≥ 8 轮
 
 const sceneOf = (row) => row && { ...JSON.parse(row.data), week: row.week };
-const parse = (s, d) => { try { return JSON.parse(s); } catch { return d; } };
+const parse = (s, d) => { try { return JSON.parse(s) ?? d; } catch { return d; } };
 
 export function listScenes() {
   const { week } = planPosition();
@@ -28,6 +28,7 @@ function view(rp) {
   return {
     id: rp.id, scene, messages, tasksDone: done,
     turns: messages.filter((m) => m.role === 'user').length,
+    feedback: parse(rp.feedback, {}),
     passTurns: PASS_TURNS, review: parse(rp.review, null), passed: !!rp.passed, ended: !!rp.ended_at,
   };
 }
@@ -79,23 +80,54 @@ export async function turn(id, text, recordingId) {
   return load(id);
 }
 
+/** 单句点评：检查第 index 条（用户消息）是否自然，结果存入 roleplay.feedback[index] */
+export async function feedback(id, index) {
+  const rp = get('SELECT * FROM roleplay WHERE id = ?', [id]);
+  if (!rp) return null;
+  const v = view(rp);
+  const msg = v.messages[index];
+  if (!msg || msg.role !== 'user') return undefined;
+  if (v.feedback[index]) return v.feedback[index];
+  const prev = [...v.messages.slice(0, index)].reverse().find((m) => m.role === 'assistant');
+  const out = await llm.chatJSON([
+    { role: 'system', content: `You are an English coach for a Chinese adult learning everyday spoken English.
+Check ONE line the learner said in a role-play. Judge only whether it is grammatical and natural spoken English in this context.
+Ignore capitalization, punctuation, spacing and obvious typing slips. Do not rewrite lines that are already natural just to make them fancier.
+If the line is fine, respond {"ok": true}.
+Otherwise respond {"ok": false, "better": "the most natural way to say what the learner meant", "issue_zh": "用一句简体中文说明问题（语法、用词或中式英语），不超过40字", "zh": "better 的简体中文意思"}.
+If the learner wrote Chinese, "better" is natural English for it and "issue_zh" is "用英语可以这样说".
+Respond ONLY with JSON.` },
+    { role: 'user', content: `Scene: ${v.scene.title}
+${v.scene.role} said: ${prev?.content || ''}
+Learner said: ${msg.content}` },
+  ], { model: getSettings().llmModel, temperature: 0.2, kind: 'feedback' }, () => ({ ok: true }));
+  const ok = out.ok === true || out.ok === 'true' || !out.better || out.better.trim().toLowerCase() === msg.content.trim().toLowerCase();
+  const fb = ok ? { ok: true } : { ok: false, better: out.better.trim(), issue_zh: out.issue_zh || '', zh: out.zh || '' };
+  // 读最新值再写，避免并发点评互相覆盖
+  const cur = parse(get('SELECT feedback FROM roleplay WHERE id = ?', [id]).feedback, {});
+  cur[index] = fb;
+  run('UPDATE roleplay SET feedback = ? WHERE id = ?', [JSON.stringify(cur), id]);
+  return fb;
+}
+
 export async function finish(id) {
   const rp = get('SELECT * FROM roleplay WHERE id = ?', [id]);
   if (!rp) return null;
   const v = view(rp);
   let review = { comment_zh: '', fixes: [] };
   if (v.turns > 0) {
+    // 补齐还没点评的句子，然后汇总所有需要改进的句子
+    const idx = v.messages.map((m, i) => (m.role === 'user' ? i : -1)).filter((i) => i >= 0);
+    for (const i of idx) if (!v.feedback[i]) await feedback(id, i);
+    const fbs = parse(get('SELECT feedback FROM roleplay WHERE id = ?', [id]).feedback, {});
+    review.fixes = idx.filter((i) => fbs[i] && !fbs[i].ok)
+      .map((i) => ({ you: v.messages[i].content, better: fbs[i].better, issue_zh: fbs[i].issue_zh, zh: fbs[i].zh }));
     const transcript = v.messages.map((m) => `${m.role === 'user' ? 'Learner' : v.scene.role}: ${m.content}`).join('\n');
-    review = await llm.chatJSON([
-      { role: 'system', content: `You are a friendly English speaking coach for a Chinese adult learner.
-Look at the learner's lines in this role-play (scene: ${v.scene.title}).
-Pick 3 to 5 learner sentences that are wrong, unnatural, or were said in Chinese. For each, give a short natural American English version and its Simplified Chinese meaning.
-If there are fewer problems, include lines that could sound more natural. Keep "you" exactly as the learner said it.
-Also write one encouraging sentence of overall feedback in Simplified Chinese.
-Respond ONLY with JSON: {"comment_zh": "...", "fixes": [{"you": "...", "better": "...", "zh": "..."}]}` },
+    const c = await llm.chatJSON([
+      { role: 'system', content: `You are a friendly English speaking coach for a Chinese adult learner. Read this role-play (scene: ${v.scene.title}) and write ONE encouraging sentence of overall feedback in Simplified Chinese (what went well + one thing to work on). Respond ONLY with JSON: {"comment_zh": "..."}` },
       { role: 'user', content: transcript },
-    ], { model: getSettings().llmModel, temperature: 0.3, kind: 'review' }, () => ({ comment_zh: '', fixes: [] }));
-    review.fixes = (review.fixes || []).filter((f) => f && f.better).slice(0, 5);
+    ], { model: getSettings().llmModel, temperature: 0.3, kind: 'review' }, () => ({ comment_zh: '' }));
+    review.comment_zh = c.comment_zh || '';
   }
   const passed = v.tasksDone.length === v.scene.tasks.length && v.turns >= PASS_TURNS ? 1 : 0;
   run("UPDATE roleplay SET review = ?, passed = ?, ended_at = datetime('now','localtime') WHERE id = ?", [JSON.stringify(review), passed, id]);

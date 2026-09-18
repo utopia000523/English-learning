@@ -26,7 +26,7 @@ export async function initDb(file = path.join(config.dataDir, 'speak90.db')) {
 const COLUMNS = {
   card: ['content_id TEXT', 'introduced_at TEXT', 'reviewed_at TEXT', 'last_rating INTEGER'],
   content_scene: ['data TEXT'],
-  roleplay: ['ended_at TEXT'],
+  roleplay: ['ended_at TEXT', 'feedback TEXT'],
 };
 function migrate() {
   for (const [table, cols] of Object.entries(COLUMNS)) {

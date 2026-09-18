@@ -67,6 +67,12 @@ api.post('/roleplay/:id/turn', wrap(async (req, res) => {
   const r = await roleplay.turn(Number(req.params.id), text, req.body?.recordingId);
   return r ? res.json(r) : res.status(404).json({ error: '对话不存在' });
 }));
+api.post('/roleplay/:id/feedback', wrap(async (req, res) => {
+  const fb = await roleplay.feedback(Number(req.params.id), Number(req.body?.index));
+  if (fb === null) return res.status(404).json({ error: '对话不存在' });
+  if (fb === undefined) return res.status(400).json({ error: '只能点评你说的话' });
+  res.json(fb);
+}));
 api.post('/roleplay/:id/finish', wrap(async (req, res) => {
   const r = await roleplay.finish(Number(req.params.id));
   return r ? res.json(r) : res.status(404).json({ error: '对话不存在' });
