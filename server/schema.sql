@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS card (
   id INTEGER PRIMARY KEY AUTOINCREMENT, en TEXT NOT NULL, zh TEXT, example TEXT,
   source TEXT, scene TEXT, week INTEGER, ease REAL DEFAULT 2.5, interval_days REAL DEFAULT 0,
   due_date TEXT, streak INTEGER DEFAULT 0, mastered INTEGER DEFAULT 0, notion_page_id TEXT,
+  content_id TEXT, introduced_at TEXT, reviewed_at TEXT, last_rating INTEGER,
   created_at TEXT DEFAULT (datetime('now','localtime'))
 );
 CREATE TABLE IF NOT EXISTS recording (

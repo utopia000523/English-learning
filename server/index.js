@@ -4,9 +4,11 @@ import express from 'express';
 import { config } from './config.js';
 import { initDb, saveNow } from './db.js';
 import { api } from './routes/api.js';
+import { importContent } from './content.js';
 
 export async function createApp({ dbFile } = {}) {
   await initDb(dbFile);
+  importContent();
   const app = express();
   app.use(express.json({ limit: '2mb' }));
   app.use('/api', api);

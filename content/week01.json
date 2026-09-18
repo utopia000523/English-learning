@@ -1,0 +1,217 @@
+{
+ "week": 1,
+ "theme": "自我介绍与近况",
+ "reviewed": false,
+ "items": [
+  {
+   "id": "w01-c01",
+   "type": "card",
+   "zh": "你好，我是 Utopia，很高兴认识你。",
+   "en": "Hi, I'm Utopia. Nice to meet you.",
+   "example": "Hi, I'm Alex. Great to meet you."
+  },
+  {
+   "id": "w01-c02",
+   "type": "card",
+   "zh": "我也很高兴认识你。",
+   "en": "Nice to meet you too.",
+   "example": "Likewise."
+  },
+  {
+   "id": "w01-c03",
+   "type": "card",
+   "zh": "我在深圳工作。",
+   "en": "I work in Shenzhen.",
+   "example": "I'm based in Shenzhen."
+  },
+  {
+   "id": "w01-c04",
+   "type": "card",
+   "zh": "我在一家科技公司做产品。",
+   "en": "I work in product at a tech company.",
+   "example": "I'm a product manager at a tech company."
+  },
+  {
+   "id": "w01-c05",
+   "type": "card",
+   "zh": "我做这行好几年了。",
+   "en": "I've been doing this for a few years.",
+   "example": "I've been in this field for a while now."
+  },
+  {
+   "id": "w01-c06",
+   "type": "card",
+   "zh": "你是做什么工作的？",
+   "en": "What do you do?",
+   "example": "What do you do for work?"
+  },
+  {
+   "id": "w01-c07",
+   "type": "card",
+   "zh": "你是哪里人？",
+   "en": "Where are you from?",
+   "example": "Where are you originally from?"
+  },
+  {
+   "id": "w01-c08",
+   "type": "card",
+   "zh": "我不是本地人，不过在深圳住了好几年了。",
+   "en": "I'm not from here originally, but I've lived in Shenzhen for years.",
+   "example": "I moved here a few years ago."
+  },
+  {
+   "id": "w01-c09",
+   "type": "card",
+   "zh": "你来这边多久了？",
+   "en": "How long have you been here?",
+   "example": "How long have you lived here?"
+  },
+  {
+   "id": "w01-c10",
+   "type": "card",
+   "zh": "最近怎么样？",
+   "en": "How's it going?",
+   "example": "How have you been?"
+  },
+  {
+   "id": "w01-c11",
+   "type": "card",
+   "zh": "挺好的，就是有点忙。",
+   "en": "Pretty good, just a bit busy.",
+   "example": "Not bad, just busy with work."
+  },
+  {
+   "id": "w01-c12",
+   "type": "card",
+   "zh": "老样子。",
+   "en": "Same old, same old.",
+   "example": "Nothing much, same as usual."
+  },
+  {
+   "id": "w01-c13",
+   "type": "card",
+   "zh": "最近在忙什么？",
+   "en": "What have you been up to lately?",
+   "example": "What are you up to these days?"
+  },
+  {
+   "id": "w01-c14",
+   "type": "card",
+   "zh": "最近工作挺忙的。",
+   "en": "Work's been pretty hectic lately.",
+   "example": "It's been a busy few weeks."
+  },
+  {
+   "id": "w01-c15",
+   "type": "card",
+   "zh": "我最近在练英语口语。",
+   "en": "I've been working on my spoken English.",
+   "example": "I'm trying to improve my English."
+  },
+  {
+   "id": "w01-c16",
+   "type": "card",
+   "zh": "你平时喜欢做什么？",
+   "en": "What do you like to do in your free time?",
+   "example": "What do you do for fun?"
+  },
+  {
+   "id": "w01-c17",
+   "type": "card",
+   "zh": "我周末喜欢出去走走。",
+   "en": "I like to get out and explore on weekends.",
+   "example": "On weekends I usually go for a walk."
+  },
+  {
+   "id": "w01-c18",
+   "type": "card",
+   "zh": "我对 AI 挺感兴趣的。",
+   "en": "I'm really into AI.",
+   "example": "I'm pretty interested in tech."
+  },
+  {
+   "id": "w01-c19",
+   "type": "card",
+   "zh": "我们是不是在哪见过？",
+   "en": "Have we met before?",
+   "example": "You look familiar."
+  },
+  {
+   "id": "w01-c20",
+   "type": "card",
+   "zh": "抱歉，你刚才说你叫什么？",
+   "en": "Sorry, what was your name again?",
+   "example": "Sorry, I didn't catch your name."
+  },
+  {
+   "id": "w01-c21",
+   "type": "card",
+   "zh": "你的名字怎么拼？",
+   "en": "How do you spell your name?",
+   "example": "Could you spell that for me?"
+  },
+  {
+   "id": "w01-c22",
+   "type": "card",
+   "zh": "这是我同事 Mia。",
+   "en": "This is my colleague, Mia.",
+   "example": "Let me introduce you to my coworker, Leo."
+  },
+  {
+   "id": "w01-c23",
+   "type": "card",
+   "zh": "保持联系吧。",
+   "en": "Let's keep in touch.",
+   "example": "Can I get your number?"
+  },
+  {
+   "id": "w01-c24",
+   "type": "card",
+   "zh": "那你呢？",
+   "en": "How about you?",
+   "example": "What about you?"
+  },
+  {
+   "id": "w01-c25",
+   "type": "card",
+   "zh": "听起来很有意思！",
+   "en": "That sounds interesting!",
+   "example": "Oh, that's cool!"
+  },
+  {
+   "id": "w01-c26",
+   "type": "card",
+   "zh": "真的吗？",
+   "en": "Really?",
+   "example": "No way!"
+  },
+  {
+   "id": "w01-c27",
+   "type": "card",
+   "zh": "我英语不太好，能说慢一点吗？",
+   "en": "My English isn't perfect, so could you speak a little slower?",
+   "example": "Could you say that again, please?"
+  },
+  {
+   "id": "w01-c28",
+   "type": "card",
+   "zh": "我明白你的意思。",
+   "en": "I see what you mean.",
+   "example": "Got it."
+  },
+  {
+   "id": "w01-c29",
+   "type": "card",
+   "zh": "跟你聊天很开心。",
+   "en": "It was great talking to you.",
+   "example": "I really enjoyed chatting with you."
+  },
+  {
+   "id": "w01-c30",
+   "type": "card",
+   "zh": "回头见！",
+   "en": "See you around!",
+   "example": "Catch you later!"
+  }
+ ]
+}

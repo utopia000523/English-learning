@@ -17,8 +17,20 @@ export async function initDb(file = path.join(config.dataDir, 'speak90.db')) {
   db = fs.existsSync(file) ? new SQL.Database(fs.readFileSync(file)) : new SQL.Database();
   const schema = fs.readFileSync(new URL('./schema.sql', import.meta.url), 'utf8');
   db.run(schema);
+  migrate();
   saveNow();
   return db;
+}
+
+// 已有数据库的增量字段（新库在 schema.sql 里也有）。只加不删
+const COLUMNS = {
+  card: ['content_id TEXT', 'introduced_at TEXT', 'reviewed_at TEXT', 'last_rating INTEGER'],
+};
+function migrate() {
+  for (const [table, cols] of Object.entries(COLUMNS)) {
+    const have = all(`PRAGMA table_info(${table})`).map((r) => r.name);
+    for (const def of cols) if (!have.includes(def.split(' ')[0])) db.run(`ALTER TABLE ${table} ADD COLUMN ${def}`);
+  }
 }
 
 export function all(sql, params = []) {

@@ -1,0 +1,217 @@
+{
+ "week": 3,
+ "theme": "吃饭点餐",
+ "reviewed": false,
+ "items": [
+  {
+   "id": "w03-c01",
+   "type": "card",
+   "zh": "能给我看一下菜单吗？",
+   "en": "Could I see the menu, please?",
+   "example": "Can we get some menus?"
+  },
+  {
+   "id": "w03-c02",
+   "type": "card",
+   "zh": "两位，谢谢。",
+   "en": "A table for two, please.",
+   "example": "Just the two of us."
+  },
+  {
+   "id": "w03-c03",
+   "type": "card",
+   "zh": "你们有什么推荐的？",
+   "en": "What do you recommend?",
+   "example": "What's good here?"
+  },
+  {
+   "id": "w03-c04",
+   "type": "card",
+   "zh": "我要这个。",
+   "en": "I'll have this one.",
+   "example": "I'll go with the salmon."
+  },
+  {
+   "id": "w03-c05",
+   "type": "card",
+   "zh": "我要一杯燕麦拿铁。",
+   "en": "Can I get an oat latte?",
+   "example": "I'd like a medium latte, please."
+  },
+  {
+   "id": "w03-c06",
+   "type": "card",
+   "zh": "冰的，少冰。",
+   "en": "Iced, with light ice, please.",
+   "example": "No ice, please."
+  },
+  {
+   "id": "w03-c07",
+   "type": "card",
+   "zh": "你们有无糖的吗？",
+   "en": "Do you have anything sugar-free?",
+   "example": "Is there a sugar-free option?"
+  },
+  {
+   "id": "w03-c08",
+   "type": "card",
+   "zh": "在这儿吃。",
+   "en": "For here, please.",
+   "example": "To go, please."
+  },
+  {
+   "id": "w03-c09",
+   "type": "card",
+   "zh": "能换成燕麦奶吗？",
+   "en": "Could I get that with oat milk instead?",
+   "example": "Can I swap the fries for a salad?"
+  },
+  {
+   "id": "w03-c10",
+   "type": "card",
+   "zh": "我不太能吃辣。",
+   "en": "I can't really handle spicy food.",
+   "example": "Could you make it not spicy?"
+  },
+  {
+   "id": "w03-c11",
+   "type": "card",
+   "zh": "这个里面有花生吗？",
+   "en": "Does this have peanuts in it?",
+   "example": "Is there any dairy in this?"
+  },
+  {
+   "id": "w03-c12",
+   "type": "card",
+   "zh": "这个份量大吗？",
+   "en": "How big is the portion?",
+   "example": "Is it enough for two?"
+  },
+  {
+   "id": "w03-c13",
+   "type": "card",
+   "zh": "我们还没想好，再等一下。",
+   "en": "We need a few more minutes.",
+   "example": "Could you give us a minute?"
+  },
+  {
+   "id": "w03-c14",
+   "type": "card",
+   "zh": "就这些，谢谢。",
+   "en": "That's all, thanks.",
+   "example": "That'll be it for now."
+  },
+  {
+   "id": "w03-c15",
+   "type": "card",
+   "zh": "我点的菜还没上。",
+   "en": "I'm still waiting on my order.",
+   "example": "My food hasn't come yet."
+  },
+  {
+   "id": "w03-c16",
+   "type": "card",
+   "zh": "这好像不是我点的。",
+   "en": "I don't think this is what I ordered.",
+   "example": "Sorry, I ordered the chicken, not the beef."
+  },
+  {
+   "id": "w03-c17",
+   "type": "card",
+   "zh": "能再给我一些水吗？",
+   "en": "Could I get some more water?",
+   "example": "Can I get a refill?"
+  },
+  {
+   "id": "w03-c18",
+   "type": "card",
+   "zh": "能帮我打包吗？",
+   "en": "Can I get a box for this?",
+   "example": "Could you wrap this up for me?"
+  },
+  {
+   "id": "w03-c19",
+   "type": "card",
+   "zh": "买单。",
+   "en": "Can we get the check, please?",
+   "example": "Check, please."
+  },
+  {
+   "id": "w03-c20",
+   "type": "card",
+   "zh": "可以刷卡吗？",
+   "en": "Do you take cards?",
+   "example": "Can I pay by card?"
+  },
+  {
+   "id": "w03-c21",
+   "type": "card",
+   "zh": "我们分开付。",
+   "en": "Can we split the bill?",
+   "example": "We'll pay separately."
+  },
+  {
+   "id": "w03-c22",
+   "type": "card",
+   "zh": "这顿我请。",
+   "en": "It's on me.",
+   "example": "Let me get this one."
+  },
+  {
+   "id": "w03-c23",
+   "type": "card",
+   "zh": "很好吃，谢谢。",
+   "en": "It's delicious, thanks.",
+   "example": "Everything was great."
+  },
+  {
+   "id": "w03-c24",
+   "type": "card",
+   "zh": "有点咸。",
+   "en": "It's a little too salty.",
+   "example": "It's a bit bland."
+  },
+  {
+   "id": "w03-c25",
+   "type": "card",
+   "zh": "要等多久？",
+   "en": "How long is the wait?",
+   "example": "How long will it take?"
+  },
+  {
+   "id": "w03-c26",
+   "type": "card",
+   "zh": "我预订了七点的位子。",
+   "en": "I have a reservation for seven.",
+   "example": "I booked a table under Utopia."
+  },
+  {
+   "id": "w03-c27",
+   "type": "card",
+   "zh": "能坐靠窗的位子吗？",
+   "en": "Could we sit by the window?",
+   "example": "Is there a table outside?"
+  },
+  {
+   "id": "w03-c28",
+   "type": "card",
+   "zh": "这个再来一份。",
+   "en": "I'll have another one of these.",
+   "example": "Same again, please."
+  },
+  {
+   "id": "w03-c29",
+   "type": "card",
+   "zh": "我吃饱了。",
+   "en": "I'm full.",
+   "example": "I couldn't eat another bite."
+  },
+  {
+   "id": "w03-c30",
+   "type": "card",
+   "zh": "谢谢，很好吃！",
+   "en": "Thanks, that was great!",
+   "example": "We really enjoyed it."
+  }
+ ]
+}

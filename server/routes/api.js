@@ -3,6 +3,7 @@ import { getSettings, updateSettings } from '../db.js';
 import * as llm from '../services/llm.js';
 import * as asr from '../services/asr.js';
 import * as notion from '../services/notion.js';
+import { todayQueue, reviewCard, addCard } from '../cards.js';
 
 export const api = express.Router();
 
@@ -29,4 +30,17 @@ api.post('/llm/chat', async (req, res, next) => {
     if (!Array.isArray(messages)) return res.status(400).json({ error: 'messages 必须是数组' });
     res.json(await llm.chat(messages, { model: getSettings().llmModel, json }));
   } catch (e) { next(e); }
+});
+
+// ---- 表达卡（PRD 3.3）----
+api.get('/cards/today', (_req, res) => res.json(todayQueue()));
+api.post('/cards/:id/review', (req, res) => {
+  const rating = Number(req.body?.rating);
+  if (![1, 2, 3].includes(rating)) return res.status(400).json({ error: 'rating 必须是 1/2/3' });
+  const card = reviewCard(Number(req.params.id), rating);
+  return card ? res.json(card) : res.status(404).json({ error: '卡片不存在' });
+});
+api.post('/cards', (req, res) => {
+  if (!req.body?.en?.trim()) return res.status(400).json({ error: '英文不能为空' });
+  res.json(addCard(req.body));
 });
