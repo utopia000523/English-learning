@@ -17,7 +17,15 @@ before(async () => {
 });
 after(() => server.close());
 
-test('首日：5 张第 1 周新卡', async () => {
+const put = (u, b) => fetch(base + u, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b) });
+
+test('默认每日新卡 30：首日给出第 1 周全部 30 张', async () => {
+  const q = await json(await fetch(base + '/cards/today'));
+  assert.equal(q.cards.length, 30);
+});
+
+test('按设置限制：新卡 5 张', async () => {
+  await put('/settings', { cardsNewPerDay: 5 });
   const q = await json(await fetch(base + '/cards/today'));
   assert.equal(q.dayNo, 1);
   assert.equal(q.week, 1);
@@ -33,6 +41,13 @@ test('自评后当天不再出现，新卡额度已用', async () => {
   assert.equal(q2.cards.length, 0);
   assert.equal(q2.reviewedToday, 5);
   assert.equal(q2.stats.learning, 5);
+});
+
+test('每日总张数上限：已练 5 张、总数 7 → 还剩 2 张', async () => {
+  await put('/settings', { cardsNewPerDay: 30, cardsDailyMax: 7 });
+  const q = await json(await fetch(base + '/cards/today'));
+  assert.equal(q.cards.length, 2);
+  await put('/settings', { cardsDailyMax: 0 });
 });
 
 test('参数校验', async () => {

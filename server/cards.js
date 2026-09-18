@@ -1,7 +1,7 @@
 // 表达卡数据访问
 import { all, get, run, getSettings, updateSettings } from './db.js';
 import { todayStr, diffDays } from './util/date.js';
-import { schedule, preview, NEW_PER_DAY } from './services/srs.js';
+import { schedule, preview } from './services/srs.js';
 
 /** 第几天、第几周。首次使用时以当天为第 1 天（入门测评在阶段 6 会重设） */
 export function planPosition(today = todayStr()) {
@@ -24,16 +24,23 @@ export function stats(week) {
   };
 }
 
-/** 今日队列：先到期复习卡，再补当天新卡 */
+/**
+ * 今日队列：先到期复习卡，再补当天新卡。
+ * 上限来自设置：cardsNewPerDay（每日新卡）、cardsDailyMax（每日总张数，0 = 不限）
+ */
 export function todayQueue(today = todayStr()) {
   const pos = planPosition(today);
-  const due = all('SELECT * FROM card WHERE introduced_at IS NOT NULL AND due_date <= ? ORDER BY due_date, id', [today]);
+  const { cardsNewPerDay, cardsDailyMax } = getSettings();
+  const reviewedToday = get('SELECT COUNT(*) n FROM card WHERE reviewed_at = ?', [today]).n;
+  const room = cardsDailyMax > 0 ? Math.max(0, cardsDailyMax - reviewedToday) : Infinity;
+  const due = all('SELECT * FROM card WHERE introduced_at IS NOT NULL AND due_date <= ? ORDER BY due_date, id', [today])
+    .slice(0, room === Infinity ? undefined : room);
   const introducedToday = get('SELECT COUNT(*) n FROM card WHERE introduced_at = ?', [today]).n;
-  const limit = Math.max(0, NEW_PER_DAY - introducedToday);
+  const limit = Math.max(0, Math.min(cardsNewPerDay - introducedToday, room - due.length));
   const fresh = all('SELECT * FROM card WHERE introduced_at IS NULL AND week <= ? ORDER BY week, id LIMIT ?', [pos.week, limit]);
   return {
     ...pos,
-    reviewedToday: get('SELECT COUNT(*) n FROM card WHERE reviewed_at = ?', [today]).n,
+    reviewedToday,
     cards: [...due.map((c) => toClient(c)), ...fresh.map((c) => toClient(c, true))],
     stats: stats(pos.week),
   };

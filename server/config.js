@@ -19,6 +19,8 @@ export const DEFAULT_SETTINGS = {
   ttsVoice: '',                      // 空 = 自动选择系统美音女声
   ttsRate: 1.0,
   dailyMinutes: 30,
+  cardsNewPerDay: 30,               // 表达卡：每日新卡上限
+  cardsDailyMax: 0,                  // 表达卡：每日总张数上限（复习+新卡），0 = 不限
   practiceDays: [1, 2, 3, 4, 5, 6],  // 周一至周六，周日轻复习
   reminderTime: '21:00',
   startDate: '',                     // 第 1 天的日期，首次测评完成时写入

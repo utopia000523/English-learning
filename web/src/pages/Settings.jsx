@@ -96,6 +96,22 @@ export default function Settings() {
           </select>
         </div>
         <div className="field">
+          <div><div>每日新卡</div><div className="d">表达卡每天最多学几张新卡</div></div>
+          <div className="row" style={{ gap: 6 }}>
+            <input className="in" type="number" min="0" max="200" defaultValue={s.cardsNewPerDay} style={{ width: 80 }}
+              onBlur={(e) => { const v = Math.max(0, Math.min(200, Number(e.target.value) || 0)); if (v !== s.cardsNewPerDay) save({ cardsNewPerDay: v }); }} />
+            <span className="faint">张</span>
+          </div>
+        </div>
+        <div className="field">
+          <div><div>每日总张数</div><div className="d">复习卡加新卡，每天最多几张；填 0 表示不限</div></div>
+          <div className="row" style={{ gap: 6 }}>
+            <input className="in" type="number" min="0" max="500" defaultValue={s.cardsDailyMax} style={{ width: 80 }}
+              onBlur={(e) => { const v = Math.max(0, Math.min(500, Number(e.target.value) || 0)); if (v !== s.cardsDailyMax) save({ cardsDailyMax: v }); }} />
+            <span className="faint">张</span>
+          </div>
+        </div>
+        <div className="field">
           <div>每日提醒</div>
           <input className="in" type="time" value={s.reminderTime} onChange={(e) => save({ reminderTime: e.target.value })} />
         </div>

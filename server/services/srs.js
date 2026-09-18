@@ -1,7 +1,6 @@
 // 表达卡间隔复习（PRD 3.3，简化版 SM-2）。纯函数，便于测试
 import { addDays } from '../util/date.js';
 
-export const NEW_PER_DAY = 5;          // 每天新卡上限（每周约 30 张 / 6 天）
 export const RATING = { AGAIN: 1, HARD: 2, EASY: 3 }; // 没想起 / 想起但卡 / 脱口而出
 
 /** 计算自评后的下一次间隔（天） */
