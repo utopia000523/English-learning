@@ -25,6 +25,8 @@ export async function initDb(file = path.join(config.dataDir, 'speak90.db')) {
 // 已有数据库的增量字段（新库在 schema.sql 里也有）。只加不删
 const COLUMNS = {
   card: ['content_id TEXT', 'introduced_at TEXT', 'reviewed_at TEXT', 'last_rating INTEGER'],
+  content_scene: ['data TEXT'],
+  roleplay: ['ended_at TEXT'],
 };
 function migrate() {
   for (const [table, cols] of Object.entries(COLUMNS)) {

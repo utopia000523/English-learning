@@ -4,12 +4,13 @@ import Today from './pages/Today.jsx';
 import Settings from './pages/Settings.jsx';
 import Placeholder from './pages/Placeholder.jsx';
 import Cards from './pages/Cards.jsx';
+import { RoleplayList, RoleplayChat } from './pages/Roleplay.jsx';
 
 // 导航结构与 docs/prototype.html 保持一致
 const NAV = [
   { to: '/today', label: '今日', icon: Icon.home },
   { sep: '练习' },
-  { to: '/roleplay', label: 'AI 对话', icon: Icon.chat, stage: 3 },
+  { to: '/roleplay', label: 'AI 对话', icon: Icon.chat },
   { to: '/cards', label: '表达卡', icon: Icon.card },
   { to: '/shadow', label: '跟读', icon: Icon.wave, stage: 4 },
   { to: '/mono', label: '独白', icon: Icon.mic, stage: 4 },
@@ -39,6 +40,8 @@ export default function App() {
           <Route path="/today" element={<Today />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/cards" element={<Cards />} />
+          <Route path="/roleplay" element={<RoleplayList />} />
+          <Route path="/roleplay/:id" element={<RoleplayChat />} />
           {NAV.filter((n) => n.stage).map((n) => (
             <Route key={n.to} path={n.to} element={<Placeholder title={n.label} stage={n.stage} />} />
           ))}

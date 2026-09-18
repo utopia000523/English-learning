@@ -10,6 +10,44 @@ bash scripts/start.sh
 
 首次运行会检查并提示安装：Node.js 20+、Ollama 及对话模型、whisper.cpp 及语音识别模型。然后自动打开 http://localhost:5173 。
 
+## 如何添加学习内容
+
+所有内置内容都在 **`content/`** 文件夹，一周一个文件。改完后**重新运行 `bash scripts/start.sh`** 即自动导入，已学过的卡片进度不受影响。
+
+**文件命名：**必须以 `week` + 周数开头、`.json` 结尾，例如：
+
+| 文件名 | 作用 |
+|---|---|
+| `week01.json` | 第 1 周的主内容 |
+| `week04.json` | 新增第 4 周（到第 4 周才会出新卡） |
+| `week03-work.json` | 给第 3 周追加一批卡片（比如工作主题），与 week03 一起出 |
+
+周数决定**什么时候开始出这批新卡**：第 N 周的卡在学习计划进入第 N 周后才会出现。想马上就学，就写成当前周或更早的周数。
+
+**表达卡格式**（复制已有文件改最方便）：
+
+```json
+{
+  "week": 3,
+  "theme": "工作寒暄",
+  "reviewed": false,
+  "items": [
+    { "id": "w03-work-c01", "type": "card", "zh": "我来介绍一下我们的产品。", "en": "Let me walk you through our product.", "example": "Let me give you a quick overview." }
+  ]
+}
+```
+
+- `id`：全局唯一，不能和其他文件重复；**已导入的卡不要改 id**，否则会当成新卡。
+- `zh` 正面中文，`en` 背面英文，`example` 显示在「也可以」一行（另一种说法），可留空。
+- `theme` 显示在卡片左上角。
+- 修改已有卡片的文字：直接改 JSON，只会同步到还没学过的卡。
+
+**AI 对话场景**写在同一个文件的 `scenes` 数组里，格式见 `content/week01.json`。
+
+**也可以让 AI 帮你写：**把上面的格式和主题（比如"展厅接待外宾，30 张"）发给 Claude 或 WorkBuddy，让它生成 JSON 文件放进 `content/`。
+
+**暂不支持：**不按周解锁的「自选卡组」（单独每日额度、可暂停），已记入 `开发进度.md` 待办。
+
 ## 给接手开发者（WorkBuddy 等）
 
 **开始前必读，按顺序：**

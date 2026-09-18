@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS recording (
 );
 CREATE TABLE IF NOT EXISTS roleplay (
   id INTEGER PRIMARY KEY AUTOINCREMENT, scene_id TEXT, messages TEXT, tasks_done TEXT,
-  passed INTEGER DEFAULT 0, review TEXT, created_at TEXT DEFAULT (datetime('now','localtime'))
+  passed INTEGER DEFAULT 0, review TEXT, created_at TEXT DEFAULT (datetime('now','localtime')), ended_at TEXT
 );
 CREATE TABLE IF NOT EXISTS note (
   id INTEGER PRIMARY KEY AUTOINCREMENT, en TEXT NOT NULL, zh TEXT, source TEXT, scene TEXT,
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS assessment (
 );
 CREATE TABLE IF NOT EXISTS content_scene (
   id TEXT PRIMARY KEY, week INTEGER, title TEXT, level TEXT, role TEXT, brief TEXT,
-  tasks TEXT, hints TEXT, approved INTEGER DEFAULT 0
+  tasks TEXT, hints TEXT, approved INTEGER DEFAULT 0, data TEXT
 );
 CREATE TABLE IF NOT EXISTS content_item (
   id TEXT PRIMARY KEY, week INTEGER, type TEXT, en TEXT, zh TEXT, extra TEXT, approved INTEGER DEFAULT 0

@@ -1,0 +1,53 @@
+// 用假模型（SPEAK90_FAKE_LLM）测试对话流程，不需要 Ollama
+process.env.SPEAK90_FAKE_LLM = '1';
+import { test, before, after } from 'node:test';
+import assert from 'node:assert/strict';
+import os from 'node:os';
+import path from 'node:path';
+import fs from 'node:fs';
+import { createApp } from '../server/index.js';
+
+let server; let base;
+const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'speak90-rp-'));
+const json = (r) => r.json();
+const post = (u, b) => fetch(base + u, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b || {}) });
+
+before(async () => {
+  const app = await createApp({ dbFile: path.join(tmp, 'r.db') });
+  await new Promise((r) => { server = app.listen(0, r); });
+  base = `http://127.0.0.1:${server.address().port}/api`;
+});
+after(() => server.close());
+
+test('场景列表：第 1 周可练，第 2 周起未解锁', async () => {
+  const list = await json(await fetch(base + '/roleplay/scenes'));
+  assert.equal(list.length, 6);
+  assert.ok(list.filter((s) => s.week === 1).every((s) => s.status === 'open'));
+  assert.ok(list.filter((s) => s.week > 1).every((s) => s.status === 'locked'));
+});
+
+test('对话流程：开场 → 8 轮 → 任务完成 → 复盘通关', async () => {
+  const rp = await json(await post('/roleplay', { sceneId: 'w01-s1' }));
+  assert.equal(rp.messages[0].role, 'assistant');
+  let r;
+  for (let i = 0; i < 8; i++) r = await json(await post(`/roleplay/${rp.id}/turn`, { text: `hello ${i}` }));
+  assert.equal(r.turns, 8);
+  assert.deepEqual(r.tasksDone, [1, 2, 3, 4]);
+  const fin = await json(await post(`/roleplay/${rp.id}/finish`));
+  assert.equal(fin.passed, true);
+  assert.ok(fin.review.fixes.length >= 1);
+  const list = await json(await fetch(base + '/roleplay/scenes'));
+  assert.equal(list.find((s) => s.id === 'w01-s1').status, 'passed');
+});
+
+test('轮数不足不通关', async () => {
+  const rp = await json(await post('/roleplay', { sceneId: 'w01-s2' }));
+  await post(`/roleplay/${rp.id}/turn`, { text: 'hi' });
+  const fin = await json(await post(`/roleplay/${rp.id}/finish`));
+  assert.equal(fin.passed, false);
+});
+
+test('参数校验', async () => {
+  assert.equal((await post('/roleplay', { sceneId: 'nope' })).status, 404);
+  assert.equal((await post('/roleplay/1/turn', { text: ' ' })).status, 400);
+});

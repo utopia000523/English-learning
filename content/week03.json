@@ -213,5 +213,93 @@
    "en": "Thanks, that was great!",
    "example": "We really enjoyed it."
   }
+ ],
+ "scenes": [
+  {
+   "id": "w03-s1",
+   "level": "basic",
+   "title": "咖啡店点单",
+   "role": "Sam",
+   "role_zh": "Sam · 咖啡师",
+   "persona": "Sam, a barista at a busy coffee shop",
+   "opening": "Hi there! What can I get for you today?",
+   "opening_zh": "你好！今天想喝点什么？",
+   "brief": "你在一家咖啡店，想点一杯少冰的燕麦拿铁，并问问有没有无糖选项。",
+   "tasks": [
+    {
+     "zh": "点一杯燕麦拿铁",
+     "check": "the learner orders an oat latte"
+    },
+    {
+     "zh": "要冰的",
+     "check": "the learner asks for it iced"
+    },
+    {
+     "zh": "少冰",
+     "check": "the learner asks for light ice / less ice"
+    },
+    {
+     "zh": "问有没有无糖选项",
+     "check": "the learner asks about sugar-free options"
+    }
+   ],
+   "hints": [
+    {
+     "zh": "我要一杯燕麦拿铁。",
+     "en": "Can I get an oat latte?"
+    },
+    {
+     "zh": "少冰，谢谢。",
+     "en": "Light ice, please."
+    },
+    {
+     "zh": "你们有无糖的吗？",
+     "en": "Do you have anything sugar-free?"
+    }
+   ]
+  },
+  {
+   "id": "w03-s2",
+   "level": "advanced",
+   "title": "餐厅点菜与结账",
+   "role": "Leo",
+   "role_zh": "Leo · 服务员",
+   "persona": "Leo, a server at a casual Western restaurant",
+   "opening": "Good evening! Welcome in. Do you have a reservation?",
+   "opening_zh": "晚上好！欢迎光临。您有预订吗？",
+   "brief": "你和朋友去一家西餐厅吃饭，从入座一直到结账。",
+   "tasks": [
+    {
+     "zh": "说明你有预订、几位",
+     "check": "the learner mentions the reservation and number of people"
+    },
+    {
+     "zh": "请服务员推荐菜",
+     "check": "the learner asks for a recommendation"
+    },
+    {
+     "zh": "点主菜，并说明不太能吃辣",
+     "check": "the learner orders a main dish and says they can't handle spicy food"
+    },
+    {
+     "zh": "结账并要求分开付",
+     "check": "the learner asks for the check and to split the bill"
+    }
+   ],
+   "hints": [
+    {
+     "zh": "我预订了七点的位子，两位。",
+     "en": "I have a reservation for seven, for two."
+    },
+    {
+     "zh": "你们有什么推荐的？",
+     "en": "What do you recommend?"
+    },
+    {
+     "zh": "我们分开付。",
+     "en": "Can we split the bill?"
+    }
+   ]
+  }
  ]
 }

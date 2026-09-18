@@ -213,5 +213,93 @@
    "en": "See you around!",
    "example": "Catch you later!"
   }
+ ],
+ "scenes": [
+  {
+   "id": "w01-s1",
+   "level": "basic",
+   "title": "认识新朋友",
+   "role": "Jamie",
+   "role_zh": "Jamie · 活动上认识的人",
+   "persona": "Jamie, a friendly product designer you just met at a tech meetup in Shenzhen",
+   "opening": "Hi! I don't think we've met yet. I'm Jamie.",
+   "opening_zh": "嗨！我们好像还没见过，我是 Jamie。",
+   "brief": "你在深圳的一个科技交流活动上，有人主动来跟你打招呼。",
+   "tasks": [
+    {
+     "zh": "介绍你自己的名字",
+     "check": "the learner tells their name"
+    },
+    {
+     "zh": "说说你是做什么工作的",
+     "check": "the learner says what their job is"
+    },
+    {
+     "zh": "问对方是做什么的",
+     "check": "the learner asks what Jamie does"
+    },
+    {
+     "zh": "礼貌地结束对话",
+     "check": "the learner politely ends the chat, e.g. nice to meet you / see you around"
+    }
+   ],
+   "hints": [
+    {
+     "zh": "我在一家科技公司做产品。",
+     "en": "I work in product at a tech company."
+    },
+    {
+     "zh": "你是做什么工作的？",
+     "en": "What do you do?"
+    },
+    {
+     "zh": "跟你聊天很开心。",
+     "en": "It was great talking to you."
+    }
+   ]
+  },
+  {
+   "id": "w01-s2",
+   "level": "advanced",
+   "title": "和新同事聊近况",
+   "role": "Mia",
+   "role_zh": "Mia · 新同事",
+   "persona": "Mia, a new coworker from the marketing team, chatting with you in the office kitchen",
+   "opening": "Hey, how's it going? I feel like I haven't seen you all week!",
+   "opening_zh": "嘿，最近怎么样？感觉一整周都没见到你！",
+   "brief": "你在公司茶水间碰到新同事 Mia，她想跟你聊聊近况。",
+   "tasks": [
+    {
+     "zh": "说说你最近在忙什么",
+     "check": "the learner explains what they have been busy with lately"
+    },
+    {
+     "zh": "聊一个你的爱好",
+     "check": "the learner talks about a hobby"
+    },
+    {
+     "zh": "问她最近怎么样",
+     "check": "the learner asks how Mia has been"
+    },
+    {
+     "zh": "约她下次一起吃午饭",
+     "check": "the learner suggests having lunch together some time"
+    }
+   ],
+   "hints": [
+    {
+     "zh": "最近工作挺忙的。",
+     "en": "Work's been pretty hectic lately."
+    },
+    {
+     "zh": "你最近怎么样？",
+     "en": "How have you been?"
+    },
+    {
+     "zh": "改天一起吃午饭吧？",
+     "en": "Want to grab lunch sometime?"
+    }
+   ]
+  }
  ]
 }

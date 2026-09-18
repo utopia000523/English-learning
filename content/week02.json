@@ -213,5 +213,93 @@
    "en": "See you Monday!",
    "example": "Have a good one!"
   }
+ ],
+ "scenes": [
+  {
+   "id": "w02-s1",
+   "level": "basic",
+   "title": "周末聊什么",
+   "role": "Mia",
+   "role_zh": "Mia · 同事",
+   "persona": "Mia, a friendly coworker, chatting with you on Monday morning",
+   "opening": "Morning! How was your weekend?",
+   "opening_zh": "早！周末过得怎么样？",
+   "brief": "周一早上，同事 Mia 问你周末过得怎么样。",
+   "tasks": [
+    {
+     "zh": "说你周末做了什么",
+     "check": "the learner says what they did on the weekend"
+    },
+    {
+     "zh": "说说感觉怎么样",
+     "check": "the learner says how it felt"
+    },
+    {
+     "zh": "问她周末怎么样",
+     "check": "the learner asks about Mia's weekend"
+    },
+    {
+     "zh": "对她说的内容表示感兴趣或惊讶",
+     "check": "the learner reacts to what Mia said with interest or surprise"
+    }
+   ],
+   "hints": [
+    {
+     "zh": "我去海边玩了。",
+     "en": "I went to the beach."
+    },
+    {
+     "zh": "挺放松的。",
+     "en": "It was pretty relaxing."
+    },
+    {
+     "zh": "你呢？",
+     "en": "How about you?"
+    }
+   ]
+  },
+  {
+   "id": "w02-s2",
+   "level": "advanced",
+   "title": "迟到了打个电话",
+   "role": "Tom",
+   "role_zh": "Tom · 朋友",
+   "persona": "Tom, your friend who is already waiting for you at a café for a meetup",
+   "opening": "Hey, I'm at the café already. Where are you?",
+   "opening_zh": "嘿，我已经到咖啡馆了，你在哪？",
+   "brief": "你和朋友 Tom 约好见面，但你要迟到了，他打电话来问。",
+   "tasks": [
+    {
+     "zh": "告诉他你会晚到",
+     "check": "the learner says they will be late"
+    },
+    {
+     "zh": "说明原因",
+     "check": "the learner explains why"
+    },
+    {
+     "zh": "告诉他大概几点到",
+     "check": "the learner gives an estimated arrival time"
+    },
+    {
+     "zh": "道歉并提出补偿",
+     "check": "the learner apologizes and offers something, e.g. to buy coffee"
+    }
+   ],
+   "hints": [
+    {
+     "zh": "我可能要晚到十分钟。",
+     "en": "I might be running about ten minutes late."
+    },
+    {
+     "zh": "地铁晚点了。",
+     "en": "The subway was delayed."
+    },
+    {
+     "zh": "咖啡我请。",
+     "en": "Coffee's on me."
+    }
+   ]
+  }
  ]
 }

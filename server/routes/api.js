@@ -4,6 +4,7 @@ import * as llm from '../services/llm.js';
 import * as asr from '../services/asr.js';
 import * as notion from '../services/notion.js';
 import { todayQueue, reviewCard, addCard } from '../cards.js';
+import * as roleplay from '../roleplay.js';
 
 export const api = express.Router();
 
@@ -44,3 +45,25 @@ api.post('/cards', (req, res) => {
   if (!req.body?.en?.trim()) return res.status(400).json({ error: '英文不能为空' });
   res.json(addCard(req.body));
 });
+
+// ---- AI 情景对话（PRD 3.2）----
+const wrap = (fn) => (req, res, next) => Promise.resolve(fn(req, res)).catch(next);
+api.get('/roleplay/scenes', (_req, res) => res.json(roleplay.listScenes()));
+api.post('/roleplay', (req, res) => {
+  const r = roleplay.start(req.body?.sceneId);
+  return r ? res.json(r) : res.status(404).json({ error: '场景不存在' });
+});
+api.get('/roleplay/:id', (req, res) => {
+  const r = roleplay.load(Number(req.params.id));
+  return r ? res.json(r) : res.status(404).json({ error: '对话不存在' });
+});
+api.post('/roleplay/:id/turn', wrap(async (req, res) => {
+  const text = req.body?.text?.trim();
+  if (!text) return res.status(400).json({ error: '内容不能为空' });
+  const r = await roleplay.turn(Number(req.params.id), text);
+  return r ? res.json(r) : res.status(404).json({ error: '对话不存在' });
+}));
+api.post('/roleplay/:id/finish', wrap(async (req, res) => {
+  const r = await roleplay.finish(Number(req.params.id));
+  return r ? res.json(r) : res.status(404).json({ error: '对话不存在' });
+}));

@@ -7,7 +7,7 @@ import { all, get, run } from './db.js';
 export function importContent(dir = path.join(config.root, 'content')) {
   if (!fs.existsSync(dir)) return 0;
   let added = 0;
-  for (const f of fs.readdirSync(dir).filter((x) => /^week\d+\.json$/.test(x)).sort()) {
+  for (const f of fs.readdirSync(dir).filter((x) => /^week\d+.*\.json$/.test(x)).sort()) {
     const pack = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
     for (const it of pack.items || []) {
       run(`INSERT INTO content_item (id, week, type, en, zh, extra, approved) VALUES (?,?,?,?,?,?,?)
@@ -23,6 +23,13 @@ export function importContent(dir = path.join(config.root, 'content')) {
           [it.id, it.en, it.zh, it.example || '', '内置', pack.theme, pack.week]);
         added++;
       }
+    }
+    for (const sc of pack.scenes || []) {
+      run(`INSERT INTO content_scene (id, week, title, level, role, brief, tasks, hints, approved, data) VALUES (?,?,?,?,?,?,?,?,?,?)
+           ON CONFLICT(id) DO UPDATE SET week=excluded.week, title=excluded.title, level=excluded.level, role=excluded.role,
+           brief=excluded.brief, tasks=excluded.tasks, hints=excluded.hints, data=excluded.data`,
+        [sc.id, pack.week, sc.title, sc.level, sc.role, sc.brief, JSON.stringify(sc.tasks), JSON.stringify(sc.hints || []),
+          pack.reviewed ? 1 : 0, JSON.stringify(sc)]);
     }
   }
   return added;
