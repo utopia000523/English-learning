@@ -92,10 +92,14 @@ export default function Cards() {
           </div>
           <div className="face back">
             <div className="big">{card.en}</div>
-            {card.example && <div className="muted">也可以：{card.example}</div>}
+            {card.example && (
+              <div className="muted row" style={{ gap: 2, justifyContent: 'center' }}>
+                也可以：{card.example}
+                <button className="link" title="朗读" onClick={(e) => { e.stopPropagation(); speak(card.example, voice); }}>{Icon.speaker}</button>
+              </div>
+            )}
             <div className="row" style={{ marginTop: 14, gap: 4 }}>
               <button className="link" onClick={(e) => { e.stopPropagation(); speak(card.en, voice); }}>{Icon.speaker}朗读</button>
-              {card.example && <button className="link" onClick={(e) => { e.stopPropagation(); speak(card.example, voice); }}>{Icon.speaker}朗读例句</button>}
             </div>
           </div>
         </div>
