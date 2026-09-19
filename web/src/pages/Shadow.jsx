@@ -103,7 +103,7 @@ export default function Shadow() {
         <div><h1>跟读</h1><p className="sub">{mat ? `${mat.title} · ${sents.length} 句` : '暂无材料'}</p></div>
         <div className="row">
           <select className="in" value={mid} onChange={(e) => setMid(e.target.value)}>
-            {list.map((m) => <option key={m.id} value={m.id} disabled={m.locked}>第 {m.week} 周 · {m.title}{m.locked ? '（未解锁）' : ''}</option>)}
+            {list.map((m) => <option key={m.id} value={m.id} disabled={m.locked}>第 {m.week} 周第 {m.day} 天 · {m.title}{m.locked ? '（未解锁）' : ''}</option>)}
           </select>
           <div className="seg">
             <button className={mode === 'line' ? 'on' : ''} onClick={() => setMode('line')}>逐句跟读</button>

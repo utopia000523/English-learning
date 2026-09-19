@@ -4,214 +4,388 @@
   "reviewed": false,
   "items": [
     {
-      "id": "w02-c01",
-      "type": "card",
-      "zh": "今天天气真好。",
-      "en": "It's a beautiful day today.",
-      "example": "What a nice day!"
-    },
-    {
-      "id": "w02-c02",
-      "type": "card",
-      "zh": "今天好热啊。",
-      "en": "It's so hot today.",
-      "example": "It's boiling out there."
-    },
-    {
-      "id": "w02-c03",
-      "type": "card",
-      "zh": "好像要下雨了。",
-      "en": "It looks like it's going to rain.",
-      "example": "I think it's about to rain."
-    },
-    {
       "id": "w02-c04",
       "type": "card",
       "zh": "这周末有什么安排？",
       "en": "Any plans for the weekend?",
-      "example": "What are you up to this weekend?"
+      "example": "What are you up to this weekend?",
+      "day": 1
     },
     {
       "id": "w02-c05",
       "type": "card",
       "zh": "还没想好。",
       "en": "I haven't decided yet.",
-      "example": "Not sure yet."
+      "example": "Not sure yet.",
+      "day": 1
     },
     {
       "id": "w02-c06",
       "type": "card",
       "zh": "我打算在家休息一下。",
       "en": "I'm just going to stay in and relax.",
-      "example": "I'm planning a lazy weekend."
+      "example": "I'm planning a lazy weekend.",
+      "day": 1
     },
     {
       "id": "w02-c07",
       "type": "card",
       "zh": "周末过得怎么样？",
       "en": "How was your weekend?",
-      "example": "Did you have a good weekend?"
+      "example": "Did you have a good weekend?",
+      "day": 1
     },
     {
       "id": "w02-c08",
       "type": "card",
       "zh": "挺放松的。",
       "en": "It was pretty relaxing.",
-      "example": "It was nice and chill."
+      "example": "It was nice and chill.",
+      "day": 1
     },
     {
       "id": "w02-c09",
       "type": "card",
       "zh": "我去海边玩了。",
       "en": "I went to the beach.",
-      "example": "We spent the day by the sea."
+      "example": "We spent the day by the sea.",
+      "day": 1
     },
     {
-      "id": "w02-c10",
+      "id": "w02-c31",
       "type": "card",
-      "zh": "你最近看了什么好看的剧吗？",
-      "en": "Have you watched anything good lately?",
-      "example": "Any good shows you'd recommend?"
+      "day": 1,
+      "zh": "有没有做什么好玩的？",
+      "en": "Did you do anything fun?",
+      "example": "Did you do anything fun over the holiday?"
     },
     {
-      "id": "w02-c11",
+      "id": "w02-c32",
       "type": "card",
-      "zh": "我最近在追一部剧。",
-      "en": "I've been binge-watching a show.",
-      "example": "I'm hooked on a new series."
+      "day": 1,
+      "zh": "没干什么，就休息了一下。",
+      "en": "Not much, I just took it easy.",
+      "example": "Not much, I just took it easy at home."
     },
     {
-      "id": "w02-c12",
+      "id": "w02-c01",
       "type": "card",
-      "zh": "值得看吗？",
-      "en": "Is it worth watching?",
-      "example": "Would you recommend it?"
+      "zh": "今天天气真好。",
+      "en": "It's a beautiful day today.",
+      "example": "What a nice day!",
+      "day": 2
     },
     {
-      "id": "w02-c13",
+      "id": "w02-c02",
       "type": "card",
-      "zh": "我可能要晚到十分钟。",
-      "en": "I might be running about ten minutes late.",
-      "example": "I'm running a bit late — be there in five."
+      "zh": "今天好热啊。",
+      "en": "It's so hot today.",
+      "example": "It's boiling out there.",
+      "day": 2
     },
     {
-      "id": "w02-c14",
+      "id": "w02-c03",
       "type": "card",
-      "zh": "今天好累。",
-      "en": "I'm so tired today.",
-      "example": "I'm exhausted."
-    },
-    {
-      "id": "w02-c15",
-      "type": "card",
-      "zh": "昨晚没睡好。",
-      "en": "I didn't sleep well last night.",
-      "example": "I barely slept last night."
+      "zh": "好像要下雨了。",
+      "en": "It looks like it's going to rain.",
+      "example": "I think it's about to rain.",
+      "day": 2
     },
     {
       "id": "w02-c16",
       "type": "card",
       "zh": "终于到周五了！",
       "en": "Finally, it's Friday!",
-      "example": "TGIF!"
+      "example": "TGIF!",
+      "day": 2
     },
     {
       "id": "w02-c17",
       "type": "card",
       "zh": "时间过得真快。",
       "en": "Time flies.",
-      "example": "Where did the time go?"
+      "example": "Where did the time go?",
+      "day": 2
     },
     {
-      "id": "w02-c18",
+      "id": "w02-c33",
       "type": "card",
-      "zh": "我完全同意。",
-      "en": "I totally agree.",
-      "example": "You're absolutely right."
+      "day": 2,
+      "zh": "别忘了带伞。",
+      "en": "Don't forget your umbrella.",
+      "example": "It's going to rain. Don't forget your umbrella."
     },
     {
-      "id": "w02-c19",
+      "id": "w02-c34",
       "type": "card",
-      "zh": "我不太确定。",
-      "en": "I'm not so sure.",
-      "example": "I don't know about that."
+      "day": 2,
+      "zh": "希望快点凉快下来。",
+      "en": "I hope it cools down soon.",
+      "example": "It's so hot. I hope it cools down soon."
     },
     {
-      "id": "w02-c20",
+      "id": "w02-c35",
       "type": "card",
-      "zh": "怎么说呢……",
-      "en": "How should I put it...",
-      "example": "Let me think..."
+      "day": 2,
+      "zh": "这天气太适合出门了！",
+      "en": "What a nice day to be outside!",
+      "example": "What a nice day for a walk!"
     },
     {
-      "id": "w02-c21",
+      "id": "w02-c10",
       "type": "card",
-      "zh": "有道理。",
-      "en": "Good point.",
-      "example": "That makes sense."
+      "zh": "你最近看了什么好看的剧吗？",
+      "en": "Have you watched anything good lately?",
+      "example": "Any good shows you'd recommend?",
+      "day": 3
+    },
+    {
+      "id": "w02-c11",
+      "type": "card",
+      "zh": "我最近在追一部剧。",
+      "en": "I've been binge-watching a show.",
+      "example": "I'm hooked on a new series.",
+      "day": 3
+    },
+    {
+      "id": "w02-c12",
+      "type": "card",
+      "zh": "值得看吗？",
+      "en": "Is it worth watching?",
+      "example": "Would you recommend it?",
+      "day": 3
     },
     {
       "id": "w02-c22",
       "type": "card",
       "zh": "你是认真的吗？",
       "en": "Are you serious?",
-      "example": "You're kidding!"
+      "example": "You're kidding!",
+      "day": 3
     },
     {
       "id": "w02-c23",
       "type": "card",
       "zh": "太棒了！",
       "en": "That's awesome!",
-      "example": "Good for you!"
+      "example": "Good for you!",
+      "day": 3
+    },
+    {
+      "id": "w02-c36",
+      "type": "card",
+      "day": 3,
+      "zh": "讲的是什么？",
+      "en": "What's it about?",
+      "example": "I heard about that movie. What's it about?"
+    },
+    {
+      "id": "w02-c37",
+      "type": "card",
+      "day": 3,
+      "zh": "你一定要去看看。",
+      "en": "You should definitely check it out.",
+      "example": "It's really good. You should definitely check it out."
+    },
+    {
+      "id": "w02-c38",
+      "type": "card",
+      "day": 3,
+      "zh": "别剧透！",
+      "en": "No spoilers, please!",
+      "example": "I haven't finished it yet. No spoilers, please!"
+    },
+    {
+      "id": "w02-c14",
+      "type": "card",
+      "zh": "今天好累。",
+      "en": "I'm so tired today.",
+      "example": "I'm exhausted.",
+      "day": 4
+    },
+    {
+      "id": "w02-c15",
+      "type": "card",
+      "zh": "昨晚没睡好。",
+      "en": "I didn't sleep well last night.",
+      "example": "I barely slept last night.",
+      "day": 4
     },
     {
       "id": "w02-c24",
       "type": "card",
       "zh": "太可惜了。",
       "en": "That's too bad.",
-      "example": "Oh no, sorry to hear that."
+      "example": "Oh no, sorry to hear that.",
+      "day": 4
     },
     {
       "id": "w02-c25",
       "type": "card",
       "zh": "我也是。",
       "en": "Me too.",
-      "example": "Same here."
+      "example": "Same here.",
+      "day": 4
     },
     {
       "id": "w02-c26",
       "type": "card",
       "zh": "我也不。",
       "en": "Me neither.",
-      "example": "Neither do I."
+      "example": "Neither do I.",
+      "day": 4
+    },
+    {
+      "id": "w02-c39",
+      "type": "card",
+      "day": 4,
+      "zh": "我昨晚熬夜了。",
+      "en": "I stayed up too late.",
+      "example": "I stayed up too late watching a show."
+    },
+    {
+      "id": "w02-c40",
+      "type": "card",
+      "day": 4,
+      "zh": "我真想来杯咖啡。",
+      "en": "I could really use a coffee.",
+      "example": "I could really use a break."
+    },
+    {
+      "id": "w02-c41",
+      "type": "card",
+      "day": 4,
+      "zh": "今天别太累了。",
+      "en": "Take it easy today.",
+      "example": "You look tired. Take it easy today."
+    },
+    {
+      "id": "w02-c13",
+      "type": "card",
+      "zh": "我可能要晚到十分钟。",
+      "en": "I might be running about ten minutes late.",
+      "example": "I'm running a bit late — be there in five.",
+      "day": 5
+    },
+    {
+      "id": "w02-c20",
+      "type": "card",
+      "zh": "怎么说呢……",
+      "en": "How should I put it...",
+      "example": "Let me think...",
+      "day": 5
+    },
+    {
+      "id": "w02-c42",
+      "type": "card",
+      "day": 5,
+      "zh": "抱歉，我堵在路上了。",
+      "en": "Sorry, I'm stuck in traffic.",
+      "example": "Sorry, I'm stuck in traffic on the way."
+    },
+    {
+      "id": "w02-c43",
+      "type": "card",
+      "day": 5,
+      "zh": "我大概十五分钟后到。",
+      "en": "I'll be there in about fifteen minutes.",
+      "example": "I'll be there in about ten minutes."
+    },
+    {
+      "id": "w02-c44",
+      "type": "card",
+      "day": 5,
+      "zh": "你们先点，别等我。",
+      "en": "Go ahead and order without me.",
+      "example": "Go ahead and start without me."
+    },
+    {
+      "id": "w02-c45",
+      "type": "card",
+      "day": 5,
+      "zh": "抱歉让你久等了。",
+      "en": "Sorry to keep you waiting.",
+      "example": "So sorry to keep you waiting."
+    },
+    {
+      "id": "w02-c46",
+      "type": "card",
+      "day": 5,
+      "zh": "咖啡我请，算是赔罪。",
+      "en": "Coffee's on me to make up for it.",
+      "example": "Lunch is on me to make up for it."
+    },
+    {
+      "id": "w02-c47",
+      "type": "card",
+      "day": 5,
+      "zh": "路上比我想的还堵。",
+      "en": "Traffic was worse than I expected.",
+      "example": "The subway was more crowded than I expected."
+    },
+    {
+      "id": "w02-c18",
+      "type": "card",
+      "zh": "我完全同意。",
+      "en": "I totally agree.",
+      "example": "You're absolutely right.",
+      "day": 6
+    },
+    {
+      "id": "w02-c19",
+      "type": "card",
+      "zh": "我不太确定。",
+      "en": "I'm not so sure.",
+      "example": "I don't know about that.",
+      "day": 6
+    },
+    {
+      "id": "w02-c21",
+      "type": "card",
+      "zh": "有道理。",
+      "en": "Good point.",
+      "example": "That makes sense.",
+      "day": 6
     },
     {
       "id": "w02-c27",
       "type": "card",
       "zh": "对了，……",
       "en": "By the way, ...",
-      "example": "Oh, before I forget..."
+      "example": "Oh, before I forget...",
+      "day": 6
     },
     {
       "id": "w02-c28",
       "type": "card",
       "zh": "我得先走了。",
       "en": "I've got to get going.",
-      "example": "I should head out."
+      "example": "I should head out.",
+      "day": 6
     },
     {
       "id": "w02-c29",
       "type": "card",
       "zh": "路上小心。",
       "en": "Get home safe.",
-      "example": "Take care."
+      "example": "Take care.",
+      "day": 6
     },
     {
       "id": "w02-c30",
       "type": "card",
       "zh": "周一见！",
       "en": "See you Monday!",
-      "example": "Have a good one!"
+      "example": "Have a good one!",
+      "day": 6
+    },
+    {
+      "id": "w02-c48",
+      "type": "card",
+      "day": 6,
+      "zh": "这个问题问得好。",
+      "en": "That's a good question.",
+      "example": "Hmm, that's a good question."
     }
   ],
   "scenes": [
@@ -261,11 +435,161 @@
           "zh": "你呢？",
           "en": "How about you?"
         }
+      ],
+      "day": 1
+    },
+    {
+      "id": "w02-s3",
+      "day": 2,
+      "level": "basic",
+      "title": "电梯里聊天气",
+      "role": "Lily",
+      "role_zh": "Lily · 同楼层的同事",
+      "persona": "Lily, a cheerful colleague from another team on the same floor, riding the elevator with the learner in the morning",
+      "opening": "Morning! Wow, did you see how dark the sky is outside?",
+      "opening_zh": "早！哇，你看到外面天多暗了吗？",
+      "brief": "早上在电梯里遇到隔壁组的同事，简单聊几句天气。",
+      "tasks": [
+        {
+          "zh": "回应对方并说说今天的天气",
+          "check": "the learner says something about today's weather"
+        },
+        {
+          "zh": "说说天气对你的影响或感受",
+          "check": "the learner says how the weather affects them or how they feel about it"
+        },
+        {
+          "zh": "问对方一个问题",
+          "check": "the learner asks Lily a question (e.g. about her plans, whether she brought an umbrella)",
+          "match": [
+            "\\?"
+          ]
+        },
+        {
+          "zh": "礼貌地结束对话",
+          "check": "the learner actually says goodbye or wraps up the chat (e.g. 'Nice meeting you', 'See you around', 'I have to go')",
+          "strict": true
+        }
+      ],
+      "hints": [
+        {
+          "zh": "好像要下雨了。",
+          "en": "It looks like it's going to rain."
+        },
+        {
+          "zh": "希望快点凉快下来。",
+          "en": "I hope it cools down soon."
+        },
+        {
+          "zh": "回头见！",
+          "en": "See you later!"
+        }
+      ]
+    },
+    {
+      "id": "w02-s4",
+      "day": 3,
+      "level": "basic",
+      "title": "推荐一部剧",
+      "role": "Kevin",
+      "role_zh": "Kevin · 朋友",
+      "persona": "Kevin, a friend who is bored and looking for a new TV show or movie to watch",
+      "opening": "I just finished my show and I have nothing to watch. Got any recommendations?",
+      "opening_zh": "我刚追完剧，没东西看了。你有什么推荐吗？",
+      "brief": "朋友剧荒了，让你推荐一部剧或电影。",
+      "tasks": [
+        {
+          "zh": "推荐一部剧或电影",
+          "check": "the learner recommends a show or movie"
+        },
+        {
+          "zh": "简单说说讲的是什么",
+          "check": "the learner briefly says what it is about"
+        },
+        {
+          "zh": "说说你为什么喜欢",
+          "check": "the learner says why they like it"
+        },
+        {
+          "zh": "问对方最近看了什么",
+          "check": "the learner asks what Kevin has watched or likes to watch",
+          "match": [
+            "what (have you|did you|do you) (been )?watch",
+            "what kind of (shows|movies)",
+            "how about you|what about you|and you\\b"
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "zh": "我最近在追一部剧。",
+          "en": "I've been binge-watching a show."
+        },
+        {
+          "zh": "你一定要去看看。",
+          "en": "You should definitely check it out."
+        },
+        {
+          "zh": "别剧透！",
+          "en": "No spoilers, please!"
+        }
+      ]
+    },
+    {
+      "id": "w02-s5",
+      "day": 4,
+      "level": "basic",
+      "title": "你看起来有点累",
+      "role": "Mia",
+      "role_zh": "Mia · 同事",
+      "persona": "Mia, a caring coworker who notices the learner looks tired this morning",
+      "opening": "Hey, are you okay? You look a little tired today.",
+      "opening_zh": "嘿，你还好吗？今天看起来有点累。",
+      "brief": "早上同事 Mia 关心你是不是太累了。",
+      "tasks": [
+        {
+          "zh": "说说你为什么累",
+          "check": "the learner explains why they are tired"
+        },
+        {
+          "zh": "说说你今天打算怎么调整",
+          "check": "the learner says what they will do about it (coffee, a break, sleep early)"
+        },
+        {
+          "zh": "回应对方的关心并道谢",
+          "check": "the learner thanks Mia for asking or caring",
+          "match": [
+            "thank|thanks"
+          ]
+        },
+        {
+          "zh": "反过来问问对方",
+          "check": "the learner asks how Mia is doing",
+          "match": [
+            "how (are|about) you",
+            "how('s| is) your (day|week|morning)",
+            "how about you|what about you|and you\\b"
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "zh": "昨晚没睡好。",
+          "en": "I didn't sleep well last night."
+        },
+        {
+          "zh": "我真想来杯咖啡。",
+          "en": "I could really use a coffee."
+        },
+        {
+          "zh": "谢谢关心，你呢？",
+          "en": "Thanks for asking. How about you?"
+        }
       ]
     },
     {
       "id": "w02-s2",
-      "level": "advanced",
+      "level": "basic",
       "title": "迟到了打个电话",
       "role": "Tom",
       "role_zh": "Tom · 朋友",
@@ -304,6 +628,52 @@
           "zh": "咖啡我请。",
           "en": "Coffee's on me."
         }
+      ],
+      "day": 5
+    },
+    {
+      "id": "w02-s6",
+      "day": 6,
+      "level": "advanced",
+      "title": "挑战：周五下班约周末",
+      "role": "Tom",
+      "role_zh": "Tom · 朋友",
+      "persona": "Tom, an easy-going friend chatting after work on Friday; he suggests going hiking on Saturday morning but is flexible",
+      "opening": "Finally, it's Friday! Any plans for the weekend?",
+      "opening_zh": "终于到周五了！周末有什么安排吗？",
+      "brief": "周五下班和朋友 Tom 聊周末。他会提个建议，你可以同意或提出不同想法，最后约好时间地点。",
+      "tasks": [
+        {
+          "zh": "说说你周末的打算",
+          "check": "the learner shares their weekend plans or says they haven't decided"
+        },
+        {
+          "zh": "对他的提议表示同意或不同意，并说理由",
+          "check": "the learner agrees or disagrees with Tom's suggestion and gives a reason"
+        },
+        {
+          "zh": "约好时间和地点",
+          "check": "the learner and Tom settle on a time and place to meet"
+        },
+        {
+          "zh": "礼貌地结束对话",
+          "check": "the learner actually says goodbye or wraps up the chat (e.g. 'Nice meeting you', 'See you around', 'I have to go')",
+          "strict": true
+        }
+      ],
+      "hints": [
+        {
+          "zh": "还没想好。",
+          "en": "I haven't decided yet."
+        },
+        {
+          "zh": "我不太确定，天气可能不好。",
+          "en": "I'm not so sure. The weather might be bad."
+        },
+        {
+          "zh": "那周六早上九点见？",
+          "en": "So, Saturday at nine?"
+        }
       ]
     }
   ],
@@ -332,7 +702,8 @@
           "en": "I didn't want to come back to work today!",
           "zh": "今天真不想回来上班！"
         }
-      ]
+      ],
+      "day": 1
     },
     {
       "id": "w02-sh2",
@@ -358,6 +729,115 @@
           "en": "Not yet. I might just stay in and relax.",
           "zh": "还没有，可能就在家休息。"
         }
+      ],
+      "day": 2
+    },
+    {
+      "id": "w02-sh3",
+      "day": 3,
+      "title": "最近在追的剧",
+      "sentences": [
+        {
+          "en": "I've been binge-watching a show lately.",
+          "zh": "我最近在追一部剧。"
+        },
+        {
+          "en": "It's about a group of friends in New York.",
+          "zh": "讲的是纽约的一群朋友。"
+        },
+        {
+          "en": "It's really funny, and the characters are great.",
+          "zh": "很好笑，人物也很棒。"
+        },
+        {
+          "en": "I watch an episode every night before bed.",
+          "zh": "我每晚睡前看一集。"
+        },
+        {
+          "en": "You should definitely check it out.",
+          "zh": "你一定要去看看。"
+        }
+      ]
+    },
+    {
+      "id": "w02-sh4",
+      "day": 4,
+      "title": "累的一天",
+      "sentences": [
+        {
+          "en": "I'm so tired today.",
+          "zh": "今天好累。"
+        },
+        {
+          "en": "I stayed up too late last night.",
+          "zh": "我昨晚熬夜了。"
+        },
+        {
+          "en": "I could really use a coffee.",
+          "zh": "我真想来杯咖啡。"
+        },
+        {
+          "en": "I'm going to take a short break after lunch.",
+          "zh": "午饭后我要休息一下。"
+        },
+        {
+          "en": "I'll try to go to bed early tonight.",
+          "zh": "今晚我要早点睡。"
+        }
+      ]
+    },
+    {
+      "id": "w02-sh5",
+      "day": 5,
+      "title": "路上堵车了",
+      "sentences": [
+        {
+          "en": "Hi Tom, sorry, I'm stuck in traffic.",
+          "zh": "嗨 Tom，抱歉，我堵在路上了。"
+        },
+        {
+          "en": "I might be running about ten minutes late.",
+          "zh": "我可能要晚到十分钟。"
+        },
+        {
+          "en": "Go ahead and order without me.",
+          "zh": "你们先点，别等我。"
+        },
+        {
+          "en": "Coffee's on me to make up for it.",
+          "zh": "咖啡我请，算是赔罪。"
+        },
+        {
+          "en": "See you soon!",
+          "zh": "马上到！"
+        }
+      ]
+    },
+    {
+      "id": "w02-sh6",
+      "day": 6,
+      "title": "周末安排",
+      "sentences": [
+        {
+          "en": "Finally, it's Friday!",
+          "zh": "终于到周五了！"
+        },
+        {
+          "en": "I don't have any big plans this weekend.",
+          "zh": "这周末没什么大安排。"
+        },
+        {
+          "en": "Hiking sounds great, but it might rain.",
+          "zh": "徒步听起来不错，但可能会下雨。"
+        },
+        {
+          "en": "How about Sunday morning instead?",
+          "zh": "改成周日早上怎么样？"
+        },
+        {
+          "en": "Let's meet at the subway station at nine.",
+          "zh": "九点在地铁站见吧。"
+        }
       ]
     }
   ],
@@ -370,7 +850,19 @@
         "where",
         "who with",
         "how you felt"
-      ]
+      ],
+      "day": 1
+    },
+    {
+      "id": "w02-t5",
+      "zh": "天气会影响你的心情吗",
+      "en": "Does the weather affect your mood?",
+      "hints": [
+        "sunny days",
+        "rainy days",
+        "an example"
+      ],
+      "day": 2
     },
     {
       "id": "w02-t2",
@@ -380,6 +872,29 @@
         "what it is",
         "what it's about",
         "would you recommend it"
+      ],
+      "day": 3
+    },
+    {
+      "id": "w02-t4",
+      "zh": "说说你昨天的一天",
+      "en": "Describe your day yesterday.",
+      "hints": [
+        "morning",
+        "work",
+        "evening"
+      ],
+      "day": 4
+    },
+    {
+      "id": "w02-t6",
+      "day": 5,
+      "zh": "说说你迟到的一次经历",
+      "en": "Tell me about a time you were late.",
+      "hints": [
+        "when and where",
+        "why you were late",
+        "what you did"
       ]
     },
     {
@@ -390,27 +905,8 @@
         "morning",
         "afternoon",
         "evening"
-      ]
-    },
-    {
-      "id": "w02-t4",
-      "zh": "说说你昨天的一天",
-      "en": "Describe your day yesterday.",
-      "hints": [
-        "morning",
-        "work",
-        "evening"
-      ]
-    },
-    {
-      "id": "w02-t5",
-      "zh": "天气会影响你的心情吗",
-      "en": "Does the weather affect your mood?",
-      "hints": [
-        "sunny days",
-        "rainy days",
-        "an example"
-      ]
+      ],
+      "day": 6
     }
   ]
 }

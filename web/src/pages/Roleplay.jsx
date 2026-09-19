@@ -33,14 +33,14 @@ export function RoleplayList() {
         <div className="list">
           {list.map((s) => (
             <div key={s.id} className="li" style={s.status === 'locked' ? { opacity: 0.55 } : { cursor: 'pointer' }} onClick={() => open(s)}>
-              <span className="faint" style={{ width: 48 }}>第 {s.week} 周</span>
+              <span className="faint" style={{ width: 104, whiteSpace: 'nowrap' }}>第 {s.week} 周 · 第 {s.day} 天</span>
               <div className="t"><b>{s.title}</b><div className="faint">AI 角色：{s.roleZh} · {LEVEL[s.level]}</div></div>
               {STATUS[s.status]}
             </div>
           ))}
         </div>
       )}
-      <p className="faint" style={{ marginTop: 12 }}>当前周及以前的场景可练，之后的到对应周解锁。</p>
+      <p className="faint" style={{ marginTop: 12 }}>每周 6 个场景，每天解锁一个，第 7 天复习。已解锁的场景随时可以回来再练。</p>
     </div>
   );
 }
@@ -197,7 +197,7 @@ export function RoleplayChat() {
         <div className="chat-head">
           <div className="ttl">
             <Link className="link" to="/roleplay" title="返回场景">{Icon.back}</Link>
-            <b style={{ fontWeight: 500 }}>{sc.title} · {LEVEL[sc.level]}</b><span className="faint">第 {sc.week} 周</span>
+            <b style={{ fontWeight: 500 }}>{sc.title} · {LEVEL[sc.level]}</b><span className="faint">第 {sc.week} 周 · 第 {sc.day || 1} 天</span>
           </div>
           <div className="row">
             <div className="seg">{[0.8, 1].map((r) => <button key={r} className={rate === r ? 'on' : ''} onClick={() => setRate(r)}>{r === 1 ? '1.0' : r}x</button>)}</div>

@@ -1,6 +1,6 @@
 // 跟读、独白（PRD 3.4、3.5）
 import { all, get, run, getSettings } from './db.js';
-import { planPosition } from './cards.js';
+import { planPosition, isUnlocked, UNLOCK_SQL, unlockArgs } from './cards.js';
 import * as llm from './services/llm.js';
 import { align, fluency } from './services/score.js';
 import { todayStr } from './util/date.js';
@@ -18,9 +18,9 @@ function saveMetrics(id, f) {
 
 // ---- 跟读 ----
 export function shadowList() {
-  const { week } = planPosition();
-  return all("SELECT * FROM content_item WHERE type = 'shadow' ORDER BY week, id").map((r) => ({
-    id: r.id, week: r.week, title: r.zh, sentences: parse(r.extra, {}).sentences || [], locked: r.week > week,
+  const pos = planPosition();
+  return all("SELECT * FROM content_item WHERE type = 'shadow' ORDER BY week, day, id").map((r) => ({
+    id: r.id, week: r.week, day: r.day || 1, title: r.zh, sentences: parse(r.extra, {}).sentences || [], locked: !isUnlocked(r.week, r.day, pos),
   }));
 }
 
@@ -36,9 +36,9 @@ export function scoreShadow(recordingId, reference) {
 
 // ---- 独白 ----
 export function topicList() {
-  const { week } = planPosition();
-  return all("SELECT * FROM content_item WHERE type = 'topic' AND week <= ? ORDER BY week DESC, id", [week]).map((r) => ({
-    id: r.id, week: r.week, zh: r.zh, en: r.en, hints: parse(r.extra, {}).hints || [],
+  const pos = planPosition();
+  return all(`SELECT * FROM content_item WHERE type = 'topic' AND ${UNLOCK_SQL} ORDER BY week DESC, day DESC, id`, unlockArgs(pos)).map((r) => ({
+    id: r.id, week: r.week, day: r.day || 1, zh: r.zh, en: r.en, hints: parse(r.extra, {}).hints || [],
   }));
 }
 

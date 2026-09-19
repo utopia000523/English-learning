@@ -1,5 +1,6 @@
 // 话题独白（PRD 3.5）：30 秒准备 → 说 1 分钟 → 流利度 + AI 地道改写。界面参考 docs/prototype.html「独白」
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { api } from '../services/api.js';
 import { speak } from '../services/tts.js';
 import { transcribe } from '../services/recorder.js';
@@ -35,13 +36,14 @@ export default function Mono() {
   const [added, setAdded] = useState({});
   const [voice, setVoice] = useState({});
   const stopping = useRef(false);
+  const [params] = useSearchParams();
 
   const pick = (list, exclude) => {
     const pool = list.filter((t) => t.id !== exclude);
     return (pool.length ? pool : list)[Math.floor(Math.random() * (pool.length || list.length))];
   };
   useEffect(() => {
-    api.get('/mono/topics').then((l) => { setTopics(l); setTopic(pick(l)); })
+    api.get('/mono/topics').then((l) => { setTopics(l); setTopic(l.find((t) => t.id === params.get('t')) || pick(l)); })
       .catch(() => setErr('无法连接本地服务：请在终端重新运行 bash scripts/start.sh，并保持窗口开着。'));
     api.get('/settings').then((s) => setVoice({ voice: s.ttsVoice, rate: s.ttsRate })).catch(() => {});
   }, []);
@@ -96,7 +98,7 @@ export default function Mono() {
       <div className="head"><div><h1>话题独白</h1><p className="sub">30 秒准备，说满 1 分钟。重点是说得久，不怕说错。</p></div></div>
       <div className="two" style={{ gridTemplateColumns: '1fr 1fr' }}>
         <div style={{ textAlign: 'center', paddingTop: 10 }}>
-          <p className="faint">第 {topic.week} 周 · 1 分钟</p>
+          <p className="faint">第 {topic.week} 周第 {topic.day} 天 · 1 分钟</p>
           <h2 style={{ fontSize: 24, margin: '10px 0 4px' }}>{topic.zh}</h2>
           <p className="muted">{topic.en}</p>
           <p className="faint" style={{ marginTop: 12 }}>可以说说：{topic.hints.join(' · ')}</p>

@@ -20,10 +20,11 @@ before(async () => {
 });
 after(() => server.close());
 
-test('跟读材料：6 组，第 1 周可用', async () => {
+test('跟读材料：18 组，第 1 天只解锁第 1 组', async () => {
   const l = await (await fetch(base + '/shadow')).json();
-  assert.equal(l.length, 6);
-  assert.ok(l.filter((m) => m.week === 1).every((m) => !m.locked && m.sentences.length > 0));
+  assert.equal(l.length, 18);
+  assert.deepEqual(l.filter((m) => !m.locked).map((m) => m.id), ['w01-sh1']);
+  assert.ok(l.every((m) => m.sentences.length >= 5 && m.day >= 1 && m.day <= 6));
 });
 
 test('跟读评分', async () => {
@@ -33,9 +34,9 @@ test('跟读评分', async () => {
   assert.ok(r.missed.includes('Nice'));
 });
 
-test('独白：话题只给已解锁周；改写与流利度', async () => {
+test('独白：话题只给已解锁的天；改写与流利度', async () => {
   const t = await (await fetch(base + '/mono/topics')).json();
-  assert.equal(t.length, 5);
+  assert.deepEqual(t.map((x) => x.id), ['w01-t1']);
   const rec = await record();
   const r = await (await post('/mono', { topicId: t[0].id, recordingId: rec.id })).json();
   assert.ok(r.rewrite && r.phrases.length && r.wpm > 0);

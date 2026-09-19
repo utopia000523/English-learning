@@ -10,37 +10,38 @@ export function importContent(dir = path.join(config.root, 'content')) {
   for (const f of fs.readdirSync(dir).filter((x) => /^week\d+.*\.json$/.test(x)).sort()) {
     const pack = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
     for (const it of pack.items || []) {
-      run(`INSERT INTO content_item (id, week, type, en, zh, extra, approved) VALUES (?,?,?,?,?,?,?)
-           ON CONFLICT(id) DO UPDATE SET en=excluded.en, zh=excluded.zh, extra=excluded.extra`,
-        [it.id, pack.week, it.type, it.en, it.zh, JSON.stringify({ example: it.example || '', theme: pack.theme }), pack.reviewed ? 1 : 0]);
+      run(`INSERT INTO content_item (id, week, type, en, zh, extra, approved, day) VALUES (?,?,?,?,?,?,?,?)
+           ON CONFLICT(id) DO UPDATE SET en=excluded.en, zh=excluded.zh, extra=excluded.extra, day=excluded.day`,
+        [it.id, pack.week, it.type, it.en, it.zh, JSON.stringify({ example: it.example || '', theme: pack.theme }), pack.reviewed ? 1 : 0, it.day || 1]);
       if (it.type !== 'card') continue;
       const exist = get('SELECT id FROM card WHERE content_id = ?', [it.id]);
       if (exist) {
         // 内容修订同步到尚未开始学习的卡；已学过的卡不动，避免打乱复习
         run('UPDATE card SET en=?, zh=?, example=? WHERE id=? AND introduced_at IS NULL', [it.en, it.zh, it.example || '', exist.id]);
+        run('UPDATE card SET day=? WHERE id=?', [it.day || 1, exist.id]);
       } else {
-        run('INSERT INTO card (content_id, en, zh, example, source, scene, week) VALUES (?,?,?,?,?,?,?)',
-          [it.id, it.en, it.zh, it.example || '', '内置', pack.theme, pack.week]);
+        run('INSERT INTO card (content_id, en, zh, example, source, scene, week, day) VALUES (?,?,?,?,?,?,?,?)',
+          [it.id, it.en, it.zh, it.example || '', '内置', pack.theme, pack.week, it.day || 1]);
         added++;
       }
     }
     // 跟读材料、独白话题：存 content_item（type = shadow / topic），细节放 extra
     for (const sh of pack.shadow || []) {
-      run(`INSERT INTO content_item (id, week, type, en, zh, extra, approved) VALUES (?,?,?,?,?,?,?)
-           ON CONFLICT(id) DO UPDATE SET week=excluded.week, en=excluded.en, zh=excluded.zh, extra=excluded.extra`,
-        [sh.id, pack.week, 'shadow', sh.title, sh.title, JSON.stringify({ sentences: sh.sentences }), pack.reviewed ? 1 : 0]);
+      run(`INSERT INTO content_item (id, week, type, en, zh, extra, approved, day) VALUES (?,?,?,?,?,?,?,?)
+           ON CONFLICT(id) DO UPDATE SET week=excluded.week, en=excluded.en, zh=excluded.zh, extra=excluded.extra, day=excluded.day`,
+        [sh.id, pack.week, 'shadow', sh.title, sh.title, JSON.stringify({ sentences: sh.sentences }), pack.reviewed ? 1 : 0, sh.day || 1]);
     }
     for (const t of pack.topics || []) {
-      run(`INSERT INTO content_item (id, week, type, en, zh, extra, approved) VALUES (?,?,?,?,?,?,?)
-           ON CONFLICT(id) DO UPDATE SET week=excluded.week, en=excluded.en, zh=excluded.zh, extra=excluded.extra`,
-        [t.id, pack.week, 'topic', t.en, t.zh, JSON.stringify({ hints: t.hints || [] }), pack.reviewed ? 1 : 0]);
+      run(`INSERT INTO content_item (id, week, type, en, zh, extra, approved, day) VALUES (?,?,?,?,?,?,?,?)
+           ON CONFLICT(id) DO UPDATE SET week=excluded.week, en=excluded.en, zh=excluded.zh, extra=excluded.extra, day=excluded.day`,
+        [t.id, pack.week, 'topic', t.en, t.zh, JSON.stringify({ hints: t.hints || [] }), pack.reviewed ? 1 : 0, t.day || 1]);
     }
     for (const sc of pack.scenes || []) {
-      run(`INSERT INTO content_scene (id, week, title, level, role, brief, tasks, hints, approved, data) VALUES (?,?,?,?,?,?,?,?,?,?)
+      run(`INSERT INTO content_scene (id, week, title, level, role, brief, tasks, hints, approved, data, day) VALUES (?,?,?,?,?,?,?,?,?,?,?)
            ON CONFLICT(id) DO UPDATE SET week=excluded.week, title=excluded.title, level=excluded.level, role=excluded.role,
-           brief=excluded.brief, tasks=excluded.tasks, hints=excluded.hints, data=excluded.data`,
+           brief=excluded.brief, tasks=excluded.tasks, hints=excluded.hints, data=excluded.data, day=excluded.day`,
         [sc.id, pack.week, sc.title, sc.level, sc.role, sc.brief, JSON.stringify(sc.tasks), JSON.stringify(sc.hints || []),
-          pack.reviewed ? 1 : 0, JSON.stringify(sc)]);
+          pack.reviewed ? 1 : 0, JSON.stringify(sc), sc.day || 1]);
     }
   }
   return added;

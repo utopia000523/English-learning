@@ -19,11 +19,11 @@ before(async () => {
 });
 after(() => server.close());
 
-test('场景列表：第 1 周可练，第 2 周起未解锁', async () => {
+test('场景列表：每周 6 个，第 1 天只解锁第 1 个', async () => {
   const list = await json(await fetch(base + '/roleplay/scenes'));
-  assert.equal(list.length, 6);
-  assert.ok(list.filter((s) => s.week === 1).every((s) => s.status === 'open'));
-  assert.ok(list.filter((s) => s.week > 1).every((s) => s.status === 'locked'));
+  assert.equal(list.length, 18);
+  assert.deepEqual([1, 2, 3].map((w) => list.filter((s) => s.week === w).map((s) => s.day).join('')), ['123456', '123456', '123456']);
+  assert.deepEqual(list.filter((s) => s.status !== 'locked').map((s) => s.id), ['w01-s1']);
 });
 
 test('对话流程：开场 → 8 轮 → 任务完成 → 复盘通关', async () => {

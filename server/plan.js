@@ -46,23 +46,38 @@ function randomWeights(week, dayNo, exclude = []) {
   return w;
 }
 
-function challengeScene(week) {
-  return get("SELECT id, title FROM content_scene WHERE week = ? AND level = 'advanced'", [week]);
-}
+/** 某周某天的内容（场景 / 跟读 / 话题），没有就返回 undefined */
+const sceneOfDay = (week, day) => get('SELECT id, title FROM content_scene WHERE week = ? AND day = ? ORDER BY id', [week, day]);
+const itemOfDay = (type, week, day) => get('SELECT id, zh FROM content_item WHERE type = ? AND week = ? AND day = ? ORDER BY id', [type, week, day]);
 
 function generate(today) {
-  const { dayNo, week } = planPosition(today);
-  const sunday = new Date(today + 'T00:00:00').getDay() === 0;
+  const { dayNo, week, dayInWeek } = planPosition(today);
   const cardsTarget = Math.min(todayQueue(today).cards.length, 30);
+  const scene = sceneOfDay(week, dayInWeek);
   let slots;
-  if (sunday) {
+  if (dayInWeek === 7) {
+    // 每周第 7 天：复习日
     slots = [{ slot: 'warmup', module: 'cards', label: '复习日' }, { slot: 'wrap', module: 'review', label: '本周错句重说' }];
-  } else {
-    const challenge = dayNo % 7 === 6 ? challengeScene(week) : null; // 每周第 6 天：通关挑战
-    const picks = challenge ? ['roleplay', ...weightedPick(randomWeights(week, dayNo, ['roleplay']), 1)] : weightedPick(randomWeights(week, dayNo), 2);
+  } else if (scene) {
+    // 第 1–6 天：表达卡热身 → 当天场景对话（第 6 天是挑战）→ 跟读 / 独白随机一项 → 收尾
+    // 跟读和独白轮着来：本周谁用得少就选谁，一样多时按阶段权重随机
+    const used = { shadow: 0, mono: 0 };
+    for (const r of all('SELECT modules FROM plan_day WHERE day_no >= ? AND day_no < ?', [dayNo - dayInWeek + 1, dayNo]))
+      for (const s of parse(r.modules, [])) if (s.module in used) used[s.module]++;
+    const pick = used.shadow === used.mono ? weightedPick(randomWeights(week, dayNo, ['roleplay']), 1)[0]
+      : used.shadow < used.mono ? 'shadow' : 'mono';
     slots = [
       { slot: 'warmup', module: 'cards', label: '热身' },
-      { slot: 'a', module: picks[0], label: challenge ? '通关挑战' : '随机', ...(challenge ? { sceneId: challenge.id } : {}) },
+      { slot: 'scene', module: 'roleplay', label: dayInWeek === 6 ? '通关挑战' : '今日场景', sceneId: scene.id },
+      { slot: 'b', module: pick, label: '随机' },
+      { slot: 'wrap', module: 'review', label: '收尾' },
+    ];
+  } else {
+    // 这周还没有按天的内容：沿用随机两项
+    const picks = weightedPick(randomWeights(week, dayNo), 2);
+    slots = [
+      { slot: 'warmup', module: 'cards', label: '热身' },
+      { slot: 'a', module: picks[0], label: '随机' },
       { slot: 'b', module: picks[1], label: '随机' },
       { slot: 'wrap', module: 'review', label: '收尾' },
     ];
@@ -105,28 +120,35 @@ function withStatus(row, isToday) {
   return { slots, total, done, ratio: total ? done / total : 0 };
 }
 
-/** 本周主题下，推荐练的场景 / 跟读材料 */
-function suggestions(week) {
-  const scenes = all('SELECT id, title, level FROM content_scene WHERE week = ? ORDER BY level DESC', [week]);
-  const scene = scenes.find((s) => !get('SELECT COUNT(*) n FROM roleplay WHERE scene_id = ? AND passed = 1', [s.id]).n) || scenes[0];
-  const shadow = get("SELECT id, zh FROM content_item WHERE type = 'shadow' AND week = ? ORDER BY id", [week]);
-  return { scene, shadow };
+/** 今天推荐练的场景 / 跟读 / 话题：优先当天的内容；这周没有按天内容时，退回本周第一个没通关的场景 */
+function suggestions(pos) {
+  const d = Math.min(pos.dayInWeek, 6);
+  const scenes = all('SELECT id, title FROM content_scene WHERE week = ? ORDER BY day, id', [pos.week]);
+  const scene = sceneOfDay(pos.week, d) ||
+    scenes.find((s) => !get('SELECT COUNT(*) n FROM roleplay WHERE scene_id = ? AND passed = 1', [s.id]).n) || scenes[0];
+  const shadow = itemOfDay('shadow', pos.week, d) || get("SELECT id, zh FROM content_item WHERE type = 'shadow' AND week = ? ORDER BY day, id", [pos.week]);
+  const topic = itemOfDay('topic', pos.week, d);
+  return { scene, shadow, topic };
 }
 
 export function todayPlan(today = todayStr()) {
   const pos = planPosition(today);
   let row = get('SELECT * FROM plan_day WHERE day_no = ?', [pos.dayNo]);
-  if (!row || row.date !== today) row = generate(today);
+  // 旧版课程（没有「今日场景」）且当天有场景内容：按新规则重排
+  const stale = row && pos.dayInWeek < 7 && sceneOfDay(pos.week, pos.dayInWeek) && !parse(row.modules, []).some((s) => s.slot === 'scene');
+  if (!row || row.date !== today || stale) row = generate(today);
   const st = withStatus(row, true);
-  const sug = suggestions(pos.week);
+  const sug = suggestions(pos);
   const q = todayQueue(today);
+  const title = (id) => get('SELECT title FROM content_scene WHERE id = ?', [id])?.title || '';
   st.slots = st.slots.map((s) => ({
     ...s,
     detail: s.module === 'cards' ? `${q.cards.length} 张待复习` :
-      s.module === 'roleplay' ? (s.sceneId ? challengeScene(pos.week)?.title : sug.scene?.title) || '' :
-      s.module === 'shadow' ? sug.shadow?.zh || '' : s.module === 'mono' ? '随机话题 1 分钟' : '错句回顾，存入笔记',
+      s.module === 'roleplay' ? (s.sceneId ? title(s.sceneId) : sug.scene?.title) || '' :
+      s.module === 'shadow' ? sug.shadow?.zh || '' : s.module === 'mono' ? (sug.topic ? `${sug.topic.zh} · 1 分钟` : '随机话题 1 分钟') : '错句回顾，存入笔记',
     sceneId: s.sceneId || (s.module === 'roleplay' ? sug.scene?.id : undefined),
     shadowId: s.module === 'shadow' ? sug.shadow?.id : undefined,
+    topicId: s.module === 'mono' ? sug.topic?.id : undefined,
   }));
   return { ...pos, phase: phaseOf(pos.week), theme: THEMES[pos.week - 1], swapped: !!row.swapped, ...st, streak: streak(today), assessmentDue: assessment.due() };
 }
@@ -204,7 +226,7 @@ export function progress(today = todayStr()) {
   const avg = (k) => (last.length ? Math.round(last.reduce((n, x) => n + (x[k] || 0), 0) / last.length) : null);
   let speakMs = 0;
   for (const r of all('SELECT words FROM recording')) speakMs += fluency(parse(r.words, [])).durationMs || 0;
-  const cs = cardStats(pos.week);
+  const cs = cardStats(pos);
   const scenesTotal = get('SELECT COUNT(*) n FROM content_scene').n;
   const scenesPassed = get('SELECT COUNT(DISTINCT scene_id) n FROM roleplay WHERE passed = 1').n;
   const st = streak(today);

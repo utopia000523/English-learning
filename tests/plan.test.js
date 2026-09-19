@@ -26,20 +26,19 @@ test('按权重不放回抽取，不重复', () => {
   assert.deepEqual(weightedPick({ a: 1, b: 0 }, 2), ['a']);
 });
 
-test('今日课程：热身 + 两个不重复随机 + 收尾（周日为复习日）', async () => {
+test('今日课程：热身 + 当天场景 + 跟读或独白 + 收尾', async () => {
   const p = await get('/plan/today');
-  const sunday = new Date().getDay() === 0;
-  if (sunday) { assert.deepEqual(p.slots.map((s) => s.module), ['cards', 'review']); return; }
-  assert.equal(p.slots.length, 4);
-  assert.equal(p.slots[0].module, 'cards');
-  assert.equal(p.slots[3].module, 'review');
-  assert.notEqual(p.slots[1].module, p.slots[2].module);
-  assert.ok(!['cards', 'review'].includes(p.slots[1].module));
+  assert.equal(p.dayInWeek, 1);
+  assert.deepEqual(p.slots.map((s) => s.module).filter((m) => m !== 'shadow' && m !== 'mono'), ['cards', 'roleplay', 'review']);
+  assert.equal(p.slots[1].sceneId, 'w01-s1');
+  assert.equal(p.slots[1].label, '今日场景');
+  assert.ok(['shadow', 'mono'].includes(p.slots[2].module));
+  if (p.slots[2].module === 'shadow') assert.equal(p.slots[2].shadowId, 'w01-sh1');
+  else assert.equal(p.slots[2].topicId, 'w01-t1');
   assert.equal(p.total, 30);
 });
 
 test('换一个只能一次；收尾完成后状态为已完成', async () => {
-  if (new Date().getDay() === 0) return;
   const a = await post('/plan/swap');
   assert.equal(a.status, 200);
   assert.equal((await post('/plan/swap')).status, 400);
@@ -58,5 +57,5 @@ test('表达卡复习计入活动与连续打卡；日历与进度可用', async
   assert.ok(plan.days[0].ratio > 0);
   const pr = await get('/progress');
   assert.equal(pr.streak, 1);
-  assert.equal(pr.scenesTotal, 6);
+  assert.equal(pr.scenesTotal, 18);
 });

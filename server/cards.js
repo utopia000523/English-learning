@@ -9,19 +9,26 @@ export function planPosition(today = todayStr()) {
   let { startDate } = getSettings();
   if (!startDate) startDate = updateSettings({ startDate: today }).startDate;
   const dayNo = Math.max(1, diffDays(startDate, today) + 1);
-  return { startDate, dayNo, week: Math.min(12, Math.ceil(dayNo / 7)) };
+  const week = Math.min(12, Math.ceil(dayNo / 7));
+  const dayInWeek = dayNo > 84 ? 7 : ((dayNo - 1) % 7) + 1; // 1–6 学新内容，7 复习日
+  return { startDate, dayNo, week, dayInWeek };
 }
+
+/** 按天解锁：之前的周全部可用；本周到今天为止（第 7 天复习日时整周可用） */
+export const UNLOCK_SQL = '(week < ? OR (week = ? AND COALESCE(day, 1) <= ?))';
+export const unlockArgs = (pos) => [pos.week, pos.week, pos.dayInWeek];
+export const isUnlocked = (week, day, pos) => week < pos.week || (week === pos.week && (day || 1) <= pos.dayInWeek);
 
 const toClient = (c, isNew = false) => ({
   id: c.id, en: c.en, zh: c.zh, example: c.example, scene: c.scene, week: c.week,
   source: c.source, isNew, preview: preview(c),
 });
 
-export function stats(week) {
+export function stats(pos) {
   return {
     mastered: get('SELECT COUNT(*) n FROM card WHERE mastered = 1').n,
     learning: get('SELECT COUNT(*) n FROM card WHERE introduced_at IS NOT NULL AND mastered = 0').n,
-    newLeft: get('SELECT COUNT(*) n FROM card WHERE introduced_at IS NULL AND week <= ?', [week]).n,
+    newLeft: get(`SELECT COUNT(*) n FROM card WHERE introduced_at IS NULL AND ${UNLOCK_SQL}`, unlockArgs(pos)).n,
   };
 }
 
@@ -38,12 +45,12 @@ export function todayQueue(today = todayStr()) {
     .slice(0, room === Infinity ? undefined : room);
   const introducedToday = get('SELECT COUNT(*) n FROM card WHERE introduced_at = ?', [today]).n;
   const limit = Math.max(0, Math.min(cardsNewPerDay - introducedToday, room - due.length));
-  const fresh = all('SELECT * FROM card WHERE introduced_at IS NULL AND week <= ? ORDER BY week, id LIMIT ?', [pos.week, limit]);
+  const fresh = all(`SELECT * FROM card WHERE introduced_at IS NULL AND ${UNLOCK_SQL} ORDER BY week, day, id LIMIT ?`, [...unlockArgs(pos), limit]);
   return {
     ...pos,
     reviewedToday,
     cards: [...due.map((c) => toClient(c)), ...fresh.map((c) => toClient(c, true))],
-    stats: stats(pos.week),
+    stats: stats(pos),
   };
 }
 
@@ -60,8 +67,8 @@ export function reviewCard(id, rating, today = todayStr()) {
 
 /** 手动添加 / 从对话复盘、独白改写加入（阶段 3、4 复用） */
 export function addCard({ en, zh = '', example = '', source = '手动', scene = '' }, today = todayStr()) {
-  const { week } = planPosition(today);
-  const { lastId } = run('INSERT INTO card (en, zh, example, source, scene, week) VALUES (?,?,?,?,?,?)',
-    [en, zh, example, source, scene, week]);
+  const { week, dayInWeek } = planPosition(today);
+  const { lastId } = run('INSERT INTO card (en, zh, example, source, scene, week, day) VALUES (?,?,?,?,?,?,?)',
+    [en, zh, example, source, scene, week, Math.min(dayInWeek, 6)]);
   return toClient(get('SELECT * FROM card WHERE id = ?', [lastId]), true);
 }

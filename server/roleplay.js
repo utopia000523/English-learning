@@ -1,6 +1,6 @@
 // AI 情景对话（PRD 3.2）
 import { all, get, run, getSettings } from './db.js';
-import { planPosition } from './cards.js';
+import { planPosition, isUnlocked, UNLOCK_SQL, unlockArgs } from './cards.js';
 import * as llm from './services/llm.js';
 import { fluency, mergeFluency } from './services/score.js';
 import { logEvent } from './activity.js';
@@ -15,14 +15,14 @@ const sceneOf = (row) => row && { ...JSON.parse(row.data), week: row.week };
 const parse = (s, d) => { try { return JSON.parse(s) ?? d; } catch { return d; } };
 
 export function listScenes() {
-  const { week } = planPosition();
-  return all('SELECT * FROM content_scene ORDER BY week, level DESC, id').map((r) => {
+  const pos = planPosition();
+  return all('SELECT * FROM content_scene ORDER BY week, day, id').map((r) => {
     const sc = sceneOf(r);
     const passed = get('SELECT COUNT(*) n FROM roleplay WHERE scene_id = ? AND passed = 1', [r.id]).n > 0;
     const tried = get('SELECT COUNT(*) n FROM roleplay WHERE scene_id = ?', [r.id]).n > 0;
     return {
-      id: sc.id, week: r.week, title: sc.title, level: sc.level, roleZh: sc.role_zh,
-      status: r.week > week ? 'locked' : passed ? 'passed' : tried ? 'tried' : 'open',
+      id: sc.id, week: r.week, day: r.day || 1, title: sc.title, level: sc.level, roleZh: sc.role_zh,
+      status: !isUnlocked(r.week, r.day, pos) ? 'locked' : passed ? 'passed' : tried ? 'tried' : 'open',
     };
   });
 }

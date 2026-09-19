@@ -1,419 +1,945 @@
 {
- "week": 3,
- "theme": "吃饭点餐",
- "reviewed": false,
- "items": [
-  {
-   "id": "w03-c01",
-   "type": "card",
-   "zh": "能给我看一下菜单吗？",
-   "en": "Could I see the menu, please?",
-   "example": "Can we get some menus?"
-  },
-  {
-   "id": "w03-c02",
-   "type": "card",
-   "zh": "两位，谢谢。",
-   "en": "A table for two, please.",
-   "example": "Just the two of us."
-  },
-  {
-   "id": "w03-c03",
-   "type": "card",
-   "zh": "你们有什么推荐的？",
-   "en": "What do you recommend?",
-   "example": "What's good here?"
-  },
-  {
-   "id": "w03-c04",
-   "type": "card",
-   "zh": "我要这个。",
-   "en": "I'll have this one.",
-   "example": "I'll go with the salmon."
-  },
-  {
-   "id": "w03-c05",
-   "type": "card",
-   "zh": "我要一杯燕麦拿铁。",
-   "en": "Can I get an oat latte?",
-   "example": "I'd like a medium latte, please."
-  },
-  {
-   "id": "w03-c06",
-   "type": "card",
-   "zh": "冰的，少冰。",
-   "en": "Iced, with light ice, please.",
-   "example": "No ice, please."
-  },
-  {
-   "id": "w03-c07",
-   "type": "card",
-   "zh": "你们有无糖的吗？",
-   "en": "Do you have anything sugar-free?",
-   "example": "Is there a sugar-free option?"
-  },
-  {
-   "id": "w03-c08",
-   "type": "card",
-   "zh": "在这儿吃。",
-   "en": "For here, please.",
-   "example": "To go, please."
-  },
-  {
-   "id": "w03-c09",
-   "type": "card",
-   "zh": "能换成燕麦奶吗？",
-   "en": "Could I get that with oat milk instead?",
-   "example": "Can I swap the fries for a salad?"
-  },
-  {
-   "id": "w03-c10",
-   "type": "card",
-   "zh": "我不太能吃辣。",
-   "en": "I can't really handle spicy food.",
-   "example": "Could you make it not spicy?"
-  },
-  {
-   "id": "w03-c11",
-   "type": "card",
-   "zh": "这个里面有花生吗？",
-   "en": "Does this have peanuts in it?",
-   "example": "Is there any dairy in this?"
-  },
-  {
-   "id": "w03-c12",
-   "type": "card",
-   "zh": "这个份量大吗？",
-   "en": "How big is the portion?",
-   "example": "Is it enough for two?"
-  },
-  {
-   "id": "w03-c13",
-   "type": "card",
-   "zh": "我们还没想好，再等一下。",
-   "en": "We need a few more minutes.",
-   "example": "Could you give us a minute?"
-  },
-  {
-   "id": "w03-c14",
-   "type": "card",
-   "zh": "就这些，谢谢。",
-   "en": "That's all, thanks.",
-   "example": "That'll be it for now."
-  },
-  {
-   "id": "w03-c15",
-   "type": "card",
-   "zh": "我点的菜还没上。",
-   "en": "I'm still waiting on my order.",
-   "example": "My food hasn't come yet."
-  },
-  {
-   "id": "w03-c16",
-   "type": "card",
-   "zh": "这好像不是我点的。",
-   "en": "I don't think this is what I ordered.",
-   "example": "Sorry, I ordered the chicken, not the beef."
-  },
-  {
-   "id": "w03-c17",
-   "type": "card",
-   "zh": "能再给我一些水吗？",
-   "en": "Could I get some more water?",
-   "example": "Can I get a refill?"
-  },
-  {
-   "id": "w03-c18",
-   "type": "card",
-   "zh": "能帮我打包吗？",
-   "en": "Can I get a box for this?",
-   "example": "Could you wrap this up for me?"
-  },
-  {
-   "id": "w03-c19",
-   "type": "card",
-   "zh": "买单。",
-   "en": "Can we get the check, please?",
-   "example": "Check, please."
-  },
-  {
-   "id": "w03-c20",
-   "type": "card",
-   "zh": "可以刷卡吗？",
-   "en": "Do you take cards?",
-   "example": "Can I pay by card?"
-  },
-  {
-   "id": "w03-c21",
-   "type": "card",
-   "zh": "我们分开付。",
-   "en": "Can we split the bill?",
-   "example": "We'll pay separately."
-  },
-  {
-   "id": "w03-c22",
-   "type": "card",
-   "zh": "这顿我请。",
-   "en": "It's on me.",
-   "example": "Let me get this one."
-  },
-  {
-   "id": "w03-c23",
-   "type": "card",
-   "zh": "很好吃，谢谢。",
-   "en": "It's delicious, thanks.",
-   "example": "Everything was great."
-  },
-  {
-   "id": "w03-c24",
-   "type": "card",
-   "zh": "有点咸。",
-   "en": "It's a little too salty.",
-   "example": "It's a bit bland."
-  },
-  {
-   "id": "w03-c25",
-   "type": "card",
-   "zh": "要等多久？",
-   "en": "How long is the wait?",
-   "example": "How long will it take?"
-  },
-  {
-   "id": "w03-c26",
-   "type": "card",
-   "zh": "我预订了七点的位子。",
-   "en": "I have a reservation for seven.",
-   "example": "I booked a table under Utopia."
-  },
-  {
-   "id": "w03-c27",
-   "type": "card",
-   "zh": "能坐靠窗的位子吗？",
-   "en": "Could we sit by the window?",
-   "example": "Is there a table outside?"
-  },
-  {
-   "id": "w03-c28",
-   "type": "card",
-   "zh": "这个再来一份。",
-   "en": "I'll have another one of these.",
-   "example": "Same again, please."
-  },
-  {
-   "id": "w03-c29",
-   "type": "card",
-   "zh": "我吃饱了。",
-   "en": "I'm full.",
-   "example": "I couldn't eat another bite."
-  },
-  {
-   "id": "w03-c30",
-   "type": "card",
-   "zh": "谢谢，很好吃！",
-   "en": "Thanks, that was great!",
-   "example": "We really enjoyed it."
-  }
- ],
- "scenes": [
-  {
-   "id": "w03-s1",
-   "level": "basic",
-   "title": "咖啡店点单",
-   "role": "Sam",
-   "role_zh": "Sam · 咖啡师",
-   "persona": "Sam, a barista at a busy coffee shop",
-   "opening": "Hi there! What can I get for you today?",
-   "opening_zh": "你好！今天想喝点什么？",
-   "brief": "你在一家咖啡店，想点一杯少冰的燕麦拿铁，并问问有没有无糖选项。",
-   "tasks": [
+  "week": 3,
+  "theme": "吃饭点餐",
+  "reviewed": false,
+  "items": [
     {
-     "zh": "点一杯燕麦拿铁",
-     "check": "the learner orders an oat latte"
+      "id": "w03-c05",
+      "type": "card",
+      "zh": "我要一杯燕麦拿铁。",
+      "en": "Can I get an oat latte?",
+      "example": "I'd like a medium latte, please.",
+      "day": 1
     },
     {
-     "zh": "要冰的",
-     "check": "the learner asks for it iced"
+      "id": "w03-c06",
+      "type": "card",
+      "zh": "冰的，少冰。",
+      "en": "Iced, with light ice, please.",
+      "example": "No ice, please.",
+      "day": 1
     },
     {
-     "zh": "少冰",
-     "check": "the learner asks for light ice / less ice"
+      "id": "w03-c07",
+      "type": "card",
+      "zh": "你们有无糖的吗？",
+      "en": "Do you have anything sugar-free?",
+      "example": "Is there a sugar-free option?",
+      "day": 1
     },
     {
-     "zh": "问有没有无糖选项",
-     "check": "the learner asks about sugar-free options"
+      "id": "w03-c08",
+      "type": "card",
+      "zh": "在这儿吃。",
+      "en": "For here, please.",
+      "example": "To go, please.",
+      "day": 1
+    },
+    {
+      "id": "w03-c09",
+      "type": "card",
+      "zh": "能换成燕麦奶吗？",
+      "en": "Could I get that with oat milk instead?",
+      "example": "Can I swap the fries for a salad?",
+      "day": 1
+    },
+    {
+      "id": "w03-c14",
+      "type": "card",
+      "zh": "就这些，谢谢。",
+      "en": "That's all, thanks.",
+      "example": "That'll be it for now.",
+      "day": 1
+    },
+    {
+      "id": "w03-c31",
+      "type": "card",
+      "day": 1,
+      "zh": "我要中杯。",
+      "en": "Can I get a medium?",
+      "example": "Can I get a large, please?"
+    },
+    {
+      "id": "w03-c32",
+      "type": "card",
+      "day": 1,
+      "zh": "能打包带走吗？",
+      "en": "Could I get it to go?",
+      "example": "Could I get this to go?"
+    },
+    {
+      "id": "w03-c03",
+      "type": "card",
+      "zh": "你们有什么推荐的？",
+      "en": "What do you recommend?",
+      "example": "What's good here?",
+      "day": 2
+    },
+    {
+      "id": "w03-c04",
+      "type": "card",
+      "zh": "我要这个。",
+      "en": "I'll have this one.",
+      "example": "I'll go with the salmon.",
+      "day": 2
+    },
+    {
+      "id": "w03-c10",
+      "type": "card",
+      "zh": "我不太能吃辣。",
+      "en": "I can't really handle spicy food.",
+      "example": "Could you make it not spicy?",
+      "day": 2
+    },
+    {
+      "id": "w03-c11",
+      "type": "card",
+      "zh": "这个里面有花生吗？",
+      "en": "Does this have peanuts in it?",
+      "example": "Is there any dairy in this?",
+      "day": 2
+    },
+    {
+      "id": "w03-c12",
+      "type": "card",
+      "zh": "这个份量大吗？",
+      "en": "How big is the portion?",
+      "example": "Is it enough for two?",
+      "day": 2
+    },
+    {
+      "id": "w03-c28",
+      "type": "card",
+      "zh": "这个再来一份。",
+      "en": "I'll have another one of these.",
+      "example": "Same again, please.",
+      "day": 2
+    },
+    {
+      "id": "w03-c33",
+      "type": "card",
+      "day": 2,
+      "zh": "这道菜里有什么？",
+      "en": "What's in this dish?",
+      "example": "Excuse me, what's in this salad?"
+    },
+    {
+      "id": "w03-c34",
+      "type": "card",
+      "day": 2,
+      "zh": "这个很辣吗？",
+      "en": "Is it very spicy?",
+      "example": "Is the curry very spicy?"
+    },
+    {
+      "id": "w03-c15",
+      "type": "card",
+      "zh": "我点的菜还没上。",
+      "en": "I'm still waiting on my order.",
+      "example": "My food hasn't come yet.",
+      "day": 3
+    },
+    {
+      "id": "w03-c16",
+      "type": "card",
+      "zh": "这好像不是我点的。",
+      "en": "I don't think this is what I ordered.",
+      "example": "Sorry, I ordered the chicken, not the beef.",
+      "day": 3
+    },
+    {
+      "id": "w03-c17",
+      "type": "card",
+      "zh": "能再给我一些水吗？",
+      "en": "Could I get some more water?",
+      "example": "Can I get a refill?",
+      "day": 3
+    },
+    {
+      "id": "w03-c24",
+      "type": "card",
+      "zh": "有点咸。",
+      "en": "It's a little too salty.",
+      "example": "It's a bit bland.",
+      "day": 3
+    },
+    {
+      "id": "w03-c35",
+      "type": "card",
+      "day": 3,
+      "zh": "能帮我们催一下菜吗？",
+      "en": "Could you check on our order?",
+      "example": "Excuse me, could you check on our order?"
+    },
+    {
+      "id": "w03-c36",
+      "type": "card",
+      "day": 3,
+      "zh": "没关系。",
+      "en": "No worries.",
+      "example": "No worries, it happens."
+    },
+    {
+      "id": "w03-c37",
+      "type": "card",
+      "day": 3,
+      "zh": "能给我们一些纸巾吗？",
+      "en": "Could we get some napkins?",
+      "example": "Could we get some extra napkins?"
+    },
+    {
+      "id": "w03-c38",
+      "type": "card",
+      "day": 3,
+      "zh": "这个有点凉了。",
+      "en": "This is a bit cold.",
+      "example": "Sorry, my soup is a bit cold."
+    },
+    {
+      "id": "w03-c18",
+      "type": "card",
+      "zh": "能帮我打包吗？",
+      "en": "Can I get a box for this?",
+      "example": "Could you wrap this up for me?",
+      "day": 4
+    },
+    {
+      "id": "w03-c19",
+      "type": "card",
+      "zh": "买单。",
+      "en": "Can we get the check, please?",
+      "example": "Check, please.",
+      "day": 4
+    },
+    {
+      "id": "w03-c20",
+      "type": "card",
+      "zh": "可以刷卡吗？",
+      "en": "Do you take cards?",
+      "example": "Can I pay by card?",
+      "day": 4
+    },
+    {
+      "id": "w03-c21",
+      "type": "card",
+      "zh": "我们分开付。",
+      "en": "Can we split the bill?",
+      "example": "We'll pay separately.",
+      "day": 4
+    },
+    {
+      "id": "w03-c22",
+      "type": "card",
+      "zh": "这顿我请。",
+      "en": "It's on me.",
+      "example": "Let me get this one.",
+      "day": 4
+    },
+    {
+      "id": "w03-c39",
+      "type": "card",
+      "day": 4,
+      "zh": "可以用微信付吗？",
+      "en": "Can I pay with WeChat?",
+      "example": "Can I pay with Alipay?"
+    },
+    {
+      "id": "w03-c40",
+      "type": "card",
+      "day": 4,
+      "zh": "能给我开张收据吗？",
+      "en": "Could I get a receipt?",
+      "example": "Could I get a receipt, please?"
+    },
+    {
+      "id": "w03-c41",
+      "type": "card",
+      "day": 4,
+      "zh": "不用找了。",
+      "en": "Keep the change.",
+      "example": "Here you go. Keep the change."
+    },
+    {
+      "id": "w03-c23",
+      "type": "card",
+      "zh": "很好吃，谢谢。",
+      "en": "It's delicious, thanks.",
+      "example": "Everything was great.",
+      "day": 5
+    },
+    {
+      "id": "w03-c29",
+      "type": "card",
+      "zh": "我吃饱了。",
+      "en": "I'm full.",
+      "example": "I couldn't eat another bite.",
+      "day": 5
+    },
+    {
+      "id": "w03-c30",
+      "type": "card",
+      "zh": "谢谢，很好吃！",
+      "en": "Thanks, that was great!",
+      "example": "We really enjoyed it.",
+      "day": 5
+    },
+    {
+      "id": "w03-c42",
+      "type": "card",
+      "day": 5,
+      "zh": "你想吃点什么？",
+      "en": "What are you in the mood for?",
+      "example": "What are you in the mood for tonight?"
+    },
+    {
+      "id": "w03-c43",
+      "type": "card",
+      "day": 5,
+      "zh": "吃火锅怎么样？",
+      "en": "How about hot pot?",
+      "example": "How about Japanese food?"
+    },
+    {
+      "id": "w03-c44",
+      "type": "card",
+      "day": 5,
+      "zh": "我想吃点清淡的。",
+      "en": "I'm craving something light.",
+      "example": "I'm craving something sweet."
+    },
+    {
+      "id": "w03-c45",
+      "type": "card",
+      "day": 5,
+      "zh": "我知道附近有家很不错的店。",
+      "en": "I know a great place nearby.",
+      "example": "I know a great noodle place nearby."
+    },
+    {
+      "id": "w03-c46",
+      "type": "card",
+      "day": 5,
+      "zh": "我们七点在那儿见。",
+      "en": "Let's meet there at seven.",
+      "example": "Let's meet there at six thirty."
+    },
+    {
+      "id": "w03-c01",
+      "type": "card",
+      "zh": "能给我看一下菜单吗？",
+      "en": "Could I see the menu, please?",
+      "example": "Can we get some menus?",
+      "day": 6
+    },
+    {
+      "id": "w03-c02",
+      "type": "card",
+      "zh": "两位，谢谢。",
+      "en": "A table for two, please.",
+      "example": "Just the two of us.",
+      "day": 6
+    },
+    {
+      "id": "w03-c13",
+      "type": "card",
+      "zh": "我们还没想好，再等一下。",
+      "en": "We need a few more minutes.",
+      "example": "Could you give us a minute?",
+      "day": 6
+    },
+    {
+      "id": "w03-c25",
+      "type": "card",
+      "zh": "要等多久？",
+      "en": "How long is the wait?",
+      "example": "How long will it take?",
+      "day": 6
+    },
+    {
+      "id": "w03-c26",
+      "type": "card",
+      "zh": "我预订了七点的位子。",
+      "en": "I have a reservation for seven.",
+      "example": "I booked a table under Utopia.",
+      "day": 6
+    },
+    {
+      "id": "w03-c27",
+      "type": "card",
+      "zh": "能坐靠窗的位子吗？",
+      "en": "Could we sit by the window?",
+      "example": "Is there a table outside?",
+      "day": 6
+    },
+    {
+      "id": "w03-c47",
+      "type": "card",
+      "day": 6,
+      "zh": "我们可以点菜了。",
+      "en": "We're ready to order.",
+      "example": "I think we're ready to order."
+    },
+    {
+      "id": "w03-c48",
+      "type": "card",
+      "day": 6,
+      "zh": "一切都很好。",
+      "en": "Everything was great.",
+      "example": "Thanks, everything was great."
     }
-   ],
-   "hints": [
+  ],
+  "scenes": [
     {
-     "zh": "我要一杯燕麦拿铁。",
-     "en": "Can I get an oat latte?"
+      "id": "w03-s1",
+      "level": "basic",
+      "title": "咖啡店点单",
+      "role": "Sam",
+      "role_zh": "Sam · 咖啡师",
+      "persona": "Sam, a barista at a busy coffee shop",
+      "opening": "Hi there! What can I get for you today?",
+      "opening_zh": "你好！今天想喝点什么？",
+      "brief": "你在一家咖啡店，想点一杯少冰的燕麦拿铁，并问问有没有无糖选项。",
+      "tasks": [
+        {
+          "zh": "点一杯燕麦拿铁",
+          "check": "the learner orders an oat latte"
+        },
+        {
+          "zh": "要冰的",
+          "check": "the learner asks for it iced"
+        },
+        {
+          "zh": "少冰",
+          "check": "the learner asks for light ice / less ice"
+        },
+        {
+          "zh": "问有没有无糖选项",
+          "check": "the learner asks about sugar-free options"
+        }
+      ],
+      "hints": [
+        {
+          "zh": "我要一杯燕麦拿铁。",
+          "en": "Can I get an oat latte?"
+        },
+        {
+          "zh": "少冰，谢谢。",
+          "en": "Light ice, please."
+        },
+        {
+          "zh": "你们有无糖的吗？",
+          "en": "Do you have anything sugar-free?"
+        }
+      ],
+      "day": 1
     },
     {
-     "zh": "少冰，谢谢。",
-     "en": "Light ice, please."
+      "id": "w03-s3",
+      "day": 2,
+      "level": "basic",
+      "title": "问推荐和忌口",
+      "role": "Leo",
+      "role_zh": "Leo · 服务员",
+      "persona": "Leo, a patient waiter at a Cantonese-Western fusion restaurant; some dishes contain peanuts or chili",
+      "opening": "Hi there! Are you ready to order, or do you need a few more minutes?",
+      "opening_zh": "你好！可以点菜了吗，还是需要再看看？",
+      "brief": "在餐厅点菜。先问问推荐，确认菜里有没有你不吃的东西，再点一道。",
+      "tasks": [
+        {
+          "zh": "请服务员推荐",
+          "check": "the learner asks for a recommendation",
+          "match": [
+            "what do you recommend",
+            "any recommendations?",
+            "what('s| is) (good|popular|your favorite)"
+          ]
+        },
+        {
+          "zh": "问一道菜里有什么或辣不辣",
+          "check": "the learner asks what is in a dish or whether it is spicy",
+          "match": [
+            "what('s| is) in",
+            "(is|it's|is it) (very |too )?spicy",
+            "does (it|this) have"
+          ]
+        },
+        {
+          "zh": "说明你不能吃辣或不吃某样东西",
+          "check": "the learner says they can't eat spicy food or something else"
+        },
+        {
+          "zh": "点一道菜",
+          "check": "the learner orders a dish",
+          "match": [
+            "i('ll| will) (have|take|get)",
+            "can i (get|have)",
+            "i('d| would) like"
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "zh": "你们有什么推荐的？",
+          "en": "What do you recommend?"
+        },
+        {
+          "zh": "这个很辣吗？",
+          "en": "Is it very spicy?"
+        },
+        {
+          "zh": "我不太能吃辣。",
+          "en": "I can't really handle spicy food."
+        }
+      ]
     },
     {
-     "zh": "你们有无糖的吗？",
-     "en": "Do you have anything sugar-free?"
+      "id": "w03-s4",
+      "day": 3,
+      "level": "basic",
+      "title": "菜上错了",
+      "role": "Leo",
+      "role_zh": "Leo · 服务员",
+      "persona": "Leo, a busy but apologetic waiter; the restaurant is crowded tonight and he brought the wrong dish",
+      "opening": "Here's your beef noodle soup. Enjoy!",
+      "opening_zh": "这是您的牛肉汤面，请慢用！",
+      "brief": "等了很久，端上来的却不是你点的。礼貌地说明问题。",
+      "tasks": [
+        {
+          "zh": "说明这不是你点的菜",
+          "check": "the learner says this is not what they ordered",
+          "match": [
+            "(not|isn't) what i ordered",
+            "i (didn't|did not) order",
+            "i ordered"
+          ]
+        },
+        {
+          "zh": "说明你等了很久 / 请对方催一下",
+          "check": "the learner says they have been waiting long or asks him to check on the order"
+        },
+        {
+          "zh": "再提一个小请求（水、纸巾等）",
+          "check": "the learner asks for something else such as water or napkins",
+          "match": [
+            "(water|napkins?|tissues?|chopsticks|a fork|a spoon)"
+          ]
+        },
+        {
+          "zh": "保持礼貌，回应对方的道歉",
+          "check": "the learner responds politely to the apology (e.g. no worries, that's okay)",
+          "match": [
+            "no worries|no problem|that's (okay|ok|fine|alright)|it's (okay|ok|fine)"
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "zh": "这好像不是我点的。",
+          "en": "I don't think this is what I ordered."
+        },
+        {
+          "zh": "能帮我们催一下菜吗？",
+          "en": "Could you check on our order?"
+        },
+        {
+          "zh": "没关系。",
+          "en": "No worries."
+        }
+      ]
+    },
+    {
+      "id": "w03-s5",
+      "day": 4,
+      "level": "basic",
+      "title": "结账与打包",
+      "role": "Anna",
+      "role_zh": "Anna · 收银员",
+      "persona": "Anna, a friendly cashier at a casual restaurant that accepts cards, WeChat Pay and Alipay",
+      "opening": "How was everything today?",
+      "opening_zh": "今天吃得怎么样？",
+      "brief": "吃完饭去前台结账，还想把剩下的打包。",
+      "tasks": [
+        {
+          "zh": "说说吃得怎么样",
+          "check": "the learner says how the food was"
+        },
+        {
+          "zh": "请对方帮你打包",
+          "check": "the learner asks for a box or to pack the leftovers",
+          "match": [
+            "(a )?box|to go|take (it|this) (home|away)|pack"
+          ]
+        },
+        {
+          "zh": "问能不能用某种方式付款",
+          "check": "the learner asks about a payment method",
+          "match": [
+            "(pay|paying) (with|by)",
+            "take cards|wechat|alipay|credit card"
+          ]
+        },
+        {
+          "zh": "要收据",
+          "check": "the learner asks for a receipt",
+          "match": [
+            "receipt|invoice|fapiao"
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "zh": "很好吃，谢谢。",
+          "en": "It was delicious, thanks."
+        },
+        {
+          "zh": "能帮我打包吗？",
+          "en": "Can I get a box for this?"
+        },
+        {
+          "zh": "能给我开张收据吗？",
+          "en": "Could I get a receipt?"
+        }
+      ]
+    },
+    {
+      "id": "w03-s6",
+      "day": 5,
+      "level": "basic",
+      "title": "和朋友商量吃什么",
+      "role": "Kevin",
+      "role_zh": "Kevin · 朋友",
+      "persona": "Kevin, a friend who is hungry but can't decide what to eat tonight; he loves spicy food",
+      "opening": "I'm starving. What should we eat tonight?",
+      "opening_zh": "我饿死了。今晚吃什么？",
+      "brief": "晚上和朋友约饭，一起决定吃什么、去哪、几点见。",
+      "tasks": [
+        {
+          "zh": "问对方想吃什么",
+          "check": "the learner asks what Kevin feels like eating",
+          "match": [
+            "in the mood for",
+            "what do you (want|feel like)",
+            "what are you craving",
+            "how about you|what about you|and you\\b"
+          ]
+        },
+        {
+          "zh": "提一个建议",
+          "check": "the learner suggests a type of food or a restaurant",
+          "match": [
+            "how about",
+            "what about",
+            "let's (go|get|try)",
+            "i know a"
+          ]
+        },
+        {
+          "zh": "说明你不太能吃辣",
+          "check": "the learner says they can't really eat spicy food"
+        },
+        {
+          "zh": "约好时间地点",
+          "check": "the learner agrees on when and where to meet"
+        }
+      ],
+      "hints": [
+        {
+          "zh": "你想吃点什么？",
+          "en": "What are you in the mood for?"
+        },
+        {
+          "zh": "我想吃点清淡的。",
+          "en": "I'm craving something light."
+        },
+        {
+          "zh": "我们七点在那儿见。",
+          "en": "Let's meet there at seven."
+        }
+      ]
+    },
+    {
+      "id": "w03-s2",
+      "level": "advanced",
+      "title": "挑战：餐厅点菜与结账",
+      "role": "Leo",
+      "role_zh": "Leo · 服务员",
+      "persona": "Leo, a server at a casual Western restaurant",
+      "opening": "Good evening! Welcome in. Do you have a reservation?",
+      "opening_zh": "晚上好！欢迎光临。您有预订吗？",
+      "brief": "你和朋友去一家西餐厅吃饭，从入座一直到结账。",
+      "tasks": [
+        {
+          "zh": "说明你有预订、几位",
+          "check": "the learner mentions the reservation and number of people"
+        },
+        {
+          "zh": "请服务员推荐菜",
+          "check": "the learner asks for a recommendation"
+        },
+        {
+          "zh": "点主菜，并说明不太能吃辣",
+          "check": "the learner orders a main dish and says they can't handle spicy food"
+        },
+        {
+          "zh": "结账并要求分开付",
+          "check": "the learner asks for the check and to split the bill"
+        }
+      ],
+      "hints": [
+        {
+          "zh": "我预订了七点的位子，两位。",
+          "en": "I have a reservation for seven, for two."
+        },
+        {
+          "zh": "你们有什么推荐的？",
+          "en": "What do you recommend?"
+        },
+        {
+          "zh": "我们分开付。",
+          "en": "Can we split the bill?"
+        }
+      ],
+      "day": 6
     }
-   ]
-  },
-  {
-   "id": "w03-s2",
-   "level": "advanced",
-   "title": "餐厅点菜与结账",
-   "role": "Leo",
-   "role_zh": "Leo · 服务员",
-   "persona": "Leo, a server at a casual Western restaurant",
-   "opening": "Good evening! Welcome in. Do you have a reservation?",
-   "opening_zh": "晚上好！欢迎光临。您有预订吗？",
-   "brief": "你和朋友去一家西餐厅吃饭，从入座一直到结账。",
-   "tasks": [
+  ],
+  "shadow": [
     {
-     "zh": "说明你有预订、几位",
-     "check": "the learner mentions the reservation and number of people"
+      "id": "w03-sh1",
+      "title": "咖啡店",
+      "sentences": [
+        {
+          "en": "Hi, can I get an oat latte, please?",
+          "zh": "你好，我要一杯燕麦拿铁。"
+        },
+        {
+          "en": "Iced, with light ice.",
+          "zh": "冰的，少冰。"
+        },
+        {
+          "en": "Do you have anything sugar-free?",
+          "zh": "你们有无糖的吗？"
+        },
+        {
+          "en": "For here, please.",
+          "zh": "在这儿喝。"
+        },
+        {
+          "en": "Can I pay by card?",
+          "zh": "可以刷卡吗？"
+        },
+        {
+          "en": "Thanks, have a nice day!",
+          "zh": "谢谢，祝你今天愉快！"
+        }
+      ],
+      "day": 1
     },
     {
-     "zh": "请服务员推荐菜",
-     "check": "the learner asks for a recommendation"
+      "id": "w03-sh3",
+      "day": 2,
+      "title": "问推荐",
+      "sentences": [
+        {
+          "en": "Excuse me, what do you recommend?",
+          "zh": "请问你们有什么推荐的？"
+        },
+        {
+          "en": "What's in this dish?",
+          "zh": "这道菜里有什么？"
+        },
+        {
+          "en": "Is it very spicy?",
+          "zh": "这个很辣吗？"
+        },
+        {
+          "en": "I can't really handle spicy food.",
+          "zh": "我不太能吃辣。"
+        },
+        {
+          "en": "Okay, I'll have the grilled fish.",
+          "zh": "好，那我要烤鱼。"
+        }
+      ]
     },
     {
-     "zh": "点主菜，并说明不太能吃辣",
-     "check": "the learner orders a main dish and says they can't handle spicy food"
+      "id": "w03-sh4",
+      "day": 3,
+      "title": "菜上错了",
+      "sentences": [
+        {
+          "en": "Excuse me, I don't think this is what I ordered.",
+          "zh": "不好意思，这好像不是我点的。"
+        },
+        {
+          "en": "I ordered the chicken rice.",
+          "zh": "我点的是鸡饭。"
+        },
+        {
+          "en": "We've been waiting for a while.",
+          "zh": "我们等了挺久了。"
+        },
+        {
+          "en": "Could you check on our order?",
+          "zh": "能帮我们催一下吗？"
+        },
+        {
+          "en": "No worries, thank you.",
+          "zh": "没关系，谢谢。"
+        }
+      ]
     },
     {
-     "zh": "结账并要求分开付",
-     "check": "the learner asks for the check and to split the bill"
+      "id": "w03-sh5",
+      "day": 4,
+      "title": "结账",
+      "sentences": [
+        {
+          "en": "Can we get the check, please?",
+          "zh": "买单，谢谢。"
+        },
+        {
+          "en": "Can I get a box for this?",
+          "zh": "能帮我打包吗？"
+        },
+        {
+          "en": "Can I pay with WeChat?",
+          "zh": "可以用微信付吗？"
+        },
+        {
+          "en": "Could I get a receipt?",
+          "zh": "能给我开张收据吗？"
+        },
+        {
+          "en": "Thanks, that was great!",
+          "zh": "谢谢，很好吃！"
+        }
+      ]
+    },
+    {
+      "id": "w03-sh6",
+      "day": 5,
+      "title": "约饭",
+      "sentences": [
+        {
+          "en": "I'm starving. What are you in the mood for?",
+          "zh": "我饿死了，你想吃什么？"
+        },
+        {
+          "en": "How about hot pot?",
+          "zh": "吃火锅怎么样？"
+        },
+        {
+          "en": "Actually, I'm craving something light.",
+          "zh": "其实我想吃点清淡的。"
+        },
+        {
+          "en": "I know a great place nearby.",
+          "zh": "我知道附近有家很不错的店。"
+        },
+        {
+          "en": "Let's meet there at seven.",
+          "zh": "我们七点在那儿见。"
+        }
+      ]
+    },
+    {
+      "id": "w03-sh2",
+      "title": "餐厅",
+      "sentences": [
+        {
+          "en": "Hi, I have a reservation for seven, for two people.",
+          "zh": "你好，我预订了七点的位子，两位。"
+        },
+        {
+          "en": "Could we sit by the window?",
+          "zh": "能坐靠窗的位子吗？"
+        },
+        {
+          "en": "What do you recommend?",
+          "zh": "你们有什么推荐的？"
+        },
+        {
+          "en": "I'll have the salmon, but I can't handle spicy food.",
+          "zh": "我要三文鱼，不过我不太能吃辣。"
+        },
+        {
+          "en": "Could we get the check, please?",
+          "zh": "麻烦买单。"
+        },
+        {
+          "en": "Can we split the bill?",
+          "zh": "我们可以分开付吗？"
+        }
+      ],
+      "day": 6
     }
-   ],
-   "hints": [
+  ],
+  "topics": [
     {
-     "zh": "我预订了七点的位子，两位。",
-     "en": "I have a reservation for seven, for two."
+      "id": "w03-t2",
+      "zh": "你常点的饮料",
+      "en": "What's your usual coffee or drink order?",
+      "hints": [
+        "what",
+        "how you like it",
+        "when"
+      ],
+      "day": 1
     },
     {
-     "zh": "你们有什么推荐的？",
-     "en": "What do you recommend?"
+      "id": "w03-t6",
+      "day": 2,
+      "zh": "说说你的口味：爱吃什么、不吃什么",
+      "en": "Talk about your taste in food: what you love and what you avoid.",
+      "hints": [
+        "favorite food",
+        "something you don't eat",
+        "why"
+      ]
     },
     {
-     "zh": "我们分开付。",
-     "en": "Can we split the bill?"
+      "id": "w03-t3",
+      "zh": "一次难忘的饭",
+      "en": "Describe a memorable meal.",
+      "hints": [
+        "when",
+        "who with",
+        "what happened"
+      ],
+      "day": 3
+    },
+    {
+      "id": "w03-t5",
+      "zh": "外面吃还是在家做",
+      "en": "Do you prefer eating out or cooking at home?",
+      "hints": [
+        "your choice",
+        "reasons",
+        "an example"
+      ],
+      "day": 4
+    },
+    {
+      "id": "w03-t4",
+      "zh": "你会做的一道菜",
+      "en": "Talk about a dish you can cook.",
+      "hints": [
+        "what it is",
+        "how to make it",
+        "who taught you"
+      ],
+      "day": 5
+    },
+    {
+      "id": "w03-t1",
+      "zh": "你最喜欢的餐厅",
+      "en": "Talk about your favorite restaurant.",
+      "hints": [
+        "where",
+        "what you order",
+        "why you like it"
+      ],
+      "day": 6
     }
-   ]
-  }
- ],
- "shadow": [
-  {
-   "id": "w03-sh1",
-   "title": "咖啡店",
-   "sentences": [
-    {
-     "en": "Hi, can I get an oat latte, please?",
-     "zh": "你好，我要一杯燕麦拿铁。"
-    },
-    {
-     "en": "Iced, with light ice.",
-     "zh": "冰的，少冰。"
-    },
-    {
-     "en": "Do you have anything sugar-free?",
-     "zh": "你们有无糖的吗？"
-    },
-    {
-     "en": "For here, please.",
-     "zh": "在这儿喝。"
-    },
-    {
-     "en": "Can I pay by card?",
-     "zh": "可以刷卡吗？"
-    },
-    {
-     "en": "Thanks, have a nice day!",
-     "zh": "谢谢，祝你今天愉快！"
-    }
-   ]
-  },
-  {
-   "id": "w03-sh2",
-   "title": "餐厅",
-   "sentences": [
-    {
-     "en": "Hi, I have a reservation for seven, for two people.",
-     "zh": "你好，我预订了七点的位子，两位。"
-    },
-    {
-     "en": "Could we sit by the window?",
-     "zh": "能坐靠窗的位子吗？"
-    },
-    {
-     "en": "What do you recommend?",
-     "zh": "你们有什么推荐的？"
-    },
-    {
-     "en": "I'll have the salmon, but I can't handle spicy food.",
-     "zh": "我要三文鱼，不过我不太能吃辣。"
-    },
-    {
-     "en": "Could we get the check, please?",
-     "zh": "麻烦买单。"
-    },
-    {
-     "en": "Can we split the bill?",
-     "zh": "我们可以分开付吗？"
-    }
-   ]
-  }
- ],
- "topics": [
-  {
-   "id": "w03-t1",
-   "zh": "你最喜欢的餐厅",
-   "en": "Talk about your favorite restaurant.",
-   "hints": [
-    "where",
-    "what you order",
-    "why you like it"
-   ]
-  },
-  {
-   "id": "w03-t2",
-   "zh": "你常点的饮料",
-   "en": "What's your usual coffee or drink order?",
-   "hints": [
-    "what",
-    "how you like it",
-    "when"
-   ]
-  },
-  {
-   "id": "w03-t3",
-   "zh": "一次难忘的饭",
-   "en": "Describe a memorable meal.",
-   "hints": [
-    "when",
-    "who with",
-    "what happened"
-   ]
-  },
-  {
-   "id": "w03-t4",
-   "zh": "你会做的一道菜",
-   "en": "Talk about a dish you can cook.",
-   "hints": [
-    "what it is",
-    "how to make it",
-    "who taught you"
-   ]
-  },
-  {
-   "id": "w03-t5",
-   "zh": "外面吃还是在家做",
-   "en": "Do you prefer eating out or cooking at home?",
-   "hints": [
-    "your choice",
-    "reasons",
-    "an example"
-   ]
-  }
- ]
+  ]
 }

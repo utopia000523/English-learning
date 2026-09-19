@@ -61,6 +61,7 @@ export default function Today() {
       return nav(`/roleplay/${rp.id}`);
     }
     if (s.module === 'shadow' && s.shadowId) return nav(`/shadow?m=${s.shadowId}`);
+    if (s.module === 'mono' && s.topicId) return nav(`/mono?t=${s.topicId}`);
     return nav(`/${s.module}`);
   };
   const swap = async () => { try { setP(await api.post('/plan/swap')); } catch (e) { setErr(e.message); } };
@@ -74,7 +75,7 @@ export default function Today() {
   return (
     <div className="narrow">
       <h1>{hello}，Utopia</h1>
-      <p className="sub">第 {p.week} 周 · {p.theme}　｜　第 {p.phase} 阶段「{PHASE[p.phase]}」</p>
+      <p className="sub">第 {p.week} 周第 {p.dayInWeek} 天 · {p.theme}　｜　第 {p.phase} 阶段「{PHASE[p.phase]}」</p>
       {p.assessmentDue != null && (
         <div className="todo-note row between" style={{ marginTop: 18 }}>
           <span>{p.assessmentDue === 0 ? '先做一次入门测评（约 8 分钟），记录你现在的口语基线，之后才能看到进步。' : `到第 ${p.assessmentDue} 天了，做一次复测（约 8 分钟），和入门时对比。`}</span>

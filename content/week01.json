@@ -8,210 +8,384 @@
       "type": "card",
       "zh": "你好，我是 Utopia，很高兴认识你。",
       "en": "Hi, I'm Utopia. Nice to meet you.",
-      "example": "Hi, I'm Alex. Great to meet you."
+      "example": "Hi, I'm Alex. Great to meet you.",
+      "day": 1
     },
     {
       "id": "w01-c02",
       "type": "card",
       "zh": "我也很高兴认识你。",
       "en": "Nice to meet you too.",
-      "example": "Likewise."
+      "example": "Likewise.",
+      "day": 1
     },
     {
       "id": "w01-c03",
       "type": "card",
       "zh": "我在深圳工作。",
       "en": "I work in Shenzhen.",
-      "example": "I'm based in Shenzhen."
+      "example": "I'm based in Shenzhen.",
+      "day": 1
     },
     {
       "id": "w01-c04",
       "type": "card",
       "zh": "我在一家科技公司做产品。",
       "en": "I work in product at a tech company.",
-      "example": "I'm a product manager at a tech company."
+      "example": "I'm a product manager at a tech company.",
+      "day": 1
     },
     {
       "id": "w01-c05",
       "type": "card",
       "zh": "我做这行好几年了。",
       "en": "I've been doing this for a few years.",
-      "example": "I've been in this field for a while now."
+      "example": "I've been in this field for a while now.",
+      "day": 1
     },
     {
       "id": "w01-c06",
       "type": "card",
       "zh": "你是做什么工作的？",
       "en": "What do you do?",
-      "example": "What do you do for work?"
-    },
-    {
-      "id": "w01-c07",
-      "type": "card",
-      "zh": "你是哪里人？",
-      "en": "Where are you from?",
-      "example": "Where are you originally from?"
-    },
-    {
-      "id": "w01-c08",
-      "type": "card",
-      "zh": "我不是本地人，不过在深圳住了好几年了。",
-      "en": "I'm not from here originally, but I've lived in Shenzhen for years.",
-      "example": "I moved here a few years ago."
-    },
-    {
-      "id": "w01-c09",
-      "type": "card",
-      "zh": "你来这边多久了？",
-      "en": "How long have you been here?",
-      "example": "How long have you lived here?"
-    },
-    {
-      "id": "w01-c10",
-      "type": "card",
-      "zh": "最近怎么样？",
-      "en": "How's it going?",
-      "example": "How have you been?"
-    },
-    {
-      "id": "w01-c11",
-      "type": "card",
-      "zh": "挺好的，就是有点忙。",
-      "en": "Pretty good, just a bit busy.",
-      "example": "Not bad, just busy with work."
-    },
-    {
-      "id": "w01-c12",
-      "type": "card",
-      "zh": "老样子。",
-      "en": "Same old, same old.",
-      "example": "Nothing much, same as usual."
-    },
-    {
-      "id": "w01-c13",
-      "type": "card",
-      "zh": "最近在忙什么？",
-      "en": "What have you been up to lately?",
-      "example": "What are you up to these days?"
-    },
-    {
-      "id": "w01-c14",
-      "type": "card",
-      "zh": "最近工作挺忙的。",
-      "en": "Work's been pretty hectic lately.",
-      "example": "It's been a busy few weeks."
-    },
-    {
-      "id": "w01-c15",
-      "type": "card",
-      "zh": "我最近在练英语口语。",
-      "en": "I've been working on my spoken English.",
-      "example": "I'm trying to improve my English."
-    },
-    {
-      "id": "w01-c16",
-      "type": "card",
-      "zh": "你平时喜欢做什么？",
-      "en": "What do you like to do in your free time?",
-      "example": "What do you do for fun?"
-    },
-    {
-      "id": "w01-c17",
-      "type": "card",
-      "zh": "我周末喜欢出去走走。",
-      "en": "I like to get out and explore on weekends.",
-      "example": "On weekends I usually go for a walk."
-    },
-    {
-      "id": "w01-c18",
-      "type": "card",
-      "zh": "我对 AI 挺感兴趣的。",
-      "en": "I'm really into AI.",
-      "example": "I'm pretty interested in tech."
-    },
-    {
-      "id": "w01-c19",
-      "type": "card",
-      "zh": "我们是不是在哪见过？",
-      "en": "Have we met before?",
-      "example": "You look familiar."
-    },
-    {
-      "id": "w01-c20",
-      "type": "card",
-      "zh": "抱歉，你刚才说你叫什么？",
-      "en": "Sorry, what was your name again?",
-      "example": "Sorry, I didn't catch your name."
-    },
-    {
-      "id": "w01-c21",
-      "type": "card",
-      "zh": "你的名字怎么拼？",
-      "en": "How do you spell your name?",
-      "example": "Could you spell that for me?"
-    },
-    {
-      "id": "w01-c22",
-      "type": "card",
-      "zh": "这是我同事 Mia。",
-      "en": "This is my colleague, Mia.",
-      "example": "Let me introduce you to my coworker, Leo."
-    },
-    {
-      "id": "w01-c23",
-      "type": "card",
-      "zh": "保持联系吧。",
-      "en": "Let's keep in touch.",
-      "example": "Can I get your number?"
+      "example": "What do you do for work?",
+      "day": 1
     },
     {
       "id": "w01-c24",
       "type": "card",
       "zh": "那你呢？",
       "en": "How about you?",
-      "example": "What about you?"
+      "example": "What about you?",
+      "day": 1
+    },
+    {
+      "id": "w01-c31",
+      "type": "card",
+      "day": 1,
+      "zh": "你今天怎么会来这儿？",
+      "en": "What brings you here today?",
+      "example": "What brings you to Shenzhen?"
+    },
+    {
+      "id": "w01-c10",
+      "type": "card",
+      "zh": "最近怎么样？",
+      "en": "How's it going?",
+      "example": "How have you been?",
+      "day": 2
+    },
+    {
+      "id": "w01-c11",
+      "type": "card",
+      "zh": "挺好的，就是有点忙。",
+      "en": "Pretty good, just a bit busy.",
+      "example": "Not bad, just busy with work.",
+      "day": 2
+    },
+    {
+      "id": "w01-c12",
+      "type": "card",
+      "zh": "老样子。",
+      "en": "Same old, same old.",
+      "example": "Nothing much, same as usual.",
+      "day": 2
+    },
+    {
+      "id": "w01-c13",
+      "type": "card",
+      "zh": "最近在忙什么？",
+      "en": "What have you been up to lately?",
+      "example": "What are you up to these days?",
+      "day": 2
+    },
+    {
+      "id": "w01-c14",
+      "type": "card",
+      "zh": "最近工作挺忙的。",
+      "en": "Work's been pretty hectic lately.",
+      "example": "It's been a busy few weeks.",
+      "day": 2
+    },
+    {
+      "id": "w01-c15",
+      "type": "card",
+      "zh": "我最近在练英语口语。",
+      "en": "I've been working on my spoken English.",
+      "example": "I'm trying to improve my English.",
+      "day": 2
+    },
+    {
+      "id": "w01-c32",
+      "type": "card",
+      "day": 2,
+      "zh": "好久不见！",
+      "en": "It's been a while!",
+      "example": "Hey, it's been a while! How have you been?"
+    },
+    {
+      "id": "w01-c33",
+      "type": "card",
+      "day": 2,
+      "zh": "最近工作忙疯了。",
+      "en": "Things have been crazy at work.",
+      "example": "Things have been crazy at work, but it's fine."
+    },
+    {
+      "id": "w01-c07",
+      "type": "card",
+      "zh": "你是哪里人？",
+      "en": "Where are you from?",
+      "example": "Where are you originally from?",
+      "day": 3
+    },
+    {
+      "id": "w01-c08",
+      "type": "card",
+      "zh": "我不是本地人，不过在深圳住了好几年了。",
+      "en": "I'm not from here originally, but I've lived in Shenzhen for years.",
+      "example": "I moved here a few years ago.",
+      "day": 3
+    },
+    {
+      "id": "w01-c09",
+      "type": "card",
+      "zh": "你来这边多久了？",
+      "en": "How long have you been here?",
+      "example": "How long have you lived here?",
+      "day": 3
+    },
+    {
+      "id": "w01-c34",
+      "type": "card",
+      "day": 3,
+      "zh": "你住在哪儿？",
+      "en": "Where do you live?",
+      "example": "Where do you live in Shenzhen?"
+    },
+    {
+      "id": "w01-c35",
+      "type": "card",
+      "day": 3,
+      "zh": "这是个很适合生活的地方。",
+      "en": "It's a great place to live.",
+      "example": "Shenzhen is a great place to live."
+    },
+    {
+      "id": "w01-c36",
+      "type": "card",
+      "day": 3,
+      "zh": "深圳最好的地方是吃的。",
+      "en": "The best thing about Shenzhen is the food.",
+      "example": "The best thing about my city is the parks."
+    },
+    {
+      "id": "w01-c37",
+      "type": "card",
+      "day": 3,
+      "zh": "你应该去深圳湾公园看看。",
+      "en": "You should check out the Bay Park.",
+      "example": "You should check out this little café."
+    },
+    {
+      "id": "w01-c38",
+      "type": "card",
+      "day": 3,
+      "zh": "有点挤，不过我很喜欢。",
+      "en": "It's a bit crowded, but I love it.",
+      "example": "It's a bit noisy, but I love it."
+    },
+    {
+      "id": "w01-c16",
+      "type": "card",
+      "zh": "你平时喜欢做什么？",
+      "en": "What do you like to do in your free time?",
+      "example": "What do you do for fun?",
+      "day": 4
+    },
+    {
+      "id": "w01-c17",
+      "type": "card",
+      "zh": "我周末喜欢出去走走。",
+      "en": "I like to get out and explore on weekends.",
+      "example": "On weekends I usually go for a walk.",
+      "day": 4
+    },
+    {
+      "id": "w01-c18",
+      "type": "card",
+      "zh": "我对 AI 挺感兴趣的。",
+      "en": "I'm really into AI.",
+      "example": "I'm pretty interested in tech.",
+      "day": 4
     },
     {
       "id": "w01-c25",
       "type": "card",
       "zh": "听起来很有意思！",
       "en": "That sounds interesting!",
-      "example": "Oh, that's cool!"
+      "example": "Oh, that's cool!",
+      "day": 4
     },
     {
       "id": "w01-c26",
       "type": "card",
       "zh": "真的吗？",
       "en": "Really?",
-      "example": "No way!"
+      "example": "No way!",
+      "day": 4
+    },
+    {
+      "id": "w01-c39",
+      "type": "card",
+      "day": 4,
+      "zh": "我最近迷上了徒步。",
+      "en": "I'm into hiking these days.",
+      "example": "I'm into photography these days."
+    },
+    {
+      "id": "w01-c40",
+      "type": "card",
+      "day": 4,
+      "zh": "你是怎么开始喜欢上这个的？",
+      "en": "How did you get into that?",
+      "example": "How did you get into running?"
+    },
+    {
+      "id": "w01-c41",
+      "type": "card",
+      "day": 4,
+      "zh": "我一直很想试试。",
+      "en": "I've always wanted to try that.",
+      "example": "I've always wanted to try surfing."
+    },
+    {
+      "id": "w01-c19",
+      "type": "card",
+      "zh": "我们是不是在哪见过？",
+      "en": "Have we met before?",
+      "example": "You look familiar.",
+      "day": 5
+    },
+    {
+      "id": "w01-c20",
+      "type": "card",
+      "zh": "抱歉，你刚才说你叫什么？",
+      "en": "Sorry, what was your name again?",
+      "example": "Sorry, I didn't catch your name.",
+      "day": 5
+    },
+    {
+      "id": "w01-c21",
+      "type": "card",
+      "zh": "你的名字怎么拼？",
+      "en": "How do you spell your name?",
+      "example": "Could you spell that for me?",
+      "day": 5
+    },
+    {
+      "id": "w01-c23",
+      "type": "card",
+      "zh": "保持联系吧。",
+      "en": "Let's keep in touch.",
+      "example": "Can I get your number?",
+      "day": 5
     },
     {
       "id": "w01-c27",
       "type": "card",
       "zh": "我英语不太好，能说慢一点吗？",
       "en": "My English isn't perfect, so could you speak a little slower?",
-      "example": "Could you say that again, please?"
+      "example": "Could you say that again, please?",
+      "day": 5
     },
     {
       "id": "w01-c28",
       "type": "card",
       "zh": "我明白你的意思。",
       "en": "I see what you mean.",
-      "example": "Got it."
+      "example": "Got it.",
+      "day": 5
+    },
+    {
+      "id": "w01-c42",
+      "type": "card",
+      "day": 5,
+      "zh": "你能再说一遍吗？",
+      "en": "Could you say that again?",
+      "example": "Sorry, could you say that again?"
+    },
+    {
+      "id": "w01-c43",
+      "type": "card",
+      "day": 5,
+      "zh": "我能加你微信吗？",
+      "en": "Can I add you on WeChat?",
+      "example": "Can I add you on LinkedIn?"
+    },
+    {
+      "id": "w01-c22",
+      "type": "card",
+      "zh": "这是我同事 Mia。",
+      "en": "This is my colleague, Mia.",
+      "example": "Let me introduce you to my coworker, Leo.",
+      "day": 6
     },
     {
       "id": "w01-c29",
       "type": "card",
       "zh": "跟你聊天很开心。",
       "en": "It was great talking to you.",
-      "example": "I really enjoyed chatting with you."
+      "example": "I really enjoyed chatting with you.",
+      "day": 6
     },
     {
       "id": "w01-c30",
       "type": "card",
       "zh": "回头见！",
       "en": "See you around!",
-      "example": "Catch you later!"
+      "example": "Catch you later!",
+      "day": 6
+    },
+    {
+      "id": "w01-c44",
+      "type": "card",
+      "day": 6,
+      "zh": "你能听清我说话吗？",
+      "en": "Can you hear me okay?",
+      "example": "Can you see my screen okay?"
+    },
+    {
+      "id": "w01-c45",
+      "type": "card",
+      "day": 6,
+      "zh": "抱歉，你那边声音断断续续的。",
+      "en": "Sorry, you're breaking up.",
+      "example": "Sorry, you're breaking up a little."
+    },
+    {
+      "id": "w01-c46",
+      "type": "card",
+      "day": 6,
+      "zh": "我来介绍一下我的同事。",
+      "en": "Let me introduce my colleague.",
+      "example": "Let me introduce my manager, Lisa."
+    },
+    {
+      "id": "w01-c47",
+      "type": "card",
+      "day": 6,
+      "zh": "谢谢你抽时间。",
+      "en": "Thanks for making the time.",
+      "example": "Thanks for making the time today."
+    },
+    {
+      "id": "w01-c48",
+      "type": "card",
+      "day": 6,
+      "zh": "我们开始吧？",
+      "en": "Shall we get started?",
+      "example": "Okay, shall we get started?"
     }
   ],
   "scenes": [
@@ -264,11 +438,12 @@
           "zh": "跟你聊天很开心。",
           "en": "It was great talking to you."
         }
-      ]
+      ],
+      "day": 1
     },
     {
       "id": "w01-s2",
-      "level": "advanced",
+      "level": "basic",
       "title": "和新同事聊近况",
       "role": "Mia",
       "role_zh": "Mia · 新同事",
@@ -313,6 +488,227 @@
           "zh": "改天一起吃午饭吧？",
           "en": "Want to grab lunch sometime?"
         }
+      ],
+      "day": 2
+    },
+    {
+      "id": "w01-s3",
+      "day": 3,
+      "level": "basic",
+      "title": "聊聊你住的城市",
+      "role": "Alex",
+      "role_zh": "Alex · 刚来深圳的外国同行",
+      "persona": "Alex, a friendly engineer from Canada who moved to Shenzhen two weeks ago and wants tips about the city",
+      "opening": "So, are you from Shenzhen? I just moved here two weeks ago.",
+      "opening_zh": "你是深圳本地人吗？我两周前刚搬过来。",
+      "brief": "活动茶歇时，一位刚来深圳的外国同行想跟你打听这座城市。",
+      "tasks": [
+        {
+          "zh": "说说你是哪里人、在深圳住了多久",
+          "check": "the learner says where they are from or how long they have lived in Shenzhen"
+        },
+        {
+          "zh": "说一个你喜欢这座城市的地方",
+          "check": "the learner says something they like about the city"
+        },
+        {
+          "zh": "给对方推荐一个地方",
+          "check": "the learner recommends a place to visit, eat or go",
+          "match": [
+            "you should (check out|go to|try|visit)",
+            "i('d)? recommend"
+          ]
+        },
+        {
+          "zh": "问对方住在哪或喜不喜欢这里",
+          "check": "the learner asks Alex where they live or how they like the city",
+          "match": [
+            "where do you live",
+            "(how do you like|do you like) (it|shenzhen|the city|living)",
+            "how about you|what about you|and you\\b"
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "zh": "我不是本地人，不过在深圳住了好几年了。",
+          "en": "I'm not from here originally, but I've lived in Shenzhen for years."
+        },
+        {
+          "zh": "你应该去深圳湾公园看看。",
+          "en": "You should check out the Bay Park."
+        },
+        {
+          "zh": "你住在哪儿？",
+          "en": "Where do you live?"
+        }
+      ]
+    },
+    {
+      "id": "w01-s4",
+      "day": 4,
+      "level": "basic",
+      "title": "聊爱好",
+      "role": "Chris",
+      "role_zh": "Chris · 午饭时的同事",
+      "persona": "Chris, a relaxed colleague who loves hiking and board games, chatting over lunch",
+      "opening": "So what do you usually do on weekends?",
+      "opening_zh": "你周末一般都干什么？",
+      "brief": "午饭时，同事 Chris 跟你聊起周末和爱好。",
+      "tasks": [
+        {
+          "zh": "说一个你的爱好",
+          "check": "the learner talks about one of their hobbies"
+        },
+        {
+          "zh": "说说多久做一次或为什么喜欢",
+          "check": "the learner says how often they do it or why they like it"
+        },
+        {
+          "zh": "问对方的爱好",
+          "check": "the learner asks about Chris's hobbies",
+          "match": [
+            "what do you (like to )?do (in your free time|on (the )?weekends|for fun)",
+            "do you have any hobbies",
+            "what are you into",
+            "how about you|what about you|and you\\b"
+          ]
+        },
+        {
+          "zh": "对对方说的表示兴趣并追问一句",
+          "check": "the learner reacts with interest to something Chris said and asks a follow-up question"
+        }
+      ],
+      "hints": [
+        {
+          "zh": "我最近迷上了徒步。",
+          "en": "I'm into hiking these days."
+        },
+        {
+          "zh": "你是怎么开始喜欢上这个的？",
+          "en": "How did you get into that?"
+        },
+        {
+          "zh": "我一直很想试试。",
+          "en": "I've always wanted to try that."
+        }
+      ]
+    },
+    {
+      "id": "w01-s5",
+      "day": 5,
+      "level": "basic",
+      "title": "没听清也能聊下去",
+      "role": "Ben",
+      "role_zh": "Ben · 说话很快的新朋友",
+      "persona": "Ben, an energetic startup founder who talks quite fast and uses some casual expressions; he slows down happily when asked",
+      "opening": "Hey there! I'm Ben — Ben Whitaker. I run a little startup doing smart home stuff. Crazy busy night, huh?",
+      "opening_zh": "嗨！我是 Ben，Ben Whitaker。我在做一家智能家居的小创业公司。今晚人真多啊？",
+      "brief": "活动现场很吵，对方说话又快，你没完全听清。练习礼貌地请对方重复、放慢，最后加个联系方式。",
+      "tasks": [
+        {
+          "zh": "请对方再说一遍或说慢一点",
+          "check": "the learner asks Ben to repeat or to speak more slowly",
+          "match": [
+            "(say|repeat) that again",
+            "(speak|talk) (a (little|bit) )?(more )?slow(ly|er)",
+            "pardon\\??",
+            "sorry\\?",
+            "what was your name"
+          ]
+        },
+        {
+          "zh": "确认对方的名字或怎么拼",
+          "check": "the learner checks Ben's name or asks how to spell it",
+          "match": [
+            "how do you spell",
+            "what was your name",
+            "is it ben\\b"
+          ]
+        },
+        {
+          "zh": "介绍一下自己",
+          "check": "the learner says who they are or what they do"
+        },
+        {
+          "zh": "提出加联系方式",
+          "check": "the learner asks to exchange contacts (WeChat, LinkedIn, phone, email)",
+          "match": [
+            "wechat|linkedin|phone number|email|contact|keep in touch|add you"
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "zh": "抱歉，你能再说一遍吗？",
+          "en": "Sorry, could you say that again?"
+        },
+        {
+          "zh": "我英语不太好，能说慢一点吗？",
+          "en": "My English isn't perfect, so could you speak a little slower?"
+        },
+        {
+          "zh": "我能加你微信吗？",
+          "en": "Can I add you on WeChat?"
+        }
+      ]
+    },
+    {
+      "id": "w01-s6",
+      "day": 6,
+      "level": "advanced",
+      "title": "挑战：视频会议前寒暄",
+      "role": "Emma",
+      "role_zh": "Emma · 伦敦的合作方",
+      "persona": "Emma, a warm project manager from a partner company in London, joining a video call a few minutes early",
+      "opening": "Hi! Can you hear me okay? I think my camera just froze for a second.",
+      "opening_zh": "嗨！你能听清我说话吗？我的摄像头好像卡了一下。",
+      "brief": "视频会议开始前几分钟，海外合作方先上线了。先寒暄，介绍自己和同事 Mia，再自然地开始会议。",
+      "tasks": [
+        {
+          "zh": "回应声音 / 画面情况并问候对方",
+          "check": "the learner responds about the audio or video and greets Emma or asks how she is"
+        },
+        {
+          "zh": "介绍你自己和你负责的工作",
+          "check": "the learner introduces themself and their role"
+        },
+        {
+          "zh": "介绍你的同事 Mia",
+          "check": "the learner introduces a colleague named Mia",
+          "match": [
+            "this is (my colleague )?mia",
+            "introduce .*mia",
+            "mia (is|will|handles|works)"
+          ]
+        },
+        {
+          "zh": "聊一句近况或天气",
+          "check": "the learner makes some small talk (how things are going, the weather, the time difference)"
+        },
+        {
+          "zh": "自然地提议开始会议",
+          "check": "the learner suggests starting the meeting",
+          "match": [
+            "(shall|should) we (get started|start|begin)",
+            "let's (get started|start|begin)",
+            "ready to (start|begin)"
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "zh": "我能听清，你呢？",
+          "en": "I can hear you fine. Can you hear me?"
+        },
+        {
+          "zh": "我来介绍一下我的同事 Mia。",
+          "en": "Let me introduce my colleague, Mia."
+        },
+        {
+          "zh": "我们开始吧？",
+          "en": "Shall we get started?"
+        }
       ]
     }
   ],
@@ -345,7 +741,8 @@
           "en": "How about you? What do you do?",
           "zh": "你呢？你是做什么的？"
         }
-      ]
+      ],
+      "day": 1
     },
     {
       "id": "w01-sh2",
@@ -375,6 +772,115 @@
           "en": "Let's grab coffee sometime.",
           "zh": "找时间一起喝杯咖啡吧。"
         }
+      ],
+      "day": 2
+    },
+    {
+      "id": "w01-sh3",
+      "day": 3,
+      "title": "我住的城市",
+      "sentences": [
+        {
+          "en": "I'm not from Shenzhen originally.",
+          "zh": "我不是深圳本地人。"
+        },
+        {
+          "en": "I moved here about five years ago.",
+          "zh": "我大概五年前搬过来的。"
+        },
+        {
+          "en": "It's a young city, and everyone is from somewhere else.",
+          "zh": "这是座年轻的城市，大家都是从外地来的。"
+        },
+        {
+          "en": "The best thing about it is the parks by the sea.",
+          "zh": "最好的地方是海边的公园。"
+        },
+        {
+          "en": "It's a bit crowded, but I really love it here.",
+          "zh": "有点挤，不过我真的很喜欢这里。"
+        }
+      ]
+    },
+    {
+      "id": "w01-sh4",
+      "day": 4,
+      "title": "我的爱好",
+      "sentences": [
+        {
+          "en": "In my free time, I like to go hiking.",
+          "zh": "空闲时我喜欢去徒步。"
+        },
+        {
+          "en": "I try to go at least twice a month.",
+          "zh": "我尽量一个月至少去两次。"
+        },
+        {
+          "en": "There are some great trails near Shenzhen.",
+          "zh": "深圳附近有一些很棒的徒步路线。"
+        },
+        {
+          "en": "It helps me clear my head after a long week.",
+          "zh": "忙了一周之后，它能让我放空一下。"
+        },
+        {
+          "en": "Have you ever tried it?",
+          "zh": "你试过吗？"
+        }
+      ]
+    },
+    {
+      "id": "w01-sh5",
+      "day": 5,
+      "title": "请对方再说一遍",
+      "sentences": [
+        {
+          "en": "Sorry, could you say that again?",
+          "zh": "抱歉，你能再说一遍吗？"
+        },
+        {
+          "en": "It's a bit loud in here.",
+          "zh": "这里有点吵。"
+        },
+        {
+          "en": "Could you speak a little slower?",
+          "zh": "你能说慢一点吗？"
+        },
+        {
+          "en": "How do you spell your name?",
+          "zh": "你的名字怎么拼？"
+        },
+        {
+          "en": "Can I add you on WeChat?",
+          "zh": "我能加你微信吗？"
+        }
+      ]
+    },
+    {
+      "id": "w01-sh6",
+      "day": 6,
+      "title": "会议前寒暄",
+      "sentences": [
+        {
+          "en": "Hi Emma, I can hear you fine.",
+          "zh": "嗨 Emma，我能听清。"
+        },
+        {
+          "en": "Thanks for making the time today.",
+          "zh": "谢谢你今天抽时间。"
+        },
+        {
+          "en": "Let me introduce my colleague, Mia.",
+          "zh": "我来介绍一下我的同事 Mia。"
+        },
+        {
+          "en": "She's in charge of the project on our side.",
+          "zh": "她负责我们这边的项目。"
+        },
+        {
+          "en": "Okay, shall we get started?",
+          "zh": "好，我们开始吧？"
+        }
       ]
     }
   ],
@@ -387,6 +893,51 @@
         "your name",
         "your job",
         "your city"
+      ],
+      "day": 1
+    },
+    {
+      "id": "w01-t4",
+      "zh": "你为什么学英语",
+      "en": "Why are you learning English?",
+      "hints": [
+        "reason",
+        "goal",
+        "what's hard"
+      ],
+      "day": 2
+    },
+    {
+      "id": "w01-t5",
+      "zh": "你住的城市",
+      "en": "Talk about the city you live in.",
+      "hints": [
+        "where",
+        "what you like",
+        "one favorite place"
+      ],
+      "day": 3
+    },
+    {
+      "id": "w01-t3",
+      "zh": "你的一个爱好",
+      "en": "Talk about one of your hobbies.",
+      "hints": [
+        "what it is",
+        "how often",
+        "why you like it"
+      ],
+      "day": 4
+    },
+    {
+      "id": "w01-t6",
+      "day": 5,
+      "zh": "你一般怎么认识新朋友",
+      "en": "How do you usually meet new people?",
+      "hints": [
+        "where",
+        "how you start a chat",
+        "one example"
       ]
     },
     {
@@ -397,37 +948,8 @@
         "what you do",
         "what you like",
         "one challenge"
-      ]
-    },
-    {
-      "id": "w01-t3",
-      "zh": "你的一个爱好",
-      "en": "Talk about one of your hobbies.",
-      "hints": [
-        "what it is",
-        "how often",
-        "why you like it"
-      ]
-    },
-    {
-      "id": "w01-t4",
-      "zh": "你为什么学英语",
-      "en": "Why are you learning English?",
-      "hints": [
-        "reason",
-        "goal",
-        "what's hard"
-      ]
-    },
-    {
-      "id": "w01-t5",
-      "zh": "你住的城市",
-      "en": "Talk about the city you live in.",
-      "hints": [
-        "where",
-        "what you like",
-        "one favorite place"
-      ]
+      ],
+      "day": 6
     }
   ]
 }

@@ -6,18 +6,24 @@ import path from 'node:path';
 import fs from 'node:fs';
 import { createApp } from '../server/index.js';
 import { todayPlan } from '../server/plan.js';
-import { updateSettings } from '../server/db.js';
+import { updateSettings, run } from '../server/db.js';
 
-// PRD 第 8 节验收 3：连续 7 天模拟，每种随机模块至少出现 2 次
-test('连续 7 天课程：对话 / 跟读 / 独白各至少 2 次（重复模拟 200 次）', async () => {
+// PRD 第 8 节验收 3：连续 7 天模拟，每种模块至少出现 2 次；第 1–6 天各练当天场景，第 7 天复习
+test('连续 7 天课程：每天一个新场景，跟读 / 独白各至少 2 次（重复模拟 200 次）', async () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'speak90-week-'));
   await createApp({ dbFile: path.join(tmp, 'w.db') });
-  updateSettings({ startDate: '2026-09-14' }); // 周一
+  updateSettings({ startDate: '2026-09-14' });
   const days = Array.from({ length: 7 }, (_, i) => `2026-09-${14 + i}`);
   let worst = Infinity;
   for (let r = 0; r < 200; r++) {
+    run('DELETE FROM plan_day');
     const n = { roleplay: 0, shadow: 0, mono: 0 };
-    for (const d of days) for (const s of todayPlan(d).slots) if (s.module in n) n[s.module]++;
+    days.forEach((d, i) => {
+      const p = todayPlan(d);
+      if (i === 6) { assert.deepEqual(p.slots.map((s) => s.module), ['cards', 'review']); return; }
+      assert.equal(p.slots.find((s) => s.module === 'roleplay').sceneId, ['w01-s1', 'w01-s2', 'w01-s3', 'w01-s4', 'w01-s5', 'w01-s6'][i]);
+      for (const s of p.slots) if (s.module in n) n[s.module]++;
+    });
     worst = Math.min(worst, ...Object.values(n));
   }
   assert.ok(worst >= 2, `最少的模块只出现了 ${worst} 次`);
