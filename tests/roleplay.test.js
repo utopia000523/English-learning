@@ -30,7 +30,7 @@ test('对话流程：开场 → 8 轮 → 任务完成 → 复盘通关', async 
   const rp = await json(await post('/roleplay', { sceneId: 'w01-s1' }));
   assert.equal(rp.messages[0].role, 'assistant');
   let r;
-  for (let i = 0; i < 8; i++) r = await json(await post(`/roleplay/${rp.id}/turn`, { text: `hello ${i}` }));
+  for (let i = 0; i < 8; i++) r = await json(await post(`/roleplay/${rp.id}/turn`, { text: i === 7 ? 'Nice talking to you, bye!' : `hello ${i}` }));
   assert.equal(r.turns, 8);
   assert.deepEqual(r.tasksDone, [1, 2, 3, 4]);
   const fin = await json(await post(`/roleplay/${rp.id}/finish`));
@@ -77,11 +77,21 @@ test('打中文：「可以说」是这句中文的英文，点评不是「表�
 
 test('单独任务检查：返回已完成任务并保存', async () => {
   const rp = await (await post('/roleplay', { sceneId: 'w01-s1' })).json();
-  await post(`/roleplay/${rp.id}/turn`, { text: "I work in product at a tech company. What do you do?" });
+  await post(`/roleplay/${rp.id}/turn`, { text: "I work in product at a tech company. What do you do? Anyway, see you around!" });
   const t = await (await post(`/roleplay/${rp.id}/tasks`)).json();
   assert.deepEqual(t.tasksDone, [1, 2, 3, 4]);
   const again = await (await fetch(base + `/roleplay/${rp.id}`)).json();
   assert.deepEqual(again.tasksDone, [1, 2, 3, 4]);
+});
+
+test('道别类任务：没说告别的话不算完成', async () => {
+  const rp = await (await post('/roleplay', { sceneId: 'w01-s1' })).json();
+  await post(`/roleplay/${rp.id}/turn`, { text: 'Nice to meet you. I work in product. What do you do?' });
+  const t = await (await post(`/roleplay/${rp.id}/tasks`)).json();
+  assert.ok(!t.tasksDone.includes(4));
+  await post(`/roleplay/${rp.id}/turn`, { text: 'It was great talking to you, see you around!' });
+  const t2 = await (await post(`/roleplay/${rp.id}/tasks`)).json();
+  assert.ok(t2.tasksDone.includes(4));
 });
 
 test('参数校验', async () => {

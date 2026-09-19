@@ -154,6 +154,25 @@ export default function Settings() {
         </div>
         {notionMsg && <div className="fixhint">{notionMsg}</div>}
       </div>
+
+      <div className="set-group">
+        <h3>数据</h3>
+        <div className="field">
+          <div><div>导出全部数据</div><div className="d">表达卡、笔记、练习记录等导出为一个 JSON 文件（不含录音和 Notion Token）</div></div>
+          <a className="link" href="/api/export" download>导出 JSON</a>
+        </div>
+        <div className="field">
+          <div><div>录音保留天数</div><div className="d">超过天数的录音文件自动删除，识别文字和成绩保留；填 0 表示一直保留</div></div>
+          <div className="row" style={{ gap: 6 }}>
+            <input className="in" type="number" min="0" max="3650" defaultValue={s.audioKeepDays} style={{ width: 80 }}
+              onBlur={(e) => { const v = Math.max(0, Number(e.target.value) || 0); if (v !== s.audioKeepDays) save({ audioKeepDays: v }); }} />
+            <span className="faint">天</span>
+          </div>
+        </div>
+        <div className="field">
+          <div><div>卸载</div><div className="d">在终端进入项目文件夹运行 <code>bash scripts/uninstall.sh</code>。会先列出要删除的内容和大小，确认后才删除；Notion 里的数据和系统朗读声音不会删除。</div></div>
+        </div>
+      </div>
     </div>
   );
 }

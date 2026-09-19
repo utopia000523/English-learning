@@ -1,5 +1,6 @@
 // 进度（PRD 1.1、3.8）。界面参考 docs/prototype.html「进度」
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { api } from '../services/api.js';
 
 function Trend({ data }) {
@@ -42,7 +43,11 @@ export default function Progress() {
           <div className="sec-t">测评记录</div>
           <table>
             <thead><tr><th>测评</th><th>语速</th><th>长停顿</th><th>口头禅</th></tr></thead>
-            <tbody>{['入门 · 第 0 天', '第 30 天', '第 60 天', '第 90 天'].map((t) => <tr key={t}><td className="faint">{t}</td><td colSpan="3" className="faint">{t.startsWith('入门') ? '入门测评即将上线' : ''}</td></tr>)}</tbody>
+            <tbody>{[0, 30, 60, 90].map((m) => {
+              const a = p.assessments.find((x) => x.milestone === m);
+              return <tr key={m}><td className={a ? '' : 'faint'}>{m === 0 ? '入门 · 第 0 天' : `第 ${m} 天`}</td>
+                {a ? <><td>{a.wpm}</td><td>{a.longPauses}</td><td>{a.fillers}</td></> : <td colSpan="3" className="faint">{p.assessmentDue === m ? <Link to="/assessment">现在测</Link> : m === 0 ? '' : `第 ${m} 天后可测`}</td>}</tr>;
+            })}</tbody>
           </table>
         </div>
       </div>

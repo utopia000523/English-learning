@@ -231,6 +231,10 @@ export function RoleplayChat() {
                   <button className="link" onClick={() => say(m.content)}>{Icon.speaker}再听</button>
                   <button className="link" onClick={() => say(m.content, 0.7)}>慢速</button>
                   {m.zh && <button className="link" onClick={() => setShowZh((z) => ({ ...z, [i]: !z[i] }))}>中文</button>}
+                  <button className="link" disabled={added['ai' + i]} onClick={async () => {
+                    await api.post('/cards', { en: m.content, zh: m.zh || '', source: 'AI 对话', scene: sc.title });
+                    setAdded((x) => ({ ...x, ['ai' + i]: true }));
+                  }}>{added['ai' + i] ? '已加入表达卡' : '+ 表达卡'}</button>
                 </div>
                 {showZh[i] && <div className="zh">{m.zh}</div>}
               </>}

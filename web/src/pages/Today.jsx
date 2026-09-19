@@ -1,6 +1,6 @@
 // 今日（PRD 2.3、3.1）：热身 → 两个随机练习 → 收尾。界面参考 docs/prototype.html「今日」
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../services/api.js';
 import { speak } from '../services/tts.js';
 import { Icon } from '../icons.jsx';
@@ -75,6 +75,12 @@ export default function Today() {
     <div className="narrow">
       <h1>{hello}，Utopia</h1>
       <p className="sub">第 {p.week} 周 · {p.theme}　｜　第 {p.phase} 阶段「{PHASE[p.phase]}」</p>
+      {p.assessmentDue != null && (
+        <div className="todo-note row between" style={{ marginTop: 18 }}>
+          <span>{p.assessmentDue === 0 ? '先做一次入门测评（约 8 分钟），记录你现在的口语基线，之后才能看到进步。' : `到第 ${p.assessmentDue} 天了，做一次复测（约 8 分钟），和入门时对比。`}</span>
+          <Link className="btn accent sm" to="/assessment">开始测评</Link>
+        </div>
+      )}
       <div className="today-meta">
         <span>第 <b>{p.dayNo}</b> 天 / 90</span>
         <div className="bar a"><i style={{ width: `${Math.round(p.ratio * 100)}%` }} /></div>

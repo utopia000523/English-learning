@@ -11,6 +11,7 @@ import Mono from './pages/Mono.jsx';
 import Notes from './pages/Notes.jsx';
 import Plan from './pages/Plan.jsx';
 import Progress from './pages/Progress.jsx';
+import Assessment from './pages/Assessment.jsx';
 import SelectionLookup from './components/SelectionLookup.jsx';
 
 // 导航结构与 docs/prototype.html 保持一致
@@ -53,6 +54,7 @@ export default function App() {
           <Route path="/notes" element={<Notes />} />
           <Route path="/plan" element={<Plan />} />
           <Route path="/progress" element={<Progress />} />
+          <Route path="/assessment" element={<Assessment />} />
           <Route path="/shadow" element={<Shadow />} />
           <Route path="/mono" element={<Mono />} />
           <Route path="/roleplay" element={<RoleplayList />} />

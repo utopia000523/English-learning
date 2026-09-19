@@ -3,6 +3,7 @@ import { all, get, run } from './db.js';
 import { planPosition, todayQueue, stats as cardStats } from './cards.js';
 import { todayStr, addDays } from './util/date.js';
 import { fluency } from './services/score.js';
+import * as assessment from './assessment.js';
 
 const parse = (s, d) => { try { return JSON.parse(s) ?? d; } catch { return d; } };
 
@@ -127,7 +128,7 @@ export function todayPlan(today = todayStr()) {
     sceneId: s.sceneId || (s.module === 'roleplay' ? sug.scene?.id : undefined),
     shadowId: s.module === 'shadow' ? sug.shadow?.id : undefined,
   }));
-  return { ...pos, phase: phaseOf(pos.week), theme: THEMES[pos.week - 1], swapped: !!row.swapped, ...st, streak: streak(today) };
+  return { ...pos, phase: phaseOf(pos.week), theme: THEMES[pos.week - 1], swapped: !!row.swapped, ...st, streak: streak(today), assessmentDue: assessment.due() };
 }
 
 /** 换一个：每天 1 次，重抽第一个还没开始的随机模块 */
@@ -212,6 +213,7 @@ export function progress(today = todayStr()) {
     ...pos, streak: st, speakMin, mastered: cs.mastered, learning: cs.learning, scenesPassed, scenesTotal,
     wpm: avg('wpm'), longPauses: avg('longPauses'), trend,
     notes: get('SELECT COUNT(*) n FROM note').n,
+    assessments: assessment.list(), assessmentDue: assessment.due(),
     badges: [
       { name: '连续 7 天', got: st >= 7 }, { name: '连续 30 天', got: st >= 30 }, { name: '首次通关', got: scenesPassed >= 1 },
       { name: '50 张熟练卡', got: cs.mastered >= 50 }, { name: '开口 100 分钟', got: speakMin >= 100 },

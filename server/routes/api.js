@@ -8,6 +8,8 @@ import * as roleplay from '../roleplay.js';
 import * as practice from '../practice.js';
 import * as notes from '../notes.js';
 import * as plan from '../plan.js';
+import * as assessment from '../assessment.js';
+import { exportAll, cleanupAudio } from '../maintenance.js';
 import { autoSync } from '../autosync.js';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -141,3 +143,18 @@ api.post('/notion/setup', wrap(async (req, res) => {
 }));
 api.post('/notion/sync', wrap(async (_req, res) => res.json(await notion.sync(plan.ratioOf))));
 api.get('/notion/pending', (_req, res) => res.json({ notes: notion.pendingCount() }));
+
+// ---- 测评（PRD 2.4）----
+api.get('/assessment', (_req, res) => res.json({ due: assessment.due(), test: assessment.TEST, list: assessment.list() }));
+api.post('/assessment', (req, res) => {
+  const b = req.body || {};
+  if (!Array.isArray(b.shadow) || !b.mono || !Array.isArray(b.answers)) return res.status(400).json({ error: '测评数据不完整' });
+  res.json(assessment.submit(b));
+});
+
+// ---- 数据导出、录音清理（PRD 3.10）----
+api.get('/export', (_req, res) => {
+  res.setHeader('Content-Disposition', `attachment; filename="speak90-${new Date().toISOString().slice(0, 10)}.json"`);
+  res.json(exportAll());
+});
+api.post('/audio/cleanup', (_req, res) => res.json({ removed: cleanupAudio() }));

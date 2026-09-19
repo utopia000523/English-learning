@@ -240,7 +240,8 @@
     },
     {
      "zh": "礼貌地结束对话",
-     "check": "the learner politely ends the chat, e.g. nice to meet you / see you around"
+     "check": "the learner actually says goodbye or wraps up the chat (e.g. 'Nice meeting you', 'See you around', 'I have to go')",
+     "strict": true
     }
    ],
    "hints": [

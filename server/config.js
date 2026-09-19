@@ -30,4 +30,5 @@ export const DEFAULT_SETTINGS = {
   notionAutoSync: true,
   notionParentPage: '',
   notionLastSync: '',
+  audioKeepDays: 30,                 // 录音文件保留天数，0 = 一直保留
 };

@@ -34,6 +34,8 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   });
   // Notion 自动同步：每 10 分钟一次，未同步的内容自动排队（断网时跳过）
   const { autoSync } = await import('./autosync.js');
+  const { cleanupAudio } = await import('./maintenance.js');
+  cleanupAudio(); setInterval(cleanupAudio, 24 * 3600 * 1000); // 录音过期清理：启动时和每天一次
   setInterval(autoSync, 10 * 60 * 1000);
   setTimeout(autoSync, 30 * 1000);
   for (const sig of ['SIGINT', 'SIGTERM']) process.on(sig, () => { saveNow(); process.exit(0); });

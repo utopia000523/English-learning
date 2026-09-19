@@ -7,6 +7,10 @@ import { logEvent } from './activity.js';
 
 export const PASS_TURNS = 8; // 通关：任务全部完成 且 用户发言 ≥ 8 轮
 
+// STRICT 任务（道别）兜底：用户确实说过告别类的话才算完成
+const BYE = /\b(bye|goodbye|see (you|ya)|take care|catch you later|talk (to you )?(later|soon)|have to go|gotta go|got to go|nice (meeting|talking|chatting)|great (meeting|talking|chatting)|good talking|(was|it's been) (nice|great|good) (meeting|talking|chatting)|have a (good|nice|great) (one|day|night|weekend))\b/i;
+const saidBye = (messages) => messages.filter((m) => m.role === 'user').some((m) => BYE.test(m.content));
+
 const sceneOf = (row) => row && { ...JSON.parse(row.data), week: row.week };
 const parse = (s, d) => { try { return JSON.parse(s) ?? d; } catch { return d; } };
 
@@ -92,7 +96,9 @@ export async function turn(id, text, recordingId) {
     (t) => ({ reply: t, completed: [] }),
   );
   const n = v.scene.tasks.length;
-  const done = [...new Set([...v.tasksDone, ...(out.completed || []).map(Number).filter((x) => x >= 1 && x <= n)])].sort();
+  const bye = saidBye(messages);
+  const done = [...new Set([...v.tasksDone, ...(out.completed || []).map(Number)
+    .filter((x) => x >= 1 && x <= n && (!v.scene.tasks[x - 1].strict || bye))])].sort((a, b) => a - b);
   // 「可以说」：中文输入用翻译结果；英文里明确问“怎么说”才用模型给的；其余一律不显示
   const askedHow = /how (do|can|would|should) (i|you) say|what('s| is) .* in english/i.test(text);
   const coach = zhHelp || (askedHow ? String(out.coach || '').trim() : '');
@@ -117,13 +123,15 @@ export async function checkTasks(id) {
   const lines = v.messages.filter((m) => m.role === 'user').map((m) => `- ${m.content}`).join('\n');
   const out = await llm.chatJSON([
     { role: 'system', content: `You check an English learner's role-play tasks. Scene: ${v.scene.title} (the other person is ${v.scene.role}).
-For EACH task below, decide whether anything the learner said so far accomplishes it. Be generous: the meaning counts, not exact words, and one line can complete several tasks.
+For EACH task below, decide whether the learner has ALREADY done it in what they actually said. Judge by meaning, not exact words; one line can complete several tasks.
+Do NOT count a task just because it might happen later or the conversation is going well. Tasks marked (STRICT) only count if the learner literally did it (e.g. really said goodbye).
 Tasks:
-${pending.map((x) => `${x.n}. ${x.t.check}`).join('\n')}
+${pending.map((x) => `${x.n}. ${x.t.check}${x.t.strict ? ' (STRICT)' : ''}`).join('\n')}
 Respond ONLY with JSON: {"done": [numbers of the tasks above that are accomplished]}` },
     { role: 'user', content: `Everything the learner said:\n${lines}` },
   ], { model: getSettings().llmModel, temperature: 0, kind: 'tasks' }, () => ({ done: [] }));
-  const ok = new Set(pending.map((x) => x.n));
+  const said = saidBye(v.messages);
+  const ok = new Set(pending.filter((x) => !x.t.strict || said).map((x) => x.n));
   const cur = parse(get('SELECT tasks_done FROM roleplay WHERE id = ?', [id]).tasks_done, []);
   const done = [...new Set([...cur, ...(out.done || []).map(Number).filter((n) => ok.has(n))])].sort((a, b) => a - b);
   run('UPDATE roleplay SET tasks_done = ? WHERE id = ?', [JSON.stringify(done), id]);
