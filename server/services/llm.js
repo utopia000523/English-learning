@@ -14,7 +14,10 @@ async function ollama(pathname, body, timeoutMs = 90000) {
     const timeout = e.name === 'TimeoutError';
     throw Object.assign(new Error(timeout ? '对话模型响应超时，请稍后再试' : '对话模型未就绪：请打开 Ollama，并到「设置」检查'), { code: 'LLM_UNAVAILABLE' });
   }
-  if (!res.ok) throw new Error(`Ollama ${pathname} 返回 ${res.status}`);
+  if (!res.ok) {
+    const detail = await res.text().catch(() => '');
+    throw Object.assign(new Error(`Ollama ${pathname} 返回 ${res.status} ${detail.slice(0, 200)}`), { status: res.status, detail });
+  }
   return res.json();
 }
 
@@ -35,13 +38,27 @@ export async function status(model) {
  * messages: [{ role: 'system'|'user'|'assistant', content }]
  * 返回 { content }
  */
+const noThink = new Set();
+
 export async function chat(messages, { model, temperature = 0.7, json = false, kind = '' } = {}) {
   if (process.env.SPEAK90_FAKE_LLM) return { content: fakeReply(kind) }; // 仅测试用
-  const data = await ollama('/api/chat', {
+  const body = {
     model, messages, stream: false,
     format: json ? 'json' : undefined,
     options: { temperature },
-  });
+    keep_alive: '30m', // 练习期间模型常驻内存，避免每次重新加载
+  };
+  // 关闭「先思考再回答」（Gemma 4、Qwen3 等支持思考的模型默认会先写很长的推理，导致很慢）
+  if (!noThink.has(model)) {
+    try {
+      const data = await ollama('/api/chat', { ...body, think: false });
+      return { content: data.message?.content ?? '' };
+    } catch (e) {
+      if (!(e.status === 400 && /think/i.test(e.detail || ''))) throw e;
+      noThink.add(model); // 该模型不支持 think 参数，之后不再传
+    }
+  }
+  const data = await ollama('/api/chat', body);
   return { content: data.message?.content ?? '' };
 }
 
