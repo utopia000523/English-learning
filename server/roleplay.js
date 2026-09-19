@@ -107,6 +107,29 @@ export async function turn(id, text, recordingId) {
   return load(id);
 }
 
+/** 任务检查：单独调用模型，只判断还没完成的任务（比在回复里顺带判断准确） */
+export async function checkTasks(id) {
+  const rp = get('SELECT * FROM roleplay WHERE id = ?', [id]);
+  if (!rp) return null;
+  const v = view(rp);
+  const pending = v.scene.tasks.map((t, i) => ({ n: i + 1, t })).filter((x) => !v.tasksDone.includes(x.n));
+  if (!pending.length || !v.turns) return { tasksDone: v.tasksDone };
+  const lines = v.messages.filter((m) => m.role === 'user').map((m) => `- ${m.content}`).join('\n');
+  const out = await llm.chatJSON([
+    { role: 'system', content: `You check an English learner's role-play tasks. Scene: ${v.scene.title} (the other person is ${v.scene.role}).
+For EACH task below, decide whether anything the learner said so far accomplishes it. Be generous: the meaning counts, not exact words, and one line can complete several tasks.
+Tasks:
+${pending.map((x) => `${x.n}. ${x.t.check}`).join('\n')}
+Respond ONLY with JSON: {"done": [numbers of the tasks above that are accomplished]}` },
+    { role: 'user', content: `Everything the learner said:\n${lines}` },
+  ], { model: getSettings().llmModel, temperature: 0, kind: 'tasks' }, () => ({ done: [] }));
+  const ok = new Set(pending.map((x) => x.n));
+  const cur = parse(get('SELECT tasks_done FROM roleplay WHERE id = ?', [id]).tasks_done, []);
+  const done = [...new Set([...cur, ...(out.done || []).map(Number).filter((n) => ok.has(n))])].sort((a, b) => a - b);
+  run('UPDATE roleplay SET tasks_done = ? WHERE id = ?', [JSON.stringify(done), id]);
+  return { tasksDone: done };
+}
+
 /** 单句点评：检查第 index 条（用户消息）是否自然，结果存入 roleplay.feedback[index] */
 export async function feedback(id, index) {
   const rp = get('SELECT * FROM roleplay WHERE id = ?', [id]);
@@ -128,7 +151,8 @@ Respond ONLY with JSON.` },
 ${v.scene.role} said: ${prev?.content || ''}
 Learner said: ${msg.content}` },
   ], { model: getSettings().llmModel, temperature: 0.2, kind: 'feedback' }, () => ({ ok: true }));
-  const ok = out.ok === true || out.ok === 'true' || !out.better || out.better.trim().toLowerCase() === msg.content.trim().toLowerCase();
+  const loose = (t) => String(t || '').toLowerCase().replace(/[’]/g, "'").replace(/[^a-z0-9' ]/g, ' ').replace(/\s+/g, ' ').trim();
+  const ok = out.ok === true || out.ok === 'true' || !out.better || loose(out.better) === loose(msg.content); // 只差大小写或标点，不算问题
   const fb = ok ? { ok: true } : { ok: false, better: out.better.trim(), issue_zh: out.issue_zh || '', zh: out.zh || '' };
   // 读最新值再写，避免并发点评互相覆盖
   const cur = parse(get('SELECT feedback FROM roleplay WHERE id = ?', [id]).feedback, {});
@@ -143,6 +167,8 @@ export async function finish(id) {
   const v = view(rp);
   let review = { comment_zh: '', fixes: [] };
   if (v.turns > 0) {
+    await checkTasks(id);
+    v.tasksDone = parse(get('SELECT tasks_done FROM roleplay WHERE id = ?', [id]).tasks_done, []);
     // 补齐还没点评的句子，然后汇总所有需要改进的句子
     const idx = v.messages.map((m, i) => (m.role === 'user' ? i : -1)).filter((i) => i >= 0);
     for (const i of idx) if (!v.feedback[i]) await feedback(id, i);

@@ -169,7 +169,9 @@ export function RoleplayChat() {
       const r = await api.post(`/roleplay/${id}/turn`, { text: t, recordingId });
       setRp(r);
       say(r.messages[r.messages.length - 1].content);
-      runFeedback(r.messages.length - 2);
+      const idx = r.messages.length - 2;
+      api.post(`/roleplay/${id}/tasks`).then((t) => setRp((x) => ({ ...x, tasksDone: t.tasksDone }))).catch(() => {})
+        .finally(() => runFeedback(idx));
     } catch (e) {
       setErr(e.message); setText(t);
       setRp((r) => ({ ...r, messages: r.messages.slice(0, -1) }));

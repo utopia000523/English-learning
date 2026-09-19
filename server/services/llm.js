@@ -55,6 +55,7 @@ export async function chatJSON(messages, opts = {}, fallback = (text) => ({ text
 }
 
 function fakeReply(kind) {
+  if (kind === 'tasks') return JSON.stringify({ done: [1, 2, 3, 4] });
   if (kind === 'translate') return JSON.stringify({ en: "Not great, work's been really busy lately." });
   if (kind === 'lookup') {
     return JSON.stringify({ zh: '忙乱的', pos: 'adj.', usage_zh: '形容事情多、节奏快、忙得团团转', example: 'It was a hectic day.', example_zh: '那天忙得不可开交。' });

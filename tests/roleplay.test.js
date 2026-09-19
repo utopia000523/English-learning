@@ -75,6 +75,15 @@ test('打中文：「可以说」是这句中文的英文，点评不是「表�
   assert.equal(fb.better, "Not great, work's been really busy lately.");
 });
 
+test('单独任务检查：返回已完成任务并保存', async () => {
+  const rp = await (await post('/roleplay', { sceneId: 'w01-s1' })).json();
+  await post(`/roleplay/${rp.id}/turn`, { text: "I work in product at a tech company. What do you do?" });
+  const t = await (await post(`/roleplay/${rp.id}/tasks`)).json();
+  assert.deepEqual(t.tasksDone, [1, 2, 3, 4]);
+  const again = await (await fetch(base + `/roleplay/${rp.id}`)).json();
+  assert.deepEqual(again.tasksDone, [1, 2, 3, 4]);
+});
+
 test('参数校验', async () => {
   assert.equal((await post('/roleplay', { sceneId: 'nope' })).status, 404);
   assert.equal((await post('/roleplay/1/turn', { text: ' ' })).status, 400);
