@@ -6,6 +6,7 @@ import { speak } from '../services/tts.js';
 import { startRecording, transcribe } from '../services/recorder.js';
 import { Icon } from '../icons.jsx';
 
+const isZh = (t) => /[\u4e00-\u9fff]/.test(t || '');
 const LEVEL = { basic: '基础版', advanced: '进阶版' };
 const STATUS = {
   passed: <span className="st ok">已通关</span>,
@@ -212,9 +213,10 @@ export function RoleplayChat() {
               {rp.feedback?.[i]?.ok && <div className="fb-ok">✓ 表达自然</div>}
               {rp.feedback?.[i] && !rp.feedback[i].ok && (
                 <div className="fb">
-                  <div className="faint">可以更地道</div>
+                  <div className="faint">{isZh(m.content) ? '用英语可以这样说' : '可以更地道'}</div>
                   <div className="n">{rp.feedback[i].better}</div>
-                  {rp.feedback[i].issue_zh && <div className="muted">{rp.feedback[i].issue_zh}</div>}
+                  {isZh(m.content) ? <div className="muted">试着把整句用英语再说一遍。</div>
+                    : rp.feedback[i].issue_zh && <div className="muted">{rp.feedback[i].issue_zh}</div>}
                   <div className="row" style={{ gap: 2, marginTop: 2, marginLeft: -6 }}>
                     <button className="link" onClick={() => say(rp.feedback[i].better)}>{Icon.speaker}朗读</button>
                     <button className="link" disabled={added[i]} onClick={() => addCard(i, rp.feedback[i])}>{added[i] ? '已加入表达卡' : '+ 加入表达卡'}</button>
@@ -238,7 +240,7 @@ export function RoleplayChat() {
                 </div>
                 {showZh[i] && <div className="zh">{m.zh}</div>}
               </>}
-              {m.coach && <div className="aside-note" style={{ marginTop: 8 }}>可以说 <b style={{ color: 'var(--ink)' }}>“{m.coach}”</b>
+              {m.coach && !isZh(rp.messages[i - 1]?.content) && <div className="aside-note" style={{ marginTop: 8 }}>可以说 <b style={{ color: 'var(--ink)' }}>“{m.coach}”</b>
                 <button className="link" onClick={() => say(m.coach)}>{Icon.speaker}</button> 试着把整句再说一遍。</div>}
             </div>
           ))}

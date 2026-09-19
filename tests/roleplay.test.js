@@ -66,10 +66,10 @@ test('单句点评：返回更地道说法；复盘汇总所有问题句', async
   assert.ok(fin.review.comment_zh);
 });
 
-test('打中文：「可以说」是这句中文的英文，点评不是「表达自然」', async () => {
+test('打中文：英文说法只出现在点评卡，点评不是「表达自然」', async () => {
   const rp = await (await post('/roleplay', { sceneId: 'w01-s2' })).json();
   const a = await (await post(`/roleplay/${rp.id}/turn`, { text: '不太好，最近工作太忙了' })).json();
-  assert.equal(a.messages.at(-1).coach, "Not great, work's been really busy lately.");
+  assert.equal(a.messages.at(-1).coach, ''); // 不在 AI 回复下重复显示
   const fb = await (await post(`/roleplay/${rp.id}/feedback`, { index: a.messages.length - 2 })).json();
   assert.equal(fb.ok, false);
   assert.equal(fb.better, "Not great, work's been really busy lately.");

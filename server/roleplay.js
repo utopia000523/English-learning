@@ -99,9 +99,9 @@ export async function turn(id, text, recordingId) {
   const bye = saidBye(messages);
   const done = [...new Set([...v.tasksDone, ...(out.completed || []).map(Number)
     .filter((x) => x >= 1 && x <= n && (!v.scene.tasks[x - 1].strict || bye))])].sort((a, b) => a - b);
-  // 「可以说」：中文输入用翻译结果；英文里明确问“怎么说”才用模型给的；其余一律不显示
+  // 「可以说」：只在英文里明确问“怎么说”时显示；中文输入的英文说法放在用户消息下的点评卡，不重复
   const askedHow = /how (do|can|would|should) (i|you) say|what('s| is) .* in english/i.test(text);
-  const coach = zhHelp || (askedHow ? String(out.coach || '').trim() : '');
+  const coach = !zhHelp && askedHow ? String(out.coach || '').trim() : '';
   messages.push({ role: 'assistant', content: String(out.reply || '').trim(), zh: out.reply_zh || '', coach });
   run('UPDATE roleplay SET messages = ?, tasks_done = ? WHERE id = ?', [JSON.stringify(messages), JSON.stringify(done), id]);
   logEvent('roleplay_turn');
