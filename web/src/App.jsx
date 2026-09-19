@@ -1,4 +1,5 @@
-import { NavLink, Route, Routes, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { NavLink, Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import { Icon } from './icons.jsx';
 import Today from './pages/Today.jsx';
 import Settings from './pages/Settings.jsx';
@@ -29,6 +30,9 @@ const NAV = [
 ];
 
 export default function App() {
+  const loc = useLocation();
+  // 切换页面时停止正在播放的朗读
+  useEffect(() => () => window.speechSynthesis?.cancel(), [loc.pathname]);
   return (
     <div className="app">
       <aside className="side">

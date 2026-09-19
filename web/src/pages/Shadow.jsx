@@ -28,6 +28,8 @@ export default function Shadow() {
   const [busy, setBusy] = useState('');
   const [turn, setTurn] = useState(null); // 影子跟读进行中：{ phase: 'listen' | 'speak', left }
   const skipRef = useRef(null);
+  const abortRef = useRef(false);
+  useEffect(() => () => { abortRef.current = true; skipRef.current?.(); window.speechSynthesis?.cancel(); }, []);
   const [err, setErr] = useState('');
   const mic = useMic({ maxSeconds: 90 });
   const [params] = useSearchParams();
@@ -75,14 +77,17 @@ export default function Shadow() {
   const runShadow = async () => {
     setErr(''); setResults({});
     try { await mic.start(); } catch { setErr('无法使用麦克风：请在地址栏左侧允许麦克风权限。'); return; }
-    setBusy('playing');
+    setBusy('playing'); abortRef.current = false;
     for (let i = 0; i < sents.length; i++) {
+      if (abortRef.current) break;
       setIdx(i); setTurn({ phase: 'listen' });
       await play(sents[i].en);
+      if (abortRef.current) break;
       const words = sents[i].en.split(/\s+/).length;
       await wait(Math.round((words * 450) / rate + 1500)); // 约为原句时长 + 1.5 秒
     }
     setTurn(null); setBusy('');
+    if (abortRef.current) { mic.cancel(); return; } // 中途停止：不评分
     const rec = await mic.stop();
     if (rec) score('all', sents.map((s) => s.en).join(' '), rec);
   };
@@ -137,6 +142,7 @@ export default function Shadow() {
                     ? <button className="btn accent" onClick={() => skipRef.current?.()}>{Icon.mic}轮到你说（{turn.left} 秒）· 说完了</button>
                     : <button className="btn line" disabled>{Icon.speaker}先听第 {idx + 1} / {sents.length} 句…</button>
                 ) : <button className="btn accent" onClick={runShadow} disabled={mic.recording || !!busy}>{Icon.mic}{busy === 'score' ? '评分中…' : r ? '再来一遍' : '开始影子跟读'}</button>}
+                {busy === 'playing' && <button className="link" onClick={() => { abortRef.current = true; window.speechSynthesis?.cancel(); skipRef.current?.(); }}>停止</button>}
                 {myUrl.all && <button className="btn line" onClick={() => new Audio(myUrl.all).play()}>回放我的</button>}
               </div>
             </>}
