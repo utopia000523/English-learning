@@ -1,411 +1,416 @@
 {
- "week": 2,
- "theme": "日常闲聊",
- "reviewed": false,
- "items": [
-  {
-   "id": "w02-c01",
-   "type": "card",
-   "zh": "今天天气真好。",
-   "en": "It's a beautiful day today.",
-   "example": "What a nice day!"
-  },
-  {
-   "id": "w02-c02",
-   "type": "card",
-   "zh": "今天好热啊。",
-   "en": "It's so hot today.",
-   "example": "It's boiling out there."
-  },
-  {
-   "id": "w02-c03",
-   "type": "card",
-   "zh": "好像要下雨了。",
-   "en": "It looks like it's going to rain.",
-   "example": "I think it's about to rain."
-  },
-  {
-   "id": "w02-c04",
-   "type": "card",
-   "zh": "这周末有什么安排？",
-   "en": "Any plans for the weekend?",
-   "example": "What are you up to this weekend?"
-  },
-  {
-   "id": "w02-c05",
-   "type": "card",
-   "zh": "还没想好。",
-   "en": "I haven't decided yet.",
-   "example": "Not sure yet."
-  },
-  {
-   "id": "w02-c06",
-   "type": "card",
-   "zh": "我打算在家休息一下。",
-   "en": "I'm just going to stay in and relax.",
-   "example": "I'm planning a lazy weekend."
-  },
-  {
-   "id": "w02-c07",
-   "type": "card",
-   "zh": "周末过得怎么样？",
-   "en": "How was your weekend?",
-   "example": "Did you have a good weekend?"
-  },
-  {
-   "id": "w02-c08",
-   "type": "card",
-   "zh": "挺放松的。",
-   "en": "It was pretty relaxing.",
-   "example": "It was nice and chill."
-  },
-  {
-   "id": "w02-c09",
-   "type": "card",
-   "zh": "我去海边玩了。",
-   "en": "I went to the beach.",
-   "example": "We spent the day by the sea."
-  },
-  {
-   "id": "w02-c10",
-   "type": "card",
-   "zh": "你最近看了什么好看的剧吗？",
-   "en": "Have you watched anything good lately?",
-   "example": "Any good shows you'd recommend?"
-  },
-  {
-   "id": "w02-c11",
-   "type": "card",
-   "zh": "我最近在追一部剧。",
-   "en": "I've been binge-watching a show.",
-   "example": "I'm hooked on a new series."
-  },
-  {
-   "id": "w02-c12",
-   "type": "card",
-   "zh": "值得看吗？",
-   "en": "Is it worth watching?",
-   "example": "Would you recommend it?"
-  },
-  {
-   "id": "w02-c13",
-   "type": "card",
-   "zh": "我可能要晚到十分钟。",
-   "en": "I might be running about ten minutes late.",
-   "example": "I'm running a bit late — be there in five."
-  },
-  {
-   "id": "w02-c14",
-   "type": "card",
-   "zh": "今天好累。",
-   "en": "I'm so tired today.",
-   "example": "I'm exhausted."
-  },
-  {
-   "id": "w02-c15",
-   "type": "card",
-   "zh": "昨晚没睡好。",
-   "en": "I didn't sleep well last night.",
-   "example": "I barely slept last night."
-  },
-  {
-   "id": "w02-c16",
-   "type": "card",
-   "zh": "终于到周五了！",
-   "en": "Finally, it's Friday!",
-   "example": "TGIF!"
-  },
-  {
-   "id": "w02-c17",
-   "type": "card",
-   "zh": "时间过得真快。",
-   "en": "Time flies.",
-   "example": "Where did the time go?"
-  },
-  {
-   "id": "w02-c18",
-   "type": "card",
-   "zh": "我完全同意。",
-   "en": "I totally agree.",
-   "example": "You're absolutely right."
-  },
-  {
-   "id": "w02-c19",
-   "type": "card",
-   "zh": "我不太确定。",
-   "en": "I'm not so sure.",
-   "example": "I don't know about that."
-  },
-  {
-   "id": "w02-c20",
-   "type": "card",
-   "zh": "怎么说呢……",
-   "en": "How should I put it...",
-   "example": "Let me think..."
-  },
-  {
-   "id": "w02-c21",
-   "type": "card",
-   "zh": "有道理。",
-   "en": "Good point.",
-   "example": "That makes sense."
-  },
-  {
-   "id": "w02-c22",
-   "type": "card",
-   "zh": "你是认真的吗？",
-   "en": "Are you serious?",
-   "example": "You're kidding!"
-  },
-  {
-   "id": "w02-c23",
-   "type": "card",
-   "zh": "太棒了！",
-   "en": "That's awesome!",
-   "example": "Good for you!"
-  },
-  {
-   "id": "w02-c24",
-   "type": "card",
-   "zh": "太可惜了。",
-   "en": "That's too bad.",
-   "example": "Oh no, sorry to hear that."
-  },
-  {
-   "id": "w02-c25",
-   "type": "card",
-   "zh": "我也是。",
-   "en": "Me too.",
-   "example": "Same here."
-  },
-  {
-   "id": "w02-c26",
-   "type": "card",
-   "zh": "我也不。",
-   "en": "Me neither.",
-   "example": "Neither do I."
-  },
-  {
-   "id": "w02-c27",
-   "type": "card",
-   "zh": "对了，……",
-   "en": "By the way, ...",
-   "example": "Oh, before I forget..."
-  },
-  {
-   "id": "w02-c28",
-   "type": "card",
-   "zh": "我得先走了。",
-   "en": "I've got to get going.",
-   "example": "I should head out."
-  },
-  {
-   "id": "w02-c29",
-   "type": "card",
-   "zh": "路上小心。",
-   "en": "Get home safe.",
-   "example": "Take care."
-  },
-  {
-   "id": "w02-c30",
-   "type": "card",
-   "zh": "周一见！",
-   "en": "See you Monday!",
-   "example": "Have a good one!"
-  }
- ],
- "scenes": [
-  {
-   "id": "w02-s1",
-   "level": "basic",
-   "title": "周末聊什么",
-   "role": "Mia",
-   "role_zh": "Mia · 同事",
-   "persona": "Mia, a friendly coworker, chatting with you on Monday morning",
-   "opening": "Morning! How was your weekend?",
-   "opening_zh": "早！周末过得怎么样？",
-   "brief": "周一早上，同事 Mia 问你周末过得怎么样。",
-   "tasks": [
+  "week": 2,
+  "theme": "日常闲聊",
+  "reviewed": false,
+  "items": [
     {
-     "zh": "说你周末做了什么",
-     "check": "the learner says what they did on the weekend"
+      "id": "w02-c01",
+      "type": "card",
+      "zh": "今天天气真好。",
+      "en": "It's a beautiful day today.",
+      "example": "What a nice day!"
     },
     {
-     "zh": "说说感觉怎么样",
-     "check": "the learner says how it felt"
+      "id": "w02-c02",
+      "type": "card",
+      "zh": "今天好热啊。",
+      "en": "It's so hot today.",
+      "example": "It's boiling out there."
     },
     {
-     "zh": "问她周末怎么样",
-     "check": "the learner asks about Mia's weekend"
+      "id": "w02-c03",
+      "type": "card",
+      "zh": "好像要下雨了。",
+      "en": "It looks like it's going to rain.",
+      "example": "I think it's about to rain."
     },
     {
-     "zh": "对她说的内容表示感兴趣或惊讶",
-     "check": "the learner reacts to what Mia said with interest or surprise"
+      "id": "w02-c04",
+      "type": "card",
+      "zh": "这周末有什么安排？",
+      "en": "Any plans for the weekend?",
+      "example": "What are you up to this weekend?"
+    },
+    {
+      "id": "w02-c05",
+      "type": "card",
+      "zh": "还没想好。",
+      "en": "I haven't decided yet.",
+      "example": "Not sure yet."
+    },
+    {
+      "id": "w02-c06",
+      "type": "card",
+      "zh": "我打算在家休息一下。",
+      "en": "I'm just going to stay in and relax.",
+      "example": "I'm planning a lazy weekend."
+    },
+    {
+      "id": "w02-c07",
+      "type": "card",
+      "zh": "周末过得怎么样？",
+      "en": "How was your weekend?",
+      "example": "Did you have a good weekend?"
+    },
+    {
+      "id": "w02-c08",
+      "type": "card",
+      "zh": "挺放松的。",
+      "en": "It was pretty relaxing.",
+      "example": "It was nice and chill."
+    },
+    {
+      "id": "w02-c09",
+      "type": "card",
+      "zh": "我去海边玩了。",
+      "en": "I went to the beach.",
+      "example": "We spent the day by the sea."
+    },
+    {
+      "id": "w02-c10",
+      "type": "card",
+      "zh": "你最近看了什么好看的剧吗？",
+      "en": "Have you watched anything good lately?",
+      "example": "Any good shows you'd recommend?"
+    },
+    {
+      "id": "w02-c11",
+      "type": "card",
+      "zh": "我最近在追一部剧。",
+      "en": "I've been binge-watching a show.",
+      "example": "I'm hooked on a new series."
+    },
+    {
+      "id": "w02-c12",
+      "type": "card",
+      "zh": "值得看吗？",
+      "en": "Is it worth watching?",
+      "example": "Would you recommend it?"
+    },
+    {
+      "id": "w02-c13",
+      "type": "card",
+      "zh": "我可能要晚到十分钟。",
+      "en": "I might be running about ten minutes late.",
+      "example": "I'm running a bit late — be there in five."
+    },
+    {
+      "id": "w02-c14",
+      "type": "card",
+      "zh": "今天好累。",
+      "en": "I'm so tired today.",
+      "example": "I'm exhausted."
+    },
+    {
+      "id": "w02-c15",
+      "type": "card",
+      "zh": "昨晚没睡好。",
+      "en": "I didn't sleep well last night.",
+      "example": "I barely slept last night."
+    },
+    {
+      "id": "w02-c16",
+      "type": "card",
+      "zh": "终于到周五了！",
+      "en": "Finally, it's Friday!",
+      "example": "TGIF!"
+    },
+    {
+      "id": "w02-c17",
+      "type": "card",
+      "zh": "时间过得真快。",
+      "en": "Time flies.",
+      "example": "Where did the time go?"
+    },
+    {
+      "id": "w02-c18",
+      "type": "card",
+      "zh": "我完全同意。",
+      "en": "I totally agree.",
+      "example": "You're absolutely right."
+    },
+    {
+      "id": "w02-c19",
+      "type": "card",
+      "zh": "我不太确定。",
+      "en": "I'm not so sure.",
+      "example": "I don't know about that."
+    },
+    {
+      "id": "w02-c20",
+      "type": "card",
+      "zh": "怎么说呢……",
+      "en": "How should I put it...",
+      "example": "Let me think..."
+    },
+    {
+      "id": "w02-c21",
+      "type": "card",
+      "zh": "有道理。",
+      "en": "Good point.",
+      "example": "That makes sense."
+    },
+    {
+      "id": "w02-c22",
+      "type": "card",
+      "zh": "你是认真的吗？",
+      "en": "Are you serious?",
+      "example": "You're kidding!"
+    },
+    {
+      "id": "w02-c23",
+      "type": "card",
+      "zh": "太棒了！",
+      "en": "That's awesome!",
+      "example": "Good for you!"
+    },
+    {
+      "id": "w02-c24",
+      "type": "card",
+      "zh": "太可惜了。",
+      "en": "That's too bad.",
+      "example": "Oh no, sorry to hear that."
+    },
+    {
+      "id": "w02-c25",
+      "type": "card",
+      "zh": "我也是。",
+      "en": "Me too.",
+      "example": "Same here."
+    },
+    {
+      "id": "w02-c26",
+      "type": "card",
+      "zh": "我也不。",
+      "en": "Me neither.",
+      "example": "Neither do I."
+    },
+    {
+      "id": "w02-c27",
+      "type": "card",
+      "zh": "对了，……",
+      "en": "By the way, ...",
+      "example": "Oh, before I forget..."
+    },
+    {
+      "id": "w02-c28",
+      "type": "card",
+      "zh": "我得先走了。",
+      "en": "I've got to get going.",
+      "example": "I should head out."
+    },
+    {
+      "id": "w02-c29",
+      "type": "card",
+      "zh": "路上小心。",
+      "en": "Get home safe.",
+      "example": "Take care."
+    },
+    {
+      "id": "w02-c30",
+      "type": "card",
+      "zh": "周一见！",
+      "en": "See you Monday!",
+      "example": "Have a good one!"
     }
-   ],
-   "hints": [
+  ],
+  "scenes": [
     {
-     "zh": "我去海边玩了。",
-     "en": "I went to the beach."
+      "id": "w02-s1",
+      "level": "basic",
+      "title": "周末聊什么",
+      "role": "Mia",
+      "role_zh": "Mia · 同事",
+      "persona": "Mia, a friendly coworker, chatting with you on Monday morning",
+      "opening": "Morning! How was your weekend?",
+      "opening_zh": "早！周末过得怎么样？",
+      "brief": "周一早上，同事 Mia 问你周末过得怎么样。",
+      "tasks": [
+        {
+          "zh": "说你周末做了什么",
+          "check": "the learner says what they did on the weekend"
+        },
+        {
+          "zh": "说说感觉怎么样",
+          "check": "the learner says how it felt"
+        },
+        {
+          "zh": "问她周末怎么样",
+          "check": "the learner asks about Mia's weekend",
+          "match": [
+            "(how was|what did you do|how about|what about) (your|you on the|the) weekend",
+            "did you (do|go) .*weekend",
+            "how about you|what about you|and you\\b"
+          ]
+        },
+        {
+          "zh": "对她说的内容表示感兴趣或惊讶",
+          "check": "the learner reacts to what Mia said with interest or surprise"
+        }
+      ],
+      "hints": [
+        {
+          "zh": "我去海边玩了。",
+          "en": "I went to the beach."
+        },
+        {
+          "zh": "挺放松的。",
+          "en": "It was pretty relaxing."
+        },
+        {
+          "zh": "你呢？",
+          "en": "How about you?"
+        }
+      ]
     },
     {
-     "zh": "挺放松的。",
-     "en": "It was pretty relaxing."
-    },
-    {
-     "zh": "你呢？",
-     "en": "How about you?"
+      "id": "w02-s2",
+      "level": "advanced",
+      "title": "迟到了打个电话",
+      "role": "Tom",
+      "role_zh": "Tom · 朋友",
+      "persona": "Tom, your friend who is already waiting for you at a café for a meetup",
+      "opening": "Hey, I'm at the café already. Where are you?",
+      "opening_zh": "嘿，我已经到咖啡馆了，你在哪？",
+      "brief": "你和朋友 Tom 约好见面，但你要迟到了，他打电话来问。",
+      "tasks": [
+        {
+          "zh": "告诉他你会晚到",
+          "check": "the learner says they will be late"
+        },
+        {
+          "zh": "说明原因",
+          "check": "the learner explains why"
+        },
+        {
+          "zh": "告诉他大概几点到",
+          "check": "the learner gives an estimated arrival time"
+        },
+        {
+          "zh": "道歉并提出补偿",
+          "check": "the learner apologizes and offers something, e.g. to buy coffee"
+        }
+      ],
+      "hints": [
+        {
+          "zh": "我可能要晚到十分钟。",
+          "en": "I might be running about ten minutes late."
+        },
+        {
+          "zh": "地铁晚点了。",
+          "en": "The subway was delayed."
+        },
+        {
+          "zh": "咖啡我请。",
+          "en": "Coffee's on me."
+        }
+      ]
     }
-   ]
-  },
-  {
-   "id": "w02-s2",
-   "level": "advanced",
-   "title": "迟到了打个电话",
-   "role": "Tom",
-   "role_zh": "Tom · 朋友",
-   "persona": "Tom, your friend who is already waiting for you at a café for a meetup",
-   "opening": "Hey, I'm at the café already. Where are you?",
-   "opening_zh": "嘿，我已经到咖啡馆了，你在哪？",
-   "brief": "你和朋友 Tom 约好见面，但你要迟到了，他打电话来问。",
-   "tasks": [
+  ],
+  "shadow": [
     {
-     "zh": "告诉他你会晚到",
-     "check": "the learner says they will be late"
+      "id": "w02-sh1",
+      "title": "周末怎么过",
+      "sentences": [
+        {
+          "en": "How was your weekend?",
+          "zh": "你周末过得怎么样？"
+        },
+        {
+          "en": "It was great. I went to the beach with some friends.",
+          "zh": "很棒，我和几个朋友去了海边。"
+        },
+        {
+          "en": "The weather was perfect, not too hot.",
+          "zh": "天气很好，不太热。"
+        },
+        {
+          "en": "We had seafood for lunch and walked along the coast.",
+          "zh": "我们午饭吃了海鲜，然后沿着海边散步。"
+        },
+        {
+          "en": "I didn't want to come back to work today!",
+          "zh": "今天真不想回来上班！"
+        }
+      ]
     },
     {
-     "zh": "说明原因",
-     "check": "the learner explains why"
-    },
-    {
-     "zh": "告诉他大概几点到",
-     "check": "the learner gives an estimated arrival time"
-    },
-    {
-     "zh": "道歉并提出补偿",
-     "check": "the learner apologizes and offers something, e.g. to buy coffee"
+      "id": "w02-sh2",
+      "title": "天气和安排",
+      "sentences": [
+        {
+          "en": "It looks like it's going to rain this afternoon.",
+          "zh": "看起来今天下午要下雨。"
+        },
+        {
+          "en": "Did you bring an umbrella?",
+          "zh": "你带伞了吗？"
+        },
+        {
+          "en": "No, I forgot. I'll just wait it out at the office.",
+          "zh": "没有，忘了。我就在办公室等雨停吧。"
+        },
+        {
+          "en": "Any plans for the weekend?",
+          "zh": "周末有什么安排吗？"
+        },
+        {
+          "en": "Not yet. I might just stay in and relax.",
+          "zh": "还没有，可能就在家休息。"
+        }
+      ]
     }
-   ],
-   "hints": [
+  ],
+  "topics": [
     {
-     "zh": "我可能要晚到十分钟。",
-     "en": "I might be running about ten minutes late."
+      "id": "w02-t1",
+      "zh": "说说你最近的一个周末",
+      "en": "Talk about a recent weekend.",
+      "hints": [
+        "where",
+        "who with",
+        "how you felt"
+      ]
     },
     {
-     "zh": "地铁晚点了。",
-     "en": "The subway was delayed."
+      "id": "w02-t2",
+      "zh": "最近在看的剧或书",
+      "en": "Something you've been watching or reading lately.",
+      "hints": [
+        "what it is",
+        "what it's about",
+        "would you recommend it"
+      ]
     },
     {
-     "zh": "咖啡我请。",
-     "en": "Coffee's on me."
+      "id": "w02-t3",
+      "zh": "你理想中的周末",
+      "en": "Describe your ideal weekend.",
+      "hints": [
+        "morning",
+        "afternoon",
+        "evening"
+      ]
+    },
+    {
+      "id": "w02-t4",
+      "zh": "说说你昨天的一天",
+      "en": "Describe your day yesterday.",
+      "hints": [
+        "morning",
+        "work",
+        "evening"
+      ]
+    },
+    {
+      "id": "w02-t5",
+      "zh": "天气会影响你的心情吗",
+      "en": "Does the weather affect your mood?",
+      "hints": [
+        "sunny days",
+        "rainy days",
+        "an example"
+      ]
     }
-   ]
-  }
- ],
- "shadow": [
-  {
-   "id": "w02-sh1",
-   "title": "周末怎么过",
-   "sentences": [
-    {
-     "en": "How was your weekend?",
-     "zh": "你周末过得怎么样？"
-    },
-    {
-     "en": "It was great. I went to the beach with some friends.",
-     "zh": "很棒，我和几个朋友去了海边。"
-    },
-    {
-     "en": "The weather was perfect, not too hot.",
-     "zh": "天气很好，不太热。"
-    },
-    {
-     "en": "We had seafood for lunch and walked along the coast.",
-     "zh": "我们午饭吃了海鲜，然后沿着海边散步。"
-    },
-    {
-     "en": "I didn't want to come back to work today!",
-     "zh": "今天真不想回来上班！"
-    }
-   ]
-  },
-  {
-   "id": "w02-sh2",
-   "title": "天气和安排",
-   "sentences": [
-    {
-     "en": "It looks like it's going to rain this afternoon.",
-     "zh": "看起来今天下午要下雨。"
-    },
-    {
-     "en": "Did you bring an umbrella?",
-     "zh": "你带伞了吗？"
-    },
-    {
-     "en": "No, I forgot. I'll just wait it out at the office.",
-     "zh": "没有，忘了。我就在办公室等雨停吧。"
-    },
-    {
-     "en": "Any plans for the weekend?",
-     "zh": "周末有什么安排吗？"
-    },
-    {
-     "en": "Not yet. I might just stay in and relax.",
-     "zh": "还没有，可能就在家休息。"
-    }
-   ]
-  }
- ],
- "topics": [
-  {
-   "id": "w02-t1",
-   "zh": "说说你最近的一个周末",
-   "en": "Talk about a recent weekend.",
-   "hints": [
-    "where",
-    "who with",
-    "how you felt"
-   ]
-  },
-  {
-   "id": "w02-t2",
-   "zh": "最近在看的剧或书",
-   "en": "Something you've been watching or reading lately.",
-   "hints": [
-    "what it is",
-    "what it's about",
-    "would you recommend it"
-   ]
-  },
-  {
-   "id": "w02-t3",
-   "zh": "你理想中的周末",
-   "en": "Describe your ideal weekend.",
-   "hints": [
-    "morning",
-    "afternoon",
-    "evening"
-   ]
-  },
-  {
-   "id": "w02-t4",
-   "zh": "说说你昨天的一天",
-   "en": "Describe your day yesterday.",
-   "hints": [
-    "morning",
-    "work",
-    "evening"
-   ]
-  },
-  {
-   "id": "w02-t5",
-   "zh": "天气会影响你的心情吗",
-   "en": "Does the weather affect your mood?",
-   "hints": [
-    "sunny days",
-    "rainy days",
-    "an example"
-   ]
-  }
- ]
+  ]
 }

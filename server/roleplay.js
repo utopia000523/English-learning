@@ -97,7 +97,7 @@ export async function turn(id, text, recordingId) {
   );
   const n = v.scene.tasks.length;
   const bye = saidBye(messages);
-  const done = [...new Set([...v.tasksDone, ...(out.completed || []).map(Number)
+  const done = [...new Set([...v.tasksDone, ...matchedTasks(v.scene, messages), ...(out.completed || []).map(Number)
     .filter((x) => x >= 1 && x <= n && (!v.scene.tasks[x - 1].strict || bye))])].sort((a, b) => a - b);
   // 「可以说」：只在英文里明确问“怎么说”时显示；中文输入的英文说法放在用户消息下的点评卡，不重复
   const askedHow = /how (do|can|would|should) (i|you) say|what('s| is) .* in english/i.test(text);
@@ -114,26 +114,34 @@ export async function turn(id, text, recordingId) {
 }
 
 /** 任务检查：单独调用模型，只判断还没完成的任务（比在回复里顺带判断准确） */
+/** 任务的 match（正则）命中即算完成，不依赖模型判断，用于「How about you?」这类模型容易漏判的追问 */
+export function matchedTasks(scene, messages) {
+  const lines = messages.filter((m) => m.role === 'user').map((m) => m.content);
+  return scene.tasks.map((t, i) => (t.match || []).some((p) => lines.some((l) => new RegExp(p, 'i').test(l))) ? i + 1 : 0).filter(Boolean);
+}
+
 export async function checkTasks(id) {
   const rp = get('SELECT * FROM roleplay WHERE id = ?', [id]);
   if (!rp) return null;
   const v = view(rp);
   const pending = v.scene.tasks.map((t, i) => ({ n: i + 1, t })).filter((x) => !v.tasksDone.includes(x.n));
   if (!pending.length || !v.turns) return { tasksDone: v.tasksDone };
-  const lines = v.messages.filter((m) => m.role === 'user').map((m) => `- ${m.content}`).join('\n');
+  const lines = v.messages.filter((m) => m.content).map((m) => `${m.role === 'user' ? 'Learner' : v.scene.role}: ${m.content}`).join('\n');
   const out = await llm.chatJSON([
     { role: 'system', content: `You check an English learner's role-play tasks. Scene: ${v.scene.title} (the other person is ${v.scene.role}).
 For EACH task below, decide whether the learner has ALREADY done it in what they actually said. Judge by meaning, not exact words; one line can complete several tasks.
+Read the learner's lines in context: a follow-up like "How about you?" or "And you?" asks the other person the same thing the learner just talked about (e.g. after the learner describes their job, it asks what the other person does).
+Only the Learner's lines can complete tasks; the other person's lines are context.
 Do NOT count a task just because it might happen later or the conversation is going well. Tasks marked (STRICT) only count if the learner literally did it (e.g. really said goodbye).
 Tasks:
 ${pending.map((x) => `${x.n}. ${x.t.check}${x.t.strict ? ' (STRICT)' : ''}`).join('\n')}
 Respond ONLY with JSON: {"done": [numbers of the tasks above that are accomplished]}` },
-    { role: 'user', content: `Everything the learner said:\n${lines}` },
+    { role: 'user', content: `The conversation so far:\n${lines}` },
   ], { model: getSettings().llmModel, temperature: 0, kind: 'tasks' }, () => ({ done: [] }));
   const said = saidBye(v.messages);
   const ok = new Set(pending.filter((x) => !x.t.strict || said).map((x) => x.n));
   const cur = parse(get('SELECT tasks_done FROM roleplay WHERE id = ?', [id]).tasks_done, []);
-  const done = [...new Set([...cur, ...(out.done || []).map(Number).filter((n) => ok.has(n))])].sort((a, b) => a - b);
+  const done = [...new Set([...cur, ...matchedTasks(v.scene, v.messages), ...(out.done || []).map(Number).filter((n) => ok.has(n))])].sort((a, b) => a - b);
   run('UPDATE roleplay SET tasks_done = ? WHERE id = ?', [JSON.stringify(done), id]);
   return { tasksDone: done };
 }

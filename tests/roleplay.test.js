@@ -98,3 +98,13 @@ test('参数校验', async () => {
   assert.equal((await post('/roleplay', { sceneId: 'nope' })).status, 404);
   assert.equal((await post('/roleplay/1/turn', { text: ' ' })).status, 400);
 });
+
+test('追问「How about you?」算作问对方工作（任务 match 规则）', async () => {
+  const { matchedTasks } = await import('../server/roleplay.js');
+  const fs = await import('node:fs');
+  const sc = JSON.parse(fs.readFileSync(new URL('../content/week01.json', import.meta.url))).scenes.find((s) => s.id === 'w01-s1');
+  const say = (t) => [{ role: 'assistant', content: 'What do you do?' }, { role: 'user', content: t }];
+  assert.deepEqual(matchedTasks(sc, say("Great! I work in product at a tech company in Shenzhen. How about you?")), [3]);
+  assert.deepEqual(matchedTasks(sc, say('What do you do for work?')), [3]);
+  assert.deepEqual(matchedTasks(sc, say('I work in product.')), []);
+});

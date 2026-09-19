@@ -42,7 +42,7 @@ bash scripts/start.sh
 - `theme` 显示在卡片左上角。
 - 修改已有卡片的文字：直接改 JSON，只会同步到还没学过的卡。
 
-**AI 对话场景**写在同一个文件的 `scenes` 数组里，格式见 `content/week01.json`。
+**AI 对话场景**写在同一个文件的 `scenes` 数组里，格式见 `content/week01.json`。任务 `tasks` 的字段：`zh` 显示给学习者；`check` 是给模型判断用的英文描述；`strict: true` 表示必须真的做了才算（如道别）；`match` 是可选的正则数组，学习者任一句命中就直接算完成，用来兜住模型容易漏判的说法（如 “How about you?”）。
 
 **也可以让 AI 帮你写：**把上面的格式和主题（比如"展厅接待外宾，30 张"）发给 Claude 或 WorkBuddy，让它生成 JSON 文件放进 `content/`。
 
