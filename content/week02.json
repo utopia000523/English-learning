@@ -68,6 +68,62 @@
       "example": "Not much, I just took it easy at home."
     },
     {
+      "id": "w02-c49",
+      "type": "card",
+      "day": 1,
+      "zh": "我周末都待在家里。",
+      "en": "I spent the weekend at home.",
+      "example": "I spent the weekend with my family."
+    },
+    {
+      "id": "w02-c50",
+      "type": "card",
+      "day": 1,
+      "zh": "我补了补觉。",
+      "en": "I caught up on some sleep.",
+      "example": "I finally caught up on some sleep."
+    },
+    {
+      "id": "w02-c51",
+      "type": "card",
+      "day": 1,
+      "zh": "我和几个朋友出去了。",
+      "en": "I went out with some friends.",
+      "example": "I went out for dinner with some friends."
+    },
+    {
+      "id": "w02-c52",
+      "type": "card",
+      "day": 1,
+      "zh": "周末过得太快了。",
+      "en": "The weekend went by so fast.",
+      "example": "The holiday went by so fast."
+    },
+    {
+      "id": "w02-c53",
+      "type": "card",
+      "day": 1,
+      "zh": "你干什么去了？",
+      "en": "What did you get up to?",
+      "example": "What did you get up to last night?"
+    },
+    {
+      "id": "w02-c54",
+      "type": "card",
+      "day": 1,
+      "zh": "听起来周末过得很棒。",
+      "en": "Sounds like a great weekend.",
+      "example": "Sounds like a great trip."
+    },
+    {
+      "id": "w02-c55",
+      "type": "card",
+      "day": 1,
+      "zh": "真希望周末能长一点。",
+      "en": "I wish the weekend were longer.",
+      "example": "I wish the holiday were longer."
+    },
+    {
       "id": "w02-c01",
       "type": "card",
       "zh": "今天天气真好。",
@@ -130,6 +186,62 @@
       "zh": "这天气太适合出门了！",
       "en": "What a nice day to be outside!",
       "example": "What a nice day for a walk!"
+    },
+    {
+      "id": "w02-c56",
+      "type": "card",
+      "day": 2,
+      "zh": "外面下大雨了。",
+      "en": "It's pouring outside.",
+      "example": "It's pouring, so take an umbrella."
+    },
+    {
+      "id": "w02-c57",
+      "type": "card",
+      "day": 2,
+      "zh": "今天好潮湿。",
+      "en": "It's really humid today.",
+      "example": "It's so humid in summer here."
+    },
+    {
+      "id": "w02-c58",
+      "type": "card",
+      "day": 2,
+      "zh": "天气变冷了。",
+      "en": "It's getting cold.",
+      "example": "It's getting cold at night."
+    },
+    {
+      "id": "w02-c59",
+      "type": "card",
+      "day": 2,
+      "zh": "这周末台风要来。",
+      "en": "The typhoon is coming this weekend.",
+      "example": "I heard a typhoon is coming."
+    },
+    {
+      "id": "w02-c60",
+      "type": "card",
+      "day": 2,
+      "zh": "我很喜欢这种天气。",
+      "en": "I love this kind of weather.",
+      "example": "I love this kind of weather for walking."
+    },
+    {
+      "id": "w02-c61",
+      "type": "card",
+      "day": 2,
+      "zh": "你被雨淋了吗？",
+      "en": "Did you get caught in the rain?",
+      "example": "Did you get caught in the rain this morning?"
+    },
+    {
+      "id": "w02-c62",
+      "type": "card",
+      "day": 2,
+      "zh": "别淋湿了！",
+      "en": "Stay dry!",
+      "example": "Stay dry out there!"
     },
     {
       "id": "w02-c10",
@@ -196,6 +308,62 @@
       "example": "I haven't finished it yet. No spoilers, please!"
     },
     {
+      "id": "w02-c63",
+      "type": "card",
+      "day": 3,
+      "zh": "这是部喜剧。",
+      "en": "It's a comedy.",
+      "example": "It's a crime drama."
+    },
+    {
+      "id": "w02-c64",
+      "type": "card",
+      "day": 3,
+      "zh": "在 Netflix 上能看。",
+      "en": "It's on Netflix.",
+      "example": "It's on Bilibili."
+    },
+    {
+      "id": "w02-c65",
+      "type": "card",
+      "day": 3,
+      "zh": "一共有三季。",
+      "en": "It has three seasons.",
+      "example": "It only has one season."
+    },
+    {
+      "id": "w02-c66",
+      "type": "card",
+      "day": 3,
+      "zh": "结局太精彩了。",
+      "en": "The ending was amazing.",
+      "example": "The ending was a bit disappointing."
+    },
+    {
+      "id": "w02-c67",
+      "type": "card",
+      "day": 3,
+      "zh": "我根本停不下来。",
+      "en": "I couldn't stop watching.",
+      "example": "I couldn't stop reading it."
+    },
+    {
+      "id": "w02-c68",
+      "type": "card",
+      "day": 3,
+      "zh": "开头有点慢。",
+      "en": "It's a little slow at first.",
+      "example": "It's a little slow at first, but it gets better."
+    },
+    {
+      "id": "w02-c69",
+      "type": "card",
+      "day": 3,
+      "zh": "你喜欢什么类型的剧？",
+      "en": "What kind of shows do you like?",
+      "example": "What kind of movies do you like?"
+    },
+    {
       "id": "w02-c14",
       "type": "card",
       "zh": "今天好累。",
@@ -258,6 +426,62 @@
       "zh": "今天别太累了。",
       "en": "Take it easy today.",
       "example": "You look tired. Take it easy today."
+    },
+    {
+      "id": "w02-c70",
+      "type": "card",
+      "day": 4,
+      "zh": "这周太忙了。",
+      "en": "I've been so busy this week.",
+      "example": "I've been so busy lately."
+    },
+    {
+      "id": "w02-c71",
+      "type": "card",
+      "day": 4,
+      "zh": "我昨晚加班到很晚。",
+      "en": "I worked late last night.",
+      "example": "I worked late every day this week."
+    },
+    {
+      "id": "w02-c72",
+      "type": "card",
+      "day": 4,
+      "zh": "我需要休息一下。",
+      "en": "I need a break.",
+      "example": "I really need a break."
+    },
+    {
+      "id": "w02-c73",
+      "type": "card",
+      "day": 4,
+      "zh": "今晚我要早点睡。",
+      "en": "I'll go to bed early tonight.",
+      "example": "I'll try to go to bed early."
+    },
+    {
+      "id": "w02-c74",
+      "type": "card",
+      "day": 4,
+      "zh": "谢谢关心。",
+      "en": "Thanks for asking.",
+      "example": "Thanks for asking, I'm okay."
+    },
+    {
+      "id": "w02-c75",
+      "type": "card",
+      "day": 4,
+      "zh": "坚持住！",
+      "en": "Hang in there!",
+      "example": "Hang in there, it's almost Friday!"
+    },
+    {
+      "id": "w02-c76",
+      "type": "card",
+      "day": 4,
+      "zh": "你呢？这周忙吗？",
+      "en": "How about you? Busy week?",
+      "example": "How about you? Busy day?"
     },
     {
       "id": "w02-c13",
@@ -324,6 +548,62 @@
       "example": "The subway was more crowded than I expected."
     },
     {
+      "id": "w02-c77",
+      "type": "card",
+      "day": 5,
+      "zh": "我刚错过了公交车。",
+      "en": "I just missed the bus.",
+      "example": "I just missed the subway."
+    },
+    {
+      "id": "w02-c78",
+      "type": "card",
+      "day": 5,
+      "zh": "你现在在哪儿？",
+      "en": "Where are you now?",
+      "example": "Where are you guys now?"
+    },
+    {
+      "id": "w02-c79",
+      "type": "card",
+      "day": 5,
+      "zh": "你能把地址发我吗？",
+      "en": "Can you send me the address?",
+      "example": "Can you send me the location?"
+    },
+    {
+      "id": "w02-c80",
+      "type": "card",
+      "day": 5,
+      "zh": "我快到了。",
+      "en": "I'm almost there.",
+      "example": "I'm almost there, two more stops."
+    },
+    {
+      "id": "w02-c81",
+      "type": "card",
+      "day": 5,
+      "zh": "我在路上了。",
+      "en": "I'm on my way.",
+      "example": "I'm on my way now."
+    },
+    {
+      "id": "w02-c82",
+      "type": "card",
+      "day": 5,
+      "zh": "谢谢你等我。",
+      "en": "Thanks for waiting.",
+      "example": "Thanks for waiting for me."
+    },
+    {
+      "id": "w02-c83",
+      "type": "card",
+      "day": 5,
+      "zh": "下次不会了。",
+      "en": "It won't happen again.",
+      "example": "Sorry, it won't happen again."
+    },
+    {
       "id": "w02-c18",
       "type": "card",
       "zh": "我完全同意。",
@@ -386,6 +666,62 @@
       "zh": "这个问题问得好。",
       "en": "That's a good question.",
       "example": "Hmm, that's a good question."
+    },
+    {
+      "id": "w02-c84",
+      "type": "card",
+      "day": 6,
+      "zh": "你这周末干嘛？",
+      "en": "What are you up to this weekend?",
+      "example": "What are you up to tonight?"
+    },
+    {
+      "id": "w02-c85",
+      "type": "card",
+      "day": 6,
+      "zh": "要不要一起出去玩？",
+      "en": "Do you want to hang out?",
+      "example": "Do you want to hang out on Sunday?"
+    },
+    {
+      "id": "w02-c86",
+      "type": "card",
+      "day": 6,
+      "zh": "我周六有空。",
+      "en": "I'm free on Saturday.",
+      "example": "I'm free after five."
+    },
+    {
+      "id": "w02-c87",
+      "type": "card",
+      "day": 6,
+      "zh": "我没问题。",
+      "en": "That works for me.",
+      "example": "Sunday morning works for me."
+    },
+    {
+      "id": "w02-c88",
+      "type": "card",
+      "day": 6,
+      "zh": "下次吧。",
+      "en": "Maybe another time.",
+      "example": "I can't this week, maybe another time."
+    },
+    {
+      "id": "w02-c89",
+      "type": "card",
+      "day": 6,
+      "zh": "我们十点见怎么样？",
+      "en": "How about we meet at ten?",
+      "example": "How about we meet at the station?"
+    },
+    {
+      "id": "w02-c90",
+      "type": "card",
+      "day": 6,
+      "zh": "我可以，算我一个。",
+      "en": "I'm down.",
+      "example": "Hot pot tonight? I'm down."
     }
   ],
   "scenes": [

@@ -68,6 +68,62 @@
       "example": "Could I get this to go?"
     },
     {
+      "id": "w03-c49",
+      "type": "card",
+      "day": 1,
+      "zh": "我要一杯小杯热拿铁。",
+      "en": "Can I get a small hot latte?",
+      "example": "Can I get a large iced americano?"
+    },
+    {
+      "id": "w03-c50",
+      "type": "card",
+      "day": 1,
+      "zh": "少糖，谢谢。",
+      "en": "Less sugar, please.",
+      "example": "Half sugar, please."
+    },
+    {
+      "id": "w03-c51",
+      "type": "card",
+      "day": 1,
+      "zh": "能多加一份浓缩吗？",
+      "en": "Could I get an extra shot?",
+      "example": "Could I get an extra shot of espresso?"
+    },
+    {
+      "id": "w03-c52",
+      "type": "card",
+      "day": 1,
+      "zh": "这两个有什么区别？",
+      "en": "What's the difference between these two?",
+      "example": "What's the difference between a latte and a flat white?"
+    },
+    {
+      "id": "w03-c53",
+      "type": "card",
+      "day": 1,
+      "zh": "可以用手机付吗？",
+      "en": "Can I pay by phone?",
+      "example": "Can I pay by card?"
+    },
+    {
+      "id": "w03-c54",
+      "type": "card",
+      "day": 1,
+      "zh": "要多久？",
+      "en": "How long will it take?",
+      "example": "How long will the food take?"
+    },
+    {
+      "id": "w03-c55",
+      "type": "card",
+      "day": 1,
+      "zh": "能做得不那么甜吗？",
+      "en": "Could you make it less sweet?",
+      "example": "Could you make it a little less sweet?"
+    },
+    {
       "id": "w03-c03",
       "type": "card",
       "zh": "你们有什么推荐的？",
@@ -130,6 +186,62 @@
       "zh": "这个很辣吗？",
       "en": "Is it very spicy?",
       "example": "Is the curry very spicy?"
+    },
+    {
+      "id": "w03-c56",
+      "type": "card",
+      "day": 2,
+      "zh": "你们卖得最好的是什么？",
+      "en": "What's your most popular dish?",
+      "example": "What's your most popular drink?"
+    },
+    {
+      "id": "w03-c57",
+      "type": "card",
+      "day": 2,
+      "zh": "这个够两个人吃吗？",
+      "en": "Is this enough for two people?",
+      "example": "Is this enough for three people?"
+    },
+    {
+      "id": "w03-c58",
+      "type": "card",
+      "day": 2,
+      "zh": "能做得不那么辣吗？",
+      "en": "Could you make it less spicy?",
+      "example": "Could you make it mild?"
+    },
+    {
+      "id": "w03-c59",
+      "type": "card",
+      "day": 2,
+      "zh": "我对花生过敏。",
+      "en": "I'm allergic to peanuts.",
+      "example": "I'm allergic to shrimp."
+    },
+    {
+      "id": "w03-c60",
+      "type": "card",
+      "day": 2,
+      "zh": "我不吃猪肉。",
+      "en": "I don't eat pork.",
+      "example": "I don't eat beef."
+    },
+    {
+      "id": "w03-c61",
+      "type": "card",
+      "day": 2,
+      "zh": "我们要鱼和一份沙拉。",
+      "en": "We'll have the fish and a salad.",
+      "example": "We'll have the chicken and some rice."
+    },
+    {
+      "id": "w03-c62",
+      "type": "card",
+      "day": 2,
+      "zh": "能再来点米饭吗？",
+      "en": "Could we get some rice as well?",
+      "example": "Could we get some bread as well?"
     },
     {
       "id": "w03-c15",
@@ -196,6 +308,62 @@
       "example": "Sorry, my soup is a bit cold."
     },
     {
+      "id": "w03-c63",
+      "type": "card",
+      "day": 3,
+      "zh": "不好意思，打扰一下。",
+      "en": "Excuse me, sorry to bother you.",
+      "example": "Excuse me, sorry to bother you, but..."
+    },
+    {
+      "id": "w03-c64",
+      "type": "card",
+      "day": 3,
+      "zh": "我们已经等了三十多分钟了。",
+      "en": "We've been waiting for over thirty minutes.",
+      "example": "We've been waiting for twenty minutes."
+    },
+    {
+      "id": "w03-c65",
+      "type": "card",
+      "day": 3,
+      "zh": "能帮我换一下吗？",
+      "en": "Could you change this, please?",
+      "example": "Could you change this for a hot one?"
+    },
+    {
+      "id": "w03-c66",
+      "type": "card",
+      "day": 3,
+      "zh": "我点的是不要洋葱的。",
+      "en": "I ordered it without onions.",
+      "example": "I ordered it without ice."
+    },
+    {
+      "id": "w03-c67",
+      "type": "card",
+      "day": 3,
+      "zh": "能再给我们加点茶吗？",
+      "en": "Could we get some more tea?",
+      "example": "Could we get some more rice?"
+    },
+    {
+      "id": "w03-c68",
+      "type": "card",
+      "day": 3,
+      "zh": "能给我一个干净的杯子吗？",
+      "en": "Could I get a clean glass?",
+      "example": "Could I get a clean plate?"
+    },
+    {
+      "id": "w03-c69",
+      "type": "card",
+      "day": 3,
+      "zh": "没关系，这种事难免。",
+      "en": "That's okay, these things happen.",
+      "example": "No problem, these things happen."
+    },
+    {
       "id": "w03-c18",
       "type": "card",
       "zh": "能帮我打包吗？",
@@ -258,6 +426,62 @@
       "zh": "不用找了。",
       "en": "Keep the change.",
       "example": "Here you go. Keep the change."
+    },
+    {
+      "id": "w03-c70",
+      "type": "card",
+      "day": 4,
+      "zh": "每道菜都很好吃。",
+      "en": "Everything was delicious.",
+      "example": "Everything was delicious, thank you."
+    },
+    {
+      "id": "w03-c71",
+      "type": "card",
+      "day": 4,
+      "zh": "一共多少钱？",
+      "en": "How much is it altogether?",
+      "example": "How much is it in total?"
+    },
+    {
+      "id": "w03-c72",
+      "type": "card",
+      "day": 4,
+      "zh": "我可以分开付吗？",
+      "en": "Could I pay separately?",
+      "example": "Could we pay separately?"
+    },
+    {
+      "id": "w03-c73",
+      "type": "card",
+      "day": 4,
+      "zh": "剩下的能帮我打包吗？",
+      "en": "Can I have the leftovers packed?",
+      "example": "Can I have the rest packed?"
+    },
+    {
+      "id": "w03-c74",
+      "type": "card",
+      "day": 4,
+      "zh": "能给我一个袋子吗？",
+      "en": "Could I get a bag?",
+      "example": "Could I get a paper bag?"
+    },
+    {
+      "id": "w03-c75",
+      "type": "card",
+      "day": 4,
+      "zh": "账单好像有点问题。",
+      "en": "I think there's a mistake on the bill.",
+      "example": "I think there's a mistake here."
+    },
+    {
+      "id": "w03-c76",
+      "type": "card",
+      "day": 4,
+      "zh": "你们有会员卡吗？",
+      "en": "Do you have a membership card?",
+      "example": "Do you have a loyalty card?"
     },
     {
       "id": "w03-c23",
@@ -324,6 +548,62 @@
       "example": "Let's meet there at six thirty."
     },
     {
+      "id": "w03-c77",
+      "type": "card",
+      "day": 5,
+      "zh": "我好饿。",
+      "en": "I'm really hungry.",
+      "example": "I'm really hungry after work."
+    },
+    {
+      "id": "w03-c78",
+      "type": "card",
+      "day": 5,
+      "zh": "我吃什么都行。",
+      "en": "Anything is fine with me.",
+      "example": "Anything is fine, you choose."
+    },
+    {
+      "id": "w03-c79",
+      "type": "card",
+      "day": 5,
+      "zh": "我昨天刚吃过那个。",
+      "en": "I had that yesterday.",
+      "example": "I had pizza yesterday."
+    },
+    {
+      "id": "w03-c80",
+      "type": "card",
+      "day": 5,
+      "zh": "我们去个新地方试试吧。",
+      "en": "Let's try somewhere new.",
+      "example": "Let's try a new place this time."
+    },
+    {
+      "id": "w03-c81",
+      "type": "card",
+      "day": 5,
+      "zh": "太远了。",
+      "en": "It's too far.",
+      "example": "That place is too far from here."
+    },
+    {
+      "id": "w03-c82",
+      "type": "card",
+      "day": 5,
+      "zh": "要订位吗？",
+      "en": "Do we need to book a table?",
+      "example": "Do we need to book in advance?"
+    },
+    {
+      "id": "w03-c83",
+      "type": "card",
+      "day": 5,
+      "zh": "我来订位。",
+      "en": "I'll book a table for us.",
+      "example": "I'll book a table for seven."
+    },
+    {
       "id": "w03-c01",
       "type": "card",
       "zh": "能给我看一下菜单吗？",
@@ -386,6 +666,62 @@
       "zh": "一切都很好。",
       "en": "Everything was great.",
       "example": "Thanks, everything was great."
+    },
+    {
+      "id": "w03-c84",
+      "type": "card",
+      "day": 6,
+      "zh": "你好，我用 Utopia 的名字订了位。",
+      "en": "Hi, I have a reservation under Utopia.",
+      "example": "Hi, I have a reservation under Chen."
+    },
+    {
+      "id": "w03-c85",
+      "type": "card",
+      "day": 6,
+      "zh": "我们一共四个人。",
+      "en": "There are four of us.",
+      "example": "There are six of us."
+    },
+    {
+      "id": "w03-c86",
+      "type": "card",
+      "day": 6,
+      "zh": "能再给我们几分钟吗？",
+      "en": "Could we have a few more minutes?",
+      "example": "Could we have a few more minutes to decide?"
+    },
+    {
+      "id": "w03-c87",
+      "type": "card",
+      "day": 6,
+      "zh": "几个人一起吃你推荐什么？",
+      "en": "What would you recommend for a group?",
+      "example": "What would you recommend for sharing?"
+    },
+    {
+      "id": "w03-c88",
+      "type": "card",
+      "day": 6,
+      "zh": "麻烦买单。",
+      "en": "Could we have the check, please?",
+      "example": "Could we have the check when you're ready?"
+    },
+    {
+      "id": "w03-c89",
+      "type": "card",
+      "day": 6,
+      "zh": "我们平摊吧。",
+      "en": "Let's split it evenly.",
+      "example": "Let's split it evenly, four ways."
+    },
+    {
+      "id": "w03-c90",
+      "type": "card",
+      "day": 6,
+      "zh": "我们肯定还会再来。",
+      "en": "We'll definitely come back.",
+      "example": "We'll definitely come back next time."
     }
   ],
   "scenes": [

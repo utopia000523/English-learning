@@ -19,9 +19,9 @@ after(() => server.close());
 
 const put = (u, b) => fetch(base + u, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b) });
 
-test('按天解锁：第 1 天只给第 1 周第 1 天的 8 张新卡', async () => {
+test('按天解锁：第 1 天只给第 1 周第 1 天的 15 张新卡', async () => {
   const q = await json(await fetch(base + '/cards/today'));
-  assert.equal(q.cards.length, 8);
+  assert.equal(q.cards.length, 15);
   assert.ok(q.cards.every((c) => c.week === 1));
 });
 
@@ -32,7 +32,7 @@ test('按设置限制：新卡 5 张', async () => {
   assert.equal(q.week, 1);
   assert.equal(q.cards.length, 5);
   assert.ok(q.cards.every((c) => c.isNew && c.week === 1));
-  assert.equal(q.stats.newLeft, 8);
+  assert.equal(q.stats.newLeft, 15);
 });
 
 test('自评后当天不再出现，新卡额度已用', async () => {

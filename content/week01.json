@@ -68,6 +68,62 @@
       "example": "What brings you to Shenzhen?"
     },
     {
+      "id": "w01-c49",
+      "type": "card",
+      "day": 1,
+      "zh": "对了，我叫 Utopia。",
+      "en": "I'm Utopia, by the way.",
+      "example": "I'm Alex, by the way."
+    },
+    {
+      "id": "w01-c50",
+      "type": "card",
+      "day": 1,
+      "zh": "你是第一次来这种活动吗？",
+      "en": "Is this your first time at one of these events?",
+      "example": "Is this your first time in Shenzhen?"
+    },
+    {
+      "id": "w01-c51",
+      "type": "card",
+      "day": 1,
+      "zh": "我是产品经理。",
+      "en": "I'm a product manager.",
+      "example": "I'm a software engineer."
+    },
+    {
+      "id": "w01-c52",
+      "type": "card",
+      "day": 1,
+      "zh": "我主要做 AI 硬件。",
+      "en": "I mainly work on AI hardware.",
+      "example": "I mainly work on marketing."
+    },
+    {
+      "id": "w01-c53",
+      "type": "card",
+      "day": 1,
+      "zh": "你在什么样的公司工作？",
+      "en": "What kind of company do you work for?",
+      "example": "What kind of projects do you work on?"
+    },
+    {
+      "id": "w01-c54",
+      "type": "card",
+      "day": 1,
+      "zh": "这工作挺酷的。",
+      "en": "That's a cool job.",
+      "example": "That sounds like a cool job."
+    },
+    {
+      "id": "w01-c55",
+      "type": "card",
+      "day": 1,
+      "zh": "我很喜欢我的工作。",
+      "en": "I love what I do.",
+      "example": "I really love what I do."
+    },
+    {
       "id": "w01-c10",
       "type": "card",
       "zh": "最近怎么样？",
@@ -130,6 +186,62 @@
       "zh": "最近工作忙疯了。",
       "en": "Things have been crazy at work.",
       "example": "Things have been crazy at work, but it's fine."
+    },
+    {
+      "id": "w01-c56",
+      "type": "card",
+      "day": 2,
+      "zh": "我最近在忙一个新项目。",
+      "en": "I've been really busy with a new project.",
+      "example": "I've been really busy with a product launch."
+    },
+    {
+      "id": "w01-c57",
+      "type": "card",
+      "day": 2,
+      "zh": "你适应得怎么样？",
+      "en": "How are you settling in?",
+      "example": "How are you settling in at the new job?"
+    },
+    {
+      "id": "w01-c58",
+      "type": "card",
+      "day": 2,
+      "zh": "这周忙疯了。",
+      "en": "It's been a crazy week.",
+      "example": "It's been a crazy month."
+    },
+    {
+      "id": "w01-c59",
+      "type": "card",
+      "day": 2,
+      "zh": "我正在慢慢适应。",
+      "en": "I'm getting used to it.",
+      "example": "I'm still getting used to the new schedule."
+    },
+    {
+      "id": "w01-c60",
+      "type": "card",
+      "day": 2,
+      "zh": "有需要随时跟我说。",
+      "en": "Let me know if you need anything.",
+      "example": "Let me know if you need any help."
+    },
+    {
+      "id": "w01-c61",
+      "type": "card",
+      "day": 2,
+      "zh": "事情终于没那么多了。",
+      "en": "Things are finally slowing down.",
+      "example": "Things are finally slowing down at work."
+    },
+    {
+      "id": "w01-c62",
+      "type": "card",
+      "day": 2,
+      "zh": "还不错，你呢？",
+      "en": "Not bad, how about you?",
+      "example": "Not bad at all, how about you?"
     },
     {
       "id": "w01-c07",
@@ -196,6 +308,62 @@
       "example": "It's a bit noisy, but I love it."
     },
     {
+      "id": "w01-c63",
+      "type": "card",
+      "day": 3,
+      "zh": "我在这儿大概五年了。",
+      "en": "I've been here for about five years.",
+      "example": "I've been here for about two years."
+    },
+    {
+      "id": "w01-c64",
+      "type": "card",
+      "day": 3,
+      "zh": "这些年变化很大。",
+      "en": "It's changed a lot over the years.",
+      "example": "The city has changed a lot over the years."
+    },
+    {
+      "id": "w01-c65",
+      "type": "card",
+      "day": 3,
+      "zh": "这里一年大部分时间都很暖和。",
+      "en": "The weather is warm most of the year.",
+      "example": "It's hot most of the year."
+    },
+    {
+      "id": "w01-c66",
+      "type": "card",
+      "day": 3,
+      "zh": "坐地铁出行很方便。",
+      "en": "Getting around is easy by subway.",
+      "example": "Getting around is easy by bike."
+    },
+    {
+      "id": "w01-c67",
+      "type": "card",
+      "day": 3,
+      "zh": "这里离香港很近。",
+      "en": "It's close to Hong Kong.",
+      "example": "It's close to the beach."
+    },
+    {
+      "id": "w01-c68",
+      "type": "card",
+      "day": 3,
+      "zh": "你尝过本地菜了吗？",
+      "en": "Have you tried the local food yet?",
+      "example": "Have you been to the Bay Park yet?"
+    },
+    {
+      "id": "w01-c69",
+      "type": "card",
+      "day": 3,
+      "zh": "这里好玩的挺多的。",
+      "en": "There's a lot to do here.",
+      "example": "There's a lot to do on weekends."
+    },
+    {
       "id": "w01-c16",
       "type": "card",
       "zh": "你平时喜欢做什么？",
@@ -258,6 +426,62 @@
       "zh": "我一直很想试试。",
       "en": "I've always wanted to try that.",
       "example": "I've always wanted to try surfing."
+    },
+    {
+      "id": "w01-c70",
+      "type": "card",
+      "day": 4,
+      "zh": "我大概一个月徒步两次。",
+      "en": "I go hiking about twice a month.",
+      "example": "I play badminton about once a week."
+    },
+    {
+      "id": "w01-c71",
+      "type": "card",
+      "day": 4,
+      "zh": "它能让我放松。",
+      "en": "It helps me relax.",
+      "example": "Reading helps me relax."
+    },
+    {
+      "id": "w01-c72",
+      "type": "card",
+      "day": 4,
+      "zh": "我不太擅长，但我很喜欢。",
+      "en": "I'm not very good at it, but I enjoy it.",
+      "example": "I'm not very good at tennis, but I enjoy it."
+    },
+    {
+      "id": "w01-c73",
+      "type": "card",
+      "day": 4,
+      "zh": "你有什么爱好吗？",
+      "en": "Do you have any hobbies?",
+      "example": "Do you have any hobbies outside of work?"
+    },
+    {
+      "id": "w01-c74",
+      "type": "card",
+      "day": 4,
+      "zh": "我已经玩了好几年了。",
+      "en": "I've been doing it for a few years.",
+      "example": "I've been doing yoga for a few years."
+    },
+    {
+      "id": "w01-c75",
+      "type": "card",
+      "day": 4,
+      "zh": "我们哪天一起去吧。",
+      "en": "We should go together sometime.",
+      "example": "We should go hiking together sometime."
+    },
+    {
+      "id": "w01-c76",
+      "type": "card",
+      "day": 4,
+      "zh": "听起来很好玩。",
+      "en": "That sounds like fun.",
+      "example": "That sounds like a lot of fun."
     },
     {
       "id": "w01-c19",
@@ -324,6 +548,62 @@
       "example": "Can I add you on LinkedIn?"
     },
     {
+      "id": "w01-c77",
+      "type": "card",
+      "day": 5,
+      "zh": "抱歉，我没听清。",
+      "en": "Sorry, I didn't catch that.",
+      "example": "Sorry, I didn't catch your name."
+    },
+    {
+      "id": "w01-c78",
+      "type": "card",
+      "day": 5,
+      "zh": "这里有点吵。",
+      "en": "It's a bit noisy in here.",
+      "example": "It's really noisy in here."
+    },
+    {
+      "id": "w01-c79",
+      "type": "card",
+      "day": 5,
+      "zh": "你的意思是……？",
+      "en": "Do you mean...?",
+      "example": "Do you mean next Monday?"
+    },
+    {
+      "id": "w01-c80",
+      "type": "card",
+      "day": 5,
+      "zh": "我确认一下我没理解错。",
+      "en": "Let me make sure I got that right.",
+      "example": "Let me make sure I got that right: 3 p.m.?"
+    },
+    {
+      "id": "w01-c81",
+      "type": "card",
+      "day": 5,
+      "zh": "那是什么意思？",
+      "en": "What does that mean?",
+      "example": "Sorry, what does \"ASAP\" mean?"
+    },
+    {
+      "id": "w01-c82",
+      "type": "card",
+      "day": 5,
+      "zh": "这是我的名片。",
+      "en": "Here's my card.",
+      "example": "Here's my business card."
+    },
+    {
+      "id": "w01-c83",
+      "type": "card",
+      "day": 5,
+      "zh": "我晚点给你发消息。",
+      "en": "I'll send you a message later.",
+      "example": "I'll send you an email later."
+    },
+    {
       "id": "w01-c22",
       "type": "card",
       "zh": "这是我同事 Mia。",
@@ -386,6 +666,62 @@
       "zh": "我们开始吧？",
       "en": "Shall we get started?",
       "example": "Okay, shall we get started?"
+    },
+    {
+      "id": "w01-c84",
+      "type": "card",
+      "day": 6,
+      "zh": "我们等一下其他人。",
+      "en": "Let's wait a minute for the others.",
+      "example": "Let's wait a couple of minutes for Tom."
+    },
+    {
+      "id": "w01-c85",
+      "type": "card",
+      "day": 6,
+      "zh": "伦敦天气怎么样？",
+      "en": "How's the weather in London?",
+      "example": "How's the weather over there?"
+    },
+    {
+      "id": "w01-c86",
+      "type": "card",
+      "day": 6,
+      "zh": "你那边应该还是早上吧。",
+      "en": "It must be early morning for you.",
+      "example": "It must be pretty late for you."
+    },
+    {
+      "id": "w01-c87",
+      "type": "card",
+      "day": 6,
+      "zh": "你能看到我的屏幕吗？",
+      "en": "Can you see my screen?",
+      "example": "Can everyone see my screen?"
+    },
+    {
+      "id": "w01-c88",
+      "type": "card",
+      "day": 6,
+      "zh": "你开着静音呢。",
+      "en": "You're on mute.",
+      "example": "I think you're on mute."
+    },
+    {
+      "id": "w01-c89",
+      "type": "card",
+      "day": 6,
+      "zh": "我负责产品这块。",
+      "en": "I'm in charge of the product side.",
+      "example": "I'm in charge of the marketing side."
+    },
+    {
+      "id": "w01-c90",
+      "type": "card",
+      "day": 6,
+      "zh": "我们进入正题吧。",
+      "en": "Let's get down to business.",
+      "example": "Okay, let's get down to business."
     }
   ],
   "scenes": [
