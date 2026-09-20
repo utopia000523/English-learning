@@ -152,6 +152,17 @@ export default function Settings() {
             }}>{busy ? '处理中…' : '立即同步'}</button>
           </div>
         </div>
+        <div className="field">
+          <div><div>4. 雅思词汇</div><div className="d">{s.ieltsDb ? `从「IELTS Listening Daily」的 ④ Vocabulary 表格导入表达卡；${s.ieltsLastPull ? `上次拉取 ${s.ieltsLastPull}` : '还没拉取过'}，每 10 分钟自动检查` : '粘贴雅思数据库链接（数据库或父页面要先在 Notion「连接」里加上你的集成）'}</div></div>
+          <div className="row">
+            <input className="in" placeholder="雅思数据库链接" defaultValue={s.ieltsDb} key={s.ieltsDb} onBlur={(e) => { if (e.target.value.trim() !== s.ieltsDb) save({ ieltsDb: e.target.value.trim() }); }} style={{ width: 200 }} />
+            <button className="link" disabled={!s.notionTokenSet || !s.ieltsDb || busy} onClick={async () => {
+              setBusy(true); setNotionMsg('');
+              try { const r = await api.post('/ielts/pull'); setNotionMsg(r.added ? `已导入 ${r.pages} 天、${r.added} 个雅思词汇到表达卡` : '没有新的雅思词汇'); setS(await api.get('/settings')); } catch (e) { setNotionMsg(e.message); }
+              setBusy(false);
+            }}>立即拉取</button>
+          </div>
+        </div>
         {notionMsg && <div className="fixhint">{notionMsg}</div>}
       </div>
 

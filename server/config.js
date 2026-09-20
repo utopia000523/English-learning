@@ -30,5 +30,8 @@ export const DEFAULT_SETTINGS = {
   notionAutoSync: true,
   notionParentPage: '',
   notionLastSync: '',
+  ieltsDb: '',                       // 雅思数据库（IELTS Listening Daily）的 ID，从链接里取
+  ieltsLastPull: '',
+  ieltsPages: [],                    // 已导入过的雅思页面 ID
   audioKeepDays: 30,                 // 录音文件保留天数，0 = 一直保留
 };

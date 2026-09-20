@@ -100,12 +100,14 @@ export default function Cards() {
           </div>
           <div className="face back">
             <div className="big">{card.en}</div>
+            {card.ipa && <div className="faint">{card.ipa}</div>}
             {card.example && (
               <div className="muted row" style={{ gap: 2, justifyContent: 'center' }}>
-                也可以：{card.example}
+                {card.source === '雅思' ? '原文：' : '也可以：'}{card.example}
                 <button className="link" title="朗读" onClick={(e) => { e.stopPropagation(); speak(card.example, voice); }}>{Icon.speaker}</button>
               </div>
             )}
+            {card.note && <div className="faint" style={{ marginTop: 6 }}>{card.note}</div>}
             <div className="row" style={{ marginTop: 14, gap: 4 }}>
               <button className="link" onClick={(e) => { e.stopPropagation(); speak(card.en, voice); }}>{Icon.speaker}朗读</button>
             </div>

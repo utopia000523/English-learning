@@ -3,6 +3,7 @@ import { all, get, run, getSettings, updateSettings } from './db.js';
 import { todayStr, diffDays } from './util/date.js';
 import { schedule, preview } from './services/srs.js';
 import { logEvent } from './activity.js';
+import { ipaOf } from './services/ipa.js';
 
 /** 第几天、第几周。首次使用时以当天为第 1 天（入门测评在阶段 6 会重设） */
 export function planPosition(today = todayStr()) {
@@ -20,7 +21,7 @@ export const unlockArgs = (pos) => [pos.week, pos.week, pos.dayInWeek];
 export const isUnlocked = (week, day, pos) => week < pos.week || (week === pos.week && (day || 1) <= pos.dayInWeek);
 
 const toClient = (c, isNew = false) => ({
-  id: c.id, en: c.en, zh: c.zh, example: c.example, scene: c.scene, week: c.week,
+  id: c.id, en: c.en, zh: c.zh, example: c.example, note: c.note || '', ipa: c.source === '雅思' ? ipaOf(c.en) || '' : '', scene: c.scene, week: c.week,
   source: c.source, isNew, preview: preview(c),
 });
 

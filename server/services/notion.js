@@ -8,7 +8,7 @@ const BASE = () => process.env.NOTION_API_URL || 'https://api.notion.com';
 const parse = (s, d) => { try { return JSON.parse(s) ?? d; } catch { return d; } };
 const text = (s) => [{ type: 'text', text: { content: String(s || '').slice(0, 1900) } }];
 
-async function call(token, path, method = 'GET', body) {
+export async function call(token, path, method = 'GET', body) {
   let res;
   try {
     res = await fetch(BASE() + path, {
