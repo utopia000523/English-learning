@@ -40,12 +40,12 @@ export async function status(model) {
  */
 const noThink = new Set();
 
-export async function chat(messages, { model, temperature = 0.7, json = false, kind = '' } = {}) {
+export async function chat(messages, { model, temperature = 0.7, json = false, kind = '', maxTokens = 0 } = {}) {
   if (process.env.SPEAK90_FAKE_LLM) return { content: fakeReply(kind) }; // 仅测试用
   const body = {
     model, messages, stream: false,
     format: json ? 'json' : undefined,
-    options: { temperature },
+    options: { temperature, ...(maxTokens ? { num_predict: maxTokens } : {}) },
     keep_alive: '30m', // 练习期间模型常驻内存，避免每次重新加载
   };
   // 关闭「先思考再回答」（Gemma 4、Qwen3 等支持思考的模型默认会先写很长的推理，导致很慢）

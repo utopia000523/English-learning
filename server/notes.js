@@ -21,15 +21,20 @@ export function mentions(text, sentence) {
   return re.test(String(sentence));
 }
 
-/** 结合上下文解释一个词或短语 */
+export const ipaText = (t) => ipaOf(t) || '';
+
+const cacheKey = (text, context) => `${text.trim().toLowerCase()}|${String(context).trim().toLowerCase().slice(0, 120)}`;
+
+/** 结合上下文解释一个词或短语。查过的结果会缓存，第二次直接返回 */
 export async function lookup(text, context = '') {
+  const key = cacheKey(text, context);
+  const hit = get('SELECT data FROM lookup_cache WHERE key = ?', [key]);
+  if (hit) return parse(hit.data, null) || { text, ipa: ipaOf(text), zh: '' };
   const out = await llm.chatJSON([
-    { role: 'system', content: `You are an English–Chinese dictionary for a Chinese adult learner.
-Explain the selected English word or phrase AS USED in the given sentence.
-Respond ONLY with JSON:
-{"zh": "简体中文意思（这句里的意思，简短）", "pos": "词性或类型，如 adj. / phrasal verb / idiom", "usage_zh": "一句简体中文说明用法或语气，不超过40字", "example": "one short natural everyday example sentence that actually USES the selected word or phrase (you may change its tense or person, but the phrase itself must appear — do not give a reply or a related sentence instead)", "example_zh": "例句的简体中文"}` },
+    { role: 'system', content: `English–Chinese dictionary for a Chinese adult learner. Explain the selected word/phrase AS USED in the sentence. Be brief.
+JSON only: {"zh": "中文意思，10字以内", "pos": "词性，如 adj. / phrasal verb", "usage_zh": "用法或语气，25字以内", "example": "one short everyday sentence (max 10 words) that USES the selected word or phrase itself (tense/person may change)", "example_zh": "例句中文"}` },
     { role: 'user', content: `Selected: ${text}\nSentence: ${context || text}` },
-  ], { model: getSettings().llmModel, temperature: 0.2, kind: 'lookup' }, () => ({ zh: '' }));
+  ], { model: getSettings().llmModel, temperature: 0.2, kind: 'lookup', maxTokens: 220 }, () => ({ zh: '' }));
   // 例句里必须真的出现所查的词；模型给跑偏了就退回原句
   let example = String(out.example || '').trim();
   let exampleZh = out.example_zh || '';
@@ -37,7 +42,9 @@ Respond ONLY with JSON:
     example = mentions(text, context) ? String(context).trim() : '';
     exampleZh = '';
   }
-  return { text, ipa: ipaOf(text), zh: out.zh || '', pos: out.pos || '', usage_zh: out.usage_zh || '', example, example_zh: exampleZh };
+  const info = { text, ipa: ipaOf(text), zh: out.zh || '', pos: out.pos || '', usage_zh: out.usage_zh || '', example, example_zh: exampleZh };
+  if (info.zh) run('INSERT INTO lookup_cache (key, data) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET data = excluded.data', [key, JSON.stringify(info)]);
+  return info;
 }
 
 export function listNotes({ q = '', source = '' } = {}) {

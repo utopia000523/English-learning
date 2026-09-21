@@ -45,3 +45,6 @@ CREATE TABLE IF NOT EXISTS content_scene (
 CREATE TABLE IF NOT EXISTS content_item (
   id TEXT PRIMARY KEY, week INTEGER, type TEXT, en TEXT, zh TEXT, extra TEXT, approved INTEGER DEFAULT 0
 );
+CREATE TABLE IF NOT EXISTS lookup_cache (
+  key TEXT PRIMARY KEY, data TEXT, created_at TEXT DEFAULT (datetime('now','localtime'))
+);

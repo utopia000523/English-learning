@@ -48,3 +48,11 @@ test('例句必须真的用到所查的词', async () => {
   const r = await (await post('/lookup', { text: 'been up to', context: 'What have you been up to lately?' })).json();
   assert.ok(!r.example || mentions('been up to', r.example));
 });
+
+test('查词缓存：第二次直接命中，不再调模型', async () => {
+  const one = await (await post('/lookup', { text: 'hectic', context: "Work's been pretty hectic lately." })).json();
+  const two = await (await post('/lookup', { text: 'hectic', context: "Work's been pretty hectic lately." })).json();
+  assert.deepEqual(one, two);
+  const ipa = await (await fetch(base + '/ipa?text=hectic')).json();
+  assert.equal(ipa.ipa, '/ˈhɛktɪk/');
+});

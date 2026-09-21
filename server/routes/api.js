@@ -117,6 +117,7 @@ api.post('/mono', wrap(async (req, res) => {
 }));
 
 // ---- 划词查询、笔记本（PRD 3.7）----
+api.get('/ipa', (req, res) => res.json({ ipa: notes.ipaText(String(req.query.text || '')) }));
 api.post('/lookup', wrap(async (req, res) => {
   const text = req.body?.text?.trim();
   if (!text || text.length > 80) return res.status(400).json({ error: '请选择一个词或短语' });

@@ -20,8 +20,10 @@ export default function SelectionLookup() {
   const [open, setOpen] = useState(false);
   const [info, setInfo] = useState(null);
   const [err, setErr] = useState('');
+  const [ipa, setIpa] = useState('');
   const [saved, setSaved] = useState({});
   const box = useRef(null);
+  const pending = useRef(null); // 预取中的查词请求
   const source = Object.entries(SOURCE).find(([p]) => loc.pathname.startsWith(p))?.[1] || '其他';
 
   useEffect(() => {
@@ -34,7 +36,7 @@ export default function SelectionLookup() {
         if (!sel || sel.isCollapsed || inInput || !validPick(text)) { if (!open) setPick(null); return; }
         const r = sel.getRangeAt(0).getBoundingClientRect();
         setPick({ text, context: contextOf(sel), x: r.left + r.width / 2, y: r.bottom });
-        setOpen(false); setInfo(null); setErr(''); setSaved({});
+        setOpen(false); setInfo(null); setErr(''); setSaved({}); setIpa(''); pending.current = null;
       }, 0);
     };
     const onDown = (e) => { if (!box.current?.contains(e.target)) { setOpen(false); } };
@@ -46,9 +48,18 @@ export default function SelectionLookup() {
   }, [open]);
   useEffect(() => { setPick(null); setOpen(false); }, [loc.pathname]);
 
+  // 预取：鼠标移到「查词」上就先发请求，点开时通常已经好了
+  const fetchInfo = () => {
+    if (!pick) return null;
+    if (!pending.current) {
+      pending.current = api.post('/lookup', { text: pick.text, context: pick.context });
+      api.get(`/ipa?text=${encodeURIComponent(pick.text)}`).then((r) => setIpa(r.ipa)).catch(() => {});
+    }
+    return pending.current;
+  };
   const doLookup = async () => {
     setOpen(true); setErr('');
-    try { setInfo(await api.post('/lookup', { text: pick.text, context: pick.context })); }
+    try { setInfo(await fetchInfo()); }
     catch (e) { setErr(e.message); }
   };
   const save = async (kind) => {
@@ -69,14 +80,14 @@ export default function SelectionLookup() {
   return (
     <div ref={box} className="lookup" style={{ left, top }} onMouseDown={(e) => e.preventDefault()}>
       {!open ? (
-        <button className="lookup-pill" onClick={doLookup}>查词 · {pick.text.length > 24 ? pick.text.slice(0, 24) + '…' : pick.text}</button>
+        <button className="lookup-pill" onMouseEnter={fetchInfo} onClick={doLookup}>查词 · {pick.text.length > 24 ? pick.text.slice(0, 24) + '…' : pick.text}</button>
       ) : (
         <div className="lookup-card">
           <div className="row between">
             <b style={{ fontFamily: 'var(--serif)', fontSize: 17 }}>{pick.text}</b>
             <button className="link" onClick={() => speak(pick.text)}>{Icon.speaker}</button>
           </div>
-          {info?.ipa && <div className="faint">{info.ipa}</div>}
+          {(info?.ipa || ipa) && <div className="faint">{info?.ipa || ipa}</div>}
           {!info && !err && <p className="faint" style={{ marginTop: 6 }}>查询中…</p>}
           {err && <p style={{ color: 'var(--bad)', fontSize: 13, marginTop: 6 }}>{err}</p>}
           {info && <>
