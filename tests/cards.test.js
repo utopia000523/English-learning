@@ -1,3 +1,4 @@
+process.env.SPEAK90_FAKE_LLM = '1';
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import os from 'node:os';
@@ -60,4 +61,14 @@ test('参数校验', async () => {
 test('手动添加卡片', async () => {
   const c = await json(await post('/cards', { en: 'Light ice, please.', zh: '少冰', source: 'AI 对话' }));
   assert.equal(c.en, 'Light ice, please.');
+});
+
+test('自己先说：检查答案给出结论和更自然的说法', async () => {
+  const id = 1;
+  const r = await (await post(`/cards/${id}/check`, { text: 'I am working my english' })).json();
+  assert.ok(['ok', 'close', 'wrong'].includes(r.verdict));
+  assert.ok(r.zh);
+  const empty = await (await post(`/cards/${id}/check`, { text: '  ' })).json();
+  assert.equal(empty.verdict, 'wrong');
+  assert.equal((await post('/cards/99999/check', { text: 'hi' })).status, 404);
 });

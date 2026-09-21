@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../services/api.js';
 import { speak } from '../services/tts.js';
+import { startRecording, transcribe } from '../services/recorder.js';
 import { Icon } from '../icons.jsx';
 
 const dayLabel = (n) => (n <= 1 ? '明天' : `约 ${n} 天后`);
@@ -17,6 +18,11 @@ export default function Cards() {
   const [busy, setBusy] = useState(false);
   const [voice, setVoice] = useState({});
   const [err, setErr] = useState('');
+  const [say, setSay] = useState('');       // 自己先说：输入的答案
+  const [check, setCheck] = useState(null); // 检查结果
+  const [checking, setChecking] = useState(false);
+  const [rec, setRec] = useState(0);
+  const recRef = useRef(null);
 
   const load = async () => {
     try {
@@ -44,6 +50,7 @@ export default function Cards() {
       const rest = queue.slice(1);
       // 没想起：本轮末尾再出现一次
       setQueue(rating === 1 ? [...rest, { ...card, isNew: false, again: true }] : rest);
+      setSay(''); setCheck(null);
       if (rating !== 1) setDone((n) => n + 1);
       setFlipped(false);
       if (!rest.length && rating !== 1) api.get('/cards/today').then((d) => setData((o) => ({ ...o, stats: d.stats, reviewedToday: d.reviewedToday })));
@@ -60,6 +67,33 @@ export default function Cards() {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [rate]);
+
+  const toggleMic = async () => {
+    setErr('');
+    if (!recRef.current) {
+      try { recRef.current = await startRecording(); setRec(0.1); }
+      catch { setErr('无法使用麦克风：请在浏览器地址栏左侧允许麦克风权限后重试。'); }
+      return;
+    }
+    const r = recRef.current; recRef.current = null; setRec(0);
+    if (r.seconds() < 0.6) { r.cancel(); return; }
+    setChecking(true);
+    try {
+      const out = await transcribe(await r.stop());
+      if (!out.text) setErr('没有听清，请再说一遍。');
+      else setSay((t) => (t ? t + ' ' : '') + out.text);
+    } catch (e) { setErr(e.message); }
+    setChecking(false);
+  };
+  useEffect(() => { const t = setInterval(() => { if (recRef.current) setRec(recRef.current.seconds()); }, 300); return () => clearInterval(t); }, []);
+  useEffect(() => () => recRef.current?.cancel(), []);
+
+  const runCheck = async () => {
+    if (!card || !say.trim() || checking) return;
+    setChecking(true); setCheck(null);
+    try { setCheck(await api.post(`/cards/${card.id}/check`, { text: say })); } catch (e) { setErr(e.message); }
+    setChecking(false);
+  };
 
   const head = (
     <div className="head">
@@ -113,6 +147,26 @@ export default function Cards() {
             </div>
           </div>
         </div>
+        <div className="row" style={{ gap: 6, maxWidth: 480, margin: '16px auto 0' }}>
+          <input className="in" style={{ flex: 1 }} placeholder="先自己说说看：打字或点麦克风，检查行不行"
+                value={say} onChange={(e) => setSay(e.target.value)}
+                onKeyDown={(e) => { if (e.key === 'Enter') runCheck(); }} />
+              <button className={`micbtn${rec ? ' rec' : ''}`} title={rec ? '点击结束' : '用麦克风说'} onClick={toggleMic}>{Icon.mic}</button>
+              <button className="link" disabled={!say.trim() || checking} onClick={runCheck}>{checking ? '检查中…' : '检查'}</button>
+            </div>
+            {check && (
+              <div className="fb" style={{ marginTop: 10, maxWidth: 480, textAlign: 'left', margin: '10px auto 0' }} >
+                <div className={check.verdict === 'ok' ? 'fb-ok' : 'faint'}>
+                  {check.verdict === 'ok' ? '✓ 可以这么说' : check.verdict === 'close' ? '意思到了，但不太地道' : '这样说不行'}
+                </div>
+                {check.zh && <div className="muted">{check.zh}</div>}
+                {check.better && (
+                  <div className="n row" style={{ gap: 2 }}>{check.better}
+                    <button className="link" onClick={(e) => { e.stopPropagation(); speak(check.better, voice); }}>{Icon.speaker}</button>
+                  </div>
+                )}
+              </div>
+            )}
         <div className="rate" style={{ opacity: flipped ? 1 : 0.45 }}>
           <button disabled={!flipped || busy} onClick={() => rate(1)}>没想起<small>1 · 本轮再出现，{dayLabel(1)}复习</small></button>
           <button disabled={!flipped || busy} onClick={() => rate(2)}>想起但卡<small>2 · {dayLabel(card.preview[2])}</small></button>

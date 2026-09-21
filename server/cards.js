@@ -4,6 +4,7 @@ import { todayStr, diffDays } from './util/date.js';
 import { schedule, preview } from './services/srs.js';
 import { logEvent } from './activity.js';
 import { ipaOf } from './services/ipa.js';
+import * as llm from './services/llm.js';
 
 /** 第几天、第几周。首次使用时以当天为第 1 天（入门测评在阶段 6 会重设） */
 export function planPosition(today = todayStr()) {
@@ -53,6 +54,25 @@ export function todayQueue(today = todayStr()) {
     cards: [...due.map((c) => toClient(c)), ...fresh.map((c) => toClient(c, true))],
     stats: stats(pos),
   };
+}
+
+/** 自己先说：检查学习者写的 / 说的英文能不能表达这张卡的意思 */
+export async function checkAnswer(id, text) {
+  const card = get('SELECT * FROM card WHERE id = ?', [id]);
+  if (!card) return null;
+  const said = String(text || '').trim();
+  if (!said) return { verdict: 'wrong', zh: '还没有输入内容。' };
+  const out = await llm.chatJSON([
+    { role: 'system', content: `You judge whether a Chinese adult learner's English says what they meant, in everyday spoken English.
+Meaning (Chinese): ${card.zh}
+One natural way to say it: ${card.en}
+Many other wordings are fine. Judge the learner's sentence on meaning and naturalness, NOT on matching the reference. Ignore capitalization, punctuation and obvious typing slips.
+"ok" = says the meaning and sounds natural; "close" = understandable but not natural or slightly off; "wrong" = does not say the meaning, or is clearly ungrammatical.
+Respond ONLY with JSON: {"verdict": "ok|close|wrong", "zh": "一句简体中文点评，不超过40字", "better": "如果不是 ok，给一个更自然的说法，否则空字符串"}` },
+    { role: 'user', content: said },
+  ], { model: getSettings().llmModel, temperature: 0, kind: 'check' }, () => ({ verdict: 'close', zh: '本地模型没返回结果，先自己对照背面吧。', better: '' }));
+  const verdict = ['ok', 'close', 'wrong'].includes(out.verdict) ? out.verdict : 'close';
+  return { verdict, zh: out.zh || '', better: verdict === 'ok' ? '' : out.better || '' };
 }
 
 export function reviewCard(id, rating, today = todayStr()) {

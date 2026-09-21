@@ -4,7 +4,7 @@ import * as llm from '../services/llm.js';
 import * as asr from '../services/asr.js';
 import * as notion from '../services/notion.js';
 import * as ielts from '../ielts.js';
-import { todayQueue, reviewCard, addCard } from '../cards.js';
+import { todayQueue, reviewCard, addCard, checkAnswer } from '../cards.js';
 import * as roleplay from '../roleplay.js';
 import * as practice from '../practice.js';
 import * as notes from '../notes.js';
@@ -143,6 +143,10 @@ api.post('/notion/setup', wrap(async (req, res) => {
   res.json({ ...rest, notionTokenSet: Boolean(notionToken) });
 }));
 api.post('/notion/sync', wrap(async (_req, res) => res.json(await notion.sync(plan.ratioOf))));
+api.post('/cards/:id/check', wrap(async (req, res) => {
+  const r = await checkAnswer(Number(req.params.id), req.body?.text);
+  return r ? res.json(r) : res.status(404).json({ error: '找不到这张卡' });
+}));
 api.post('/ielts/pull', wrap(async (_req, res) => res.json(await ielts.pull())));
 api.get('/notion/pending', (_req, res) => res.json({ notes: notion.pendingCount() }));
 
