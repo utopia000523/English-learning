@@ -36,3 +36,15 @@ test('笔记本：加入、去重、搜索、筛选、删除', async () => {
   assert.equal((await fetch(base + '/notes/' + a.id, { method: 'DELETE' })).status, 200);
   assert.equal((await (await fetch(base + '/notes')).json()).length, 1);
 });
+
+test('例句必须真的用到所查的词', async () => {
+  const { mentions } = await import('../server/notes.js');
+  assert.ok(mentions('been up to', 'What are you up to tonight?'));
+  assert.ok(mentions('been up to', "I haven't been up to much."));
+  assert.ok(!mentions('been up to', "I've just been working a lot lately.")); // 这是回答，不是例句
+  assert.ok(mentions('hectic', 'It was a hectic week.'));
+  assert.ok(!mentions('hectic', 'Work has been really busy.'));
+  assert.ok(mentions('impose', 'They imposed a limit on meetings.'));
+  const r = await (await post('/lookup', { text: 'been up to', context: 'What have you been up to lately?' })).json();
+  assert.ok(!r.example || mentions('been up to', r.example));
+});
