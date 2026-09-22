@@ -161,9 +161,14 @@ Check ONE line the learner said in a role-play. Judge only whether it is grammat
 Ignore capitalization, punctuation, spacing and obvious typing slips. Do not rewrite lines that are already natural just to make them fancier.
 If the line is fine, respond {"ok": true}.
 Otherwise respond {"ok": false, "better": "the most natural way to say what the learner meant", "issue_zh": "用一句简体中文说明问题（语法、用词或中式英语），不超过40字", "zh": "better 的简体中文意思"}.
+Rules for "better":
+- It must be something a native speaker would REALLY say in this exact situation, not just grammatically correct English.
+- Respect normal collocations and what each phrase is actually used with (e.g. "reach me at" takes a phone number or an email, not a username; a WeChat ID is "My WeChat ID is ..." or "Just save me as ...").
+- Keep the learner's own meaning and register; keep it short and spoken, the kind of line that fits right after what the other person just said.
+- If the learner's wording is a word-for-word translation from Chinese, say so in "issue_zh" and give what people actually say instead.
 If the learner wrote Chinese, "better" is natural English for it and "issue_zh" is "用英语可以这样说".
 Respond ONLY with JSON.` },
-    { role: 'user', content: `Scene: ${v.scene.title}
+    { role: 'user', content: `Scene: ${v.scene.title} — ${v.scene.brief || ''}
 ${v.scene.role} said: ${prev?.content || ''}
 Learner said: ${msg.content}` },
   ], { model: getSettings().llmModel, temperature: 0.2, kind: 'feedback' }, () => ({ ok: true }));
