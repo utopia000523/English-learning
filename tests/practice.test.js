@@ -37,6 +37,7 @@ test('跟读评分', async () => {
 test('独白：话题只给已解锁的天；改写与流利度', async () => {
   const t = await (await fetch(base + '/mono/topics')).json();
   assert.deepEqual(t.map((x) => x.id), ['w01-t1']);
+  assert.equal(t[0].doneAt, ''); // 还没练过
   const rec = await record();
   const r = await (await post('/mono', { topicId: t[0].id, recordingId: rec.id })).json();
   assert.ok(r.rewrite && r.phrases.length && r.wpm > 0);

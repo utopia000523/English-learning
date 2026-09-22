@@ -37,8 +37,14 @@ export function scoreShadow(recordingId, reference) {
 // ---- 独白 ----
 export function topicList() {
   const pos = planPosition();
+  // 每个话题最近一次练习的日期，用来优先给没说过的
+  const doneAt = {};
+  for (const s of all("SELECT started_at, metrics FROM session WHERE module = 'mono' ORDER BY id")) {
+    const id = parse(s.metrics, {}).topicId;
+    if (id) doneAt[id] = s.started_at;
+  }
   return all(`SELECT * FROM content_item WHERE type = 'topic' AND ${UNLOCK_SQL} ORDER BY week DESC, day DESC, id`, unlockArgs(pos)).map((r) => ({
-    id: r.id, week: r.week, day: r.day || 1, zh: r.zh, en: r.en, hints: parse(r.extra, {}).hints || [],
+    id: r.id, week: r.week, day: r.day || 1, zh: r.zh, en: r.en, hints: parse(r.extra, {}).hints || [], doneAt: doneAt[r.id] || '',
   }));
 }
 

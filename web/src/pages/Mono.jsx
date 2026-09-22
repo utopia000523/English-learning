@@ -38,9 +38,14 @@ export default function Mono() {
   const stopping = useRef(false);
   const [params] = useSearchParams();
 
+  // 优先给没练过的话题；都练过了就挑最久没说的（同样排除刚说完的那个）
   const pick = (list, exclude) => {
     const pool = list.filter((t) => t.id !== exclude);
-    return (pool.length ? pool : list)[Math.floor(Math.random() * (pool.length || list.length))];
+    const use = pool.length ? pool : list;
+    const fresh = use.filter((t) => !t.doneAt);
+    if (fresh.length) return fresh[Math.floor(Math.random() * fresh.length)];
+    const oldest = [...use].sort((a, b) => String(a.doneAt).localeCompare(String(b.doneAt)));
+    return oldest[0];
   };
   useEffect(() => {
     api.get('/mono/topics').then((l) => { setTopics(l); setTopic(l.find((t) => t.id === params.get('t')) || pick(l)); })
@@ -98,7 +103,7 @@ export default function Mono() {
       <div className="head"><div><h1>话题独白</h1><p className="sub">30 秒准备，说满 1 分钟。重点是说得久，不怕说错。</p></div></div>
       <div className="two" style={{ gridTemplateColumns: '1fr 1fr' }}>
         <div style={{ textAlign: 'center', paddingTop: 10 }}>
-          <p className="faint">第 {topic.week} 周第 {topic.day} 天 · 1 分钟</p>
+          <p className="faint">第 {topic.week} 周 · 1 分钟</p>
           <h2 style={{ fontSize: 24, margin: '10px 0 4px' }}>{topic.zh}</h2>
           <p className="muted">{topic.en}</p>
           <p className="faint" style={{ marginTop: 12 }}>可以说说：{topic.hints.join(' · ')}</p>
