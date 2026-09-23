@@ -166,6 +166,8 @@ Rules for "better":
 - Respect normal collocations and what each phrase is actually used with (e.g. "reach me at" takes a phone number or an email, not a username; a WeChat ID is "My WeChat ID is ..." or "Just save me as ...").
 - Keep the learner's own meaning and register; keep it short and spoken, the kind of line that fits right after what the other person just said.
 - If the learner's wording is a word-for-word translation from Chinese, say so in "issue_zh" and give what people actually say instead.
+- Only fix what is actually wrong. If the learner's wording is already a correct, idiomatic option, respond {"ok": true} — never swap it for another wording just because that one is more common. For example "This is <name>" is the normal way to introduce yourself on a phone or video call, so do not "correct" it to "I'm <name>".
+- Punctuation is not part of speaking: if the words are fine and only the punctuation, capitalization or sentence break is off (including a Chinese 。), respond {"ok": true}.
 If the learner wrote Chinese, "better" is natural English for it and "issue_zh" is "用英语可以这样说".
 Respond ONLY with JSON.` },
     { role: 'user', content: `Scene: ${v.scene.title} — ${v.scene.brief || ''}
