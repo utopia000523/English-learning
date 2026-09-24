@@ -65,6 +65,12 @@ test('表达是否用上：整句、关键词、两句卡说中一句', () => {
   // 常见词不算关键词：只说了 what / today 不算用上
   assert.ok(!usedExpression('What brings you here today?', ['I know what you mean. See you today.']));
   assert.ok(usedExpression('What brings you here today?', ['So what brings you here?']));
+  // is not / isn't 算同一个说法；逗号分开的半句（关键词 ≥ 3 个）说中也算
+  const slow = "My English isn't perfect, so could you speak a little slower?";
+  assert.ok(usedExpression(slow, ['Sorry my English is not very well. Could you please speak slower?']));
+  assert.ok(usedExpression(slow, ['Could you speak a little slower?']));
+  assert.ok(!usedExpression(slow, ['I speak English at work.']));
+  assert.ok(!usedExpression(slow, ['Could you say that again?']));
   assert.ok(usedExpression('Really?', ['Really? That sounds fun.']));
 });
 
