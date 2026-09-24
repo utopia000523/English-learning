@@ -17,7 +17,8 @@ export default function Cards() {
   const [flipped, setFlipped] = useState(false);
   const [busy, setBusy] = useState(false);
   const [voice, setVoice] = useState({});
-  const [err, setErr] = useState('');
+  const [fatal, setFatal] = useState(''); // 连不上服务：整页只显示提示
+  const [err, setErr] = useState('');     // 录音、检查、评分出错：卡片下方一行提示，卡片保留
   const [say, setSay] = useState('');       // 自己先说：输入的答案
   const [check, setCheck] = useState(null); // 检查结果
   const [checking, setChecking] = useState(false);
@@ -28,7 +29,7 @@ export default function Cards() {
     try {
       const d = await api.get('/cards/today');
       setData(d); setQueue(d.cards); setTotal(d.cards.length); setDone(0); setFlipped(false);
-    } catch { setErr('无法连接本地服务：请在终端重新运行 bash scripts/start.sh，并保持窗口开着。'); }
+    } catch { setFatal('无法连接本地服务：请在终端重新运行 bash scripts/start.sh，并保持窗口开着。'); }
   };
   useEffect(() => { load(); api.get('/settings').then((s) => setVoice({ voice: s.ttsVoice, rate: s.ttsRate })).catch(() => {}); }, []);
 
@@ -50,7 +51,7 @@ export default function Cards() {
       const rest = queue.slice(1);
       // 没想起：本轮末尾再出现一次
       setQueue(rating === 1 ? [...rest, { ...card, isNew: false, again: true }] : rest);
-      setSay(''); setCheck(null);
+      setSay(''); setCheck(null); setErr('');
       if (rating !== 1) setDone((n) => n + 1);
       setFlipped(false);
       if (!rest.length && rating !== 1) api.get('/cards/today').then((d) => setData((o) => ({ ...o, stats: d.stats, reviewedToday: d.reviewedToday })));
@@ -102,7 +103,7 @@ export default function Cards() {
     </div>
   );
 
-  if (err) return <div className="narrow">{head}<div className="todo-note">{err}</div></div>;
+  if (fatal) return <div className="narrow">{head}<div className="todo-note">{fatal}</div></div>;
   if (!data) return <div className="narrow">{head}</div>;
   const s = data.stats;
 
@@ -149,11 +150,12 @@ export default function Cards() {
         </div>
         <div className="row" style={{ gap: 6, maxWidth: 480, margin: '16px auto 0' }}>
           <input className="in" style={{ flex: 1 }} placeholder="先自己说说看：打字或点麦克风，检查行不行"
-                value={say} onChange={(e) => setSay(e.target.value)}
+                value={say} onChange={(e) => { setSay(e.target.value); setErr(''); }}
                 onKeyDown={(e) => { if (e.key === 'Enter') runCheck(); }} />
               <button className={`micbtn${rec ? ' rec' : ''}`} title={rec ? '点击结束' : '用麦克风说'} onClick={toggleMic}>{Icon.mic}</button>
               <button className="link" disabled={!say.trim() || checking} onClick={runCheck}>{checking ? '检查中…' : '检查'}</button>
             </div>
+            {err && <p style={{ color: 'var(--bad)', fontSize: 13, maxWidth: 480, margin: '8px auto 0', textAlign: 'left' }}>{err}</p>}
             {check && (
               <div className="fb" style={{ marginTop: 10, maxWidth: 480, textAlign: 'left', margin: '10px auto 0' }} >
                 <div className={check.verdict === 'ok' ? 'fb-ok' : 'faint'}>
