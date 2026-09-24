@@ -1,0 +1,1330 @@
+{
+  "week": 4,
+  "theme": "接待客户与介绍公司",
+  "reviewed": false,
+  "items": [
+    {
+      "id": "w04-c01",
+      "type": "card",
+      "day": 1,
+      "zh": "欢迎来深圳！",
+      "en": "Welcome to Shenzhen!",
+      "example": "Welcome to our office!"
+    },
+    {
+      "id": "w04-c02",
+      "type": "card",
+      "day": 1,
+      "zh": "一路过来还顺利吗？",
+      "en": "How was your trip over?",
+      "example": "How was your flight?"
+    },
+    {
+      "id": "w04-c03",
+      "type": "card",
+      "day": 1,
+      "zh": "找到我们这儿容易吗？",
+      "en": "Did you have any trouble finding us?",
+      "example": "Hope the traffic wasn't too bad."
+    },
+    {
+      "id": "w04-c04",
+      "type": "card",
+      "day": 1,
+      "zh": "今天由我来接待您。",
+      "en": "I'll be showing you around today.",
+      "example": "I'll be your host today."
+    },
+    {
+      "id": "w04-c05",
+      "type": "card",
+      "day": 1,
+      "zh": "这边请。",
+      "en": "This way, please.",
+      "example": "Right this way."
+    },
+    {
+      "id": "w04-c06",
+      "type": "card",
+      "day": 1,
+      "zh": "要喝点什么吗？咖啡还是茶？",
+      "en": "Can I get you something to drink? Coffee or tea?",
+      "example": "Would you like some water?"
+    },
+    {
+      "id": "w04-c07",
+      "type": "card",
+      "day": 1,
+      "zh": "请坐，别客气。",
+      "en": "Please have a seat and make yourself comfortable.",
+      "example": "Please, take a seat."
+    },
+    {
+      "id": "w04-c08",
+      "type": "card",
+      "day": 1,
+      "zh": "我们先去会议室。",
+      "en": "Let's head to the meeting room first.",
+      "example": "Let's head upstairs first."
+    },
+    {
+      "id": "w04-c09",
+      "type": "card",
+      "day": 1,
+      "zh": "我跟您说一下今天的安排。",
+      "en": "Let me walk you through today's schedule.",
+      "example": "Here's the plan for today."
+    },
+    {
+      "id": "w04-c10",
+      "type": "card",
+      "day": 1,
+      "zh": "我们先简单介绍公司，然后去展厅。",
+      "en": "We'll start with a quick overview, then visit the showroom.",
+      "example": "We'll start with a short intro, then have lunch."
+    },
+    {
+      "id": "w04-c11",
+      "type": "card",
+      "day": 1,
+      "zh": "大概需要一个半小时。",
+      "en": "It'll take about an hour and a half.",
+      "example": "It should take about an hour."
+    },
+    {
+      "id": "w04-c12",
+      "type": "card",
+      "day": 1,
+      "zh": "有什么需要随时跟我说。",
+      "en": "Just let me know if you need anything.",
+      "example": "Feel free to ask me anything."
+    },
+    {
+      "id": "w04-c13",
+      "type": "card",
+      "day": 1,
+      "zh": "洗手间在走廊尽头。",
+      "en": "The restroom is at the end of the hall.",
+      "example": "The restroom is just around the corner."
+    },
+    {
+      "id": "w04-c14",
+      "type": "card",
+      "day": 1,
+      "zh": "这是您第一次来中国吗？",
+      "en": "Is this your first time in China?",
+      "example": "Have you been to Shenzhen before?"
+    },
+    {
+      "id": "w04-c15",
+      "type": "card",
+      "day": 1,
+      "zh": "时差倒过来了吗？",
+      "en": "Are you over the jet lag yet?",
+      "example": "Did you manage to get some sleep?"
+    },
+    {
+      "id": "w04-c16",
+      "type": "card",
+      "day": 2,
+      "zh": "最近在忙什么？",
+      "en": "What are you working on these days?",
+      "example": "What's keeping you busy these days?"
+    },
+    {
+      "id": "w04-c17",
+      "type": "card",
+      "day": 2,
+      "zh": "最近挺忙的，在准备一个新品上市。",
+      "en": "It's been busy. We're getting ready for a product launch.",
+      "example": "We're rushing to meet a deadline."
+    },
+    {
+      "id": "w04-c18",
+      "type": "card",
+      "day": 2,
+      "zh": "项目进展怎么样？",
+      "en": "How's the project going?",
+      "example": "How's everything on your end?"
+    },
+    {
+      "id": "w04-c19",
+      "type": "card",
+      "day": 2,
+      "zh": "目前还挺顺利的。",
+      "en": "It's going pretty well so far.",
+      "example": "So far, so good."
+    },
+    {
+      "id": "w04-c20",
+      "type": "card",
+      "day": 2,
+      "zh": "我们进度稍微有点落后。",
+      "en": "We're a little behind schedule.",
+      "example": "We're right on schedule."
+    },
+    {
+      "id": "w04-c21",
+      "type": "card",
+      "day": 2,
+      "zh": "我这一周都在开会。",
+      "en": "I've been in meetings all week.",
+      "example": "I've been in back-to-back meetings."
+    },
+    {
+      "id": "w04-c22",
+      "type": "card",
+      "day": 2,
+      "zh": "你在公司多久了？",
+      "en": "How long have you been with the company?",
+      "example": "How long have you been on this team?"
+    },
+    {
+      "id": "w04-c23",
+      "type": "card",
+      "day": 2,
+      "zh": "我在这儿快三年了。",
+      "en": "I've been here for almost three years.",
+      "example": "I joined about two years ago."
+    },
+    {
+      "id": "w04-c24",
+      "type": "card",
+      "day": 2,
+      "zh": "我主要做产品规划。",
+      "en": "I mainly work on product planning.",
+      "example": "I mostly handle product requirements."
+    },
+    {
+      "id": "w04-c25",
+      "type": "card",
+      "day": 2,
+      "zh": "我经常和研发团队打交道。",
+      "en": "I work closely with the R&D team.",
+      "example": "I work closely with the sales team."
+    },
+    {
+      "id": "w04-c26",
+      "type": "card",
+      "day": 2,
+      "zh": "过了这周应该会轻松一点。",
+      "en": "Things should calm down after this week.",
+      "example": "I can finally catch my breath on Friday."
+    },
+    {
+      "id": "w04-c27",
+      "type": "card",
+      "day": 2,
+      "zh": "要一起吃午饭吗？",
+      "en": "Want to grab lunch together?",
+      "example": "Want to grab a coffee?"
+    },
+    {
+      "id": "w04-c28",
+      "type": "card",
+      "day": 2,
+      "zh": "你们团队有多少人？",
+      "en": "How big is your team?",
+      "example": "How many people are on your team?"
+    },
+    {
+      "id": "w04-c29",
+      "type": "card",
+      "day": 2,
+      "zh": "我们团队大概二十个人。",
+      "en": "There are about twenty people on our team.",
+      "example": "We're a small team of eight."
+    },
+    {
+      "id": "w04-c30",
+      "type": "card",
+      "day": 2,
+      "zh": "你们团队主要负责哪块？",
+      "en": "What does your team mainly focus on?",
+      "example": "What's your team working on right now?"
+    },
+    {
+      "id": "w04-c31",
+      "type": "card",
+      "day": 3,
+      "zh": "我先简单介绍一下我们公司。",
+      "en": "Let me give you a quick intro to our company.",
+      "example": "Let me start with a quick overview."
+    },
+    {
+      "id": "w04-c32",
+      "type": "card",
+      "day": 3,
+      "zh": "我们公司成立于 2010 年。",
+      "en": "We were founded in 2010.",
+      "example": "The company started about fifteen years ago."
+    },
+    {
+      "id": "w04-c33",
+      "type": "card",
+      "day": 3,
+      "zh": "总部在深圳。",
+      "en": "We're headquartered in Shenzhen.",
+      "example": "Our head office is here in Shenzhen."
+    },
+    {
+      "id": "w04-c34",
+      "type": "card",
+      "day": 3,
+      "zh": "我们全球大概有两千名员工。",
+      "en": "We have around 2,000 employees worldwide.",
+      "example": "About a third of them work in R&D."
+    },
+    {
+      "id": "w04-c35",
+      "type": "card",
+      "day": 3,
+      "zh": "我们主要做智能硬件和配套的软件。",
+      "en": "We mainly make smart devices and the software that runs them.",
+      "example": "We focus on smart hardware and software."
+    },
+    {
+      "id": "w04-c36",
+      "type": "card",
+      "day": 3,
+      "zh": "我们的产品卖到五十多个国家。",
+      "en": "Our products are sold in over fifty countries.",
+      "example": "We have customers in over thirty countries."
+    },
+    {
+      "id": "w04-c37",
+      "type": "card",
+      "day": 3,
+      "zh": "我们的客户大多是经销商和集成商。",
+      "en": "Most of our customers are distributors and system integrators.",
+      "example": "Most of our clients are in retail."
+    },
+    {
+      "id": "w04-c38",
+      "type": "card",
+      "day": 3,
+      "zh": "研发和生产都是我们自己做的。",
+      "en": "We do our own R&D and manufacturing.",
+      "example": "We handle everything in-house."
+    },
+    {
+      "id": "w04-c39",
+      "type": "card",
+      "day": 3,
+      "zh": "我们在海外有好几个办事处。",
+      "en": "We have several offices overseas.",
+      "example": "We also have an office in Dubai."
+    },
+    {
+      "id": "w04-c40",
+      "type": "card",
+      "day": 3,
+      "zh": "这是我们增长最快的业务。",
+      "en": "This is our fastest-growing business.",
+      "example": "This is our core business."
+    },
+    {
+      "id": "w04-c41",
+      "type": "card",
+      "day": 3,
+      "zh": "我们非常重视产品质量。",
+      "en": "We take product quality very seriously.",
+      "example": "Quality is our top priority."
+    },
+    {
+      "id": "w04-c42",
+      "type": "card",
+      "day": 3,
+      "zh": "这些是和我们合作过的一些客户。",
+      "en": "These are some of the clients we've worked with.",
+      "example": "Here are a few of our partners."
+    },
+    {
+      "id": "w04-c43",
+      "type": "card",
+      "day": 3,
+      "zh": "这页是我们的全球布局。",
+      "en": "This slide shows where we are around the world.",
+      "example": "This map shows our global presence."
+    },
+    {
+      "id": "w04-c44",
+      "type": "card",
+      "day": 3,
+      "zh": "到这里有什么问题吗？",
+      "en": "Any questions so far?",
+      "example": "Does that make sense so far?"
+    },
+    {
+      "id": "w04-c45",
+      "type": "card",
+      "day": 3,
+      "zh": "接下来我带您去看看产品。",
+      "en": "Next, I'll show you our products.",
+      "example": "Now let's move on to the products."
+    },
+    {
+      "id": "w04-c46",
+      "type": "card",
+      "day": 4,
+      "zh": "这是我们的展厅。",
+      "en": "This is our showroom.",
+      "example": "Welcome to our showroom."
+    },
+    {
+      "id": "w04-c47",
+      "type": "card",
+      "day": 4,
+      "zh": "我给您演示一下。",
+      "en": "Let me give you a quick demo.",
+      "example": "Let me show you how it works."
+    },
+    {
+      "id": "w04-c48",
+      "type": "card",
+      "day": 4,
+      "zh": "这是我们最新的产品。",
+      "en": "This is our latest product.",
+      "example": "This is our newest model."
+    },
+    {
+      "id": "w04-c49",
+      "type": "card",
+      "day": 4,
+      "zh": "它主要用在商场和写字楼。",
+      "en": "It's mainly used in shopping malls and office buildings.",
+      "example": "It's mainly used in schools and hospitals."
+    },
+    {
+      "id": "w04-c50",
+      "type": "card",
+      "day": 4,
+      "zh": "它最大的卖点是安装简单。",
+      "en": "Its biggest selling point is that it's easy to install.",
+      "example": "What makes it stand out is the price."
+    },
+    {
+      "id": "w04-c51",
+      "type": "card",
+      "day": 4,
+      "zh": "用手机 App 就能控制。",
+      "en": "You can control it with our phone app.",
+      "example": "You can manage everything from the app."
+    },
+    {
+      "id": "w04-c52",
+      "type": "card",
+      "day": 4,
+      "zh": "所有设备都能在一个平台上管理。",
+      "en": "You can manage all your devices on one platform.",
+      "example": "Everything shows up on one dashboard."
+    },
+    {
+      "id": "w04-c53",
+      "type": "card",
+      "day": 4,
+      "zh": "它比上一代小了三分之一。",
+      "en": "It's a third smaller than the last model.",
+      "example": "It's twice as fast as the old version."
+    },
+    {
+      "id": "w04-c54",
+      "type": "card",
+      "day": 4,
+      "zh": "这个型号卖得最好。",
+      "en": "This model is our best seller.",
+      "example": "This one's really popular in Europe."
+    },
+    {
+      "id": "w04-c55",
+      "type": "card",
+      "day": 4,
+      "zh": "您可以自己试一试。",
+      "en": "Feel free to try it yourself.",
+      "example": "Go ahead and give it a try."
+    },
+    {
+      "id": "w04-c56",
+      "type": "card",
+      "day": 4,
+      "zh": "它可以和第三方系统对接。",
+      "en": "It works with third-party systems.",
+      "example": "It works with most existing systems."
+    },
+    {
+      "id": "w04-c57",
+      "type": "card",
+      "day": 4,
+      "zh": "我们也可以根据需求定制。",
+      "en": "We can also customize it for your needs.",
+      "example": "We can adjust it based on your requirements."
+    },
+    {
+      "id": "w04-c58",
+      "type": "card",
+      "day": 4,
+      "zh": "我们提供两年质保。",
+      "en": "It comes with a two-year warranty.",
+      "example": "We also offer local after-sales support."
+    },
+    {
+      "id": "w04-c59",
+      "type": "card",
+      "day": 4,
+      "zh": "这个我得跟技术同事确认一下。",
+      "en": "Let me check with our tech team on that.",
+      "example": "I'll need to double-check that with our engineers."
+    },
+    {
+      "id": "w04-c60",
+      "type": "card",
+      "day": 4,
+      "zh": "会后我把资料发给您。",
+      "en": "I'll send you the details after the meeting.",
+      "example": "I'll email you the spec sheet later."
+    },
+    {
+      "id": "w04-c61",
+      "type": "card",
+      "day": 5,
+      "zh": "欢迎来我们展位！",
+      "en": "Thanks for stopping by our booth!",
+      "example": "Welcome to our booth!"
+    },
+    {
+      "id": "w04-c62",
+      "type": "card",
+      "day": 5,
+      "zh": "您在找什么样的产品？",
+      "en": "What kind of products are you looking for?",
+      "example": "Is there anything in particular you're interested in?"
+    },
+    {
+      "id": "w04-c63",
+      "type": "card",
+      "day": 5,
+      "zh": "您是做哪方面业务的？",
+      "en": "What line of business are you in?",
+      "example": "What does your company do?"
+    },
+    {
+      "id": "w04-c64",
+      "type": "card",
+      "day": 5,
+      "zh": "您是哪家公司的？",
+      "en": "Which company are you with?",
+      "example": "Where are you visiting from?"
+    },
+    {
+      "id": "w04-c65",
+      "type": "card",
+      "day": 5,
+      "zh": "我加一下您的领英吧？",
+      "en": "Can I add you on LinkedIn?",
+      "example": "Are you on WhatsApp?"
+    },
+    {
+      "id": "w04-c66",
+      "type": "card",
+      "day": 5,
+      "zh": "能留个联系方式吗？",
+      "en": "Could we swap contact details?",
+      "example": "Can I get your email?"
+    },
+    {
+      "id": "w04-c67",
+      "type": "card",
+      "day": 5,
+      "zh": "我们之后邮件联系。",
+      "en": "Let's follow up by email.",
+      "example": "I'll follow up with you next week."
+    },
+    {
+      "id": "w04-c68",
+      "type": "card",
+      "day": 5,
+      "zh": "扫这个二维码就能看产品目录。",
+      "en": "Just scan this QR code for our catalog.",
+      "example": "You can scan this code for more details."
+    },
+    {
+      "id": "w04-c69",
+      "type": "card",
+      "day": 5,
+      "zh": "这是我们的产品手册。",
+      "en": "Here's our product brochure.",
+      "example": "Feel free to take a brochure."
+    },
+    {
+      "id": "w04-c70",
+      "type": "card",
+      "day": 5,
+      "zh": "今年展会人真多。",
+      "en": "There's a great turnout this year.",
+      "example": "The show is really busy this year."
+    },
+    {
+      "id": "w04-c71",
+      "type": "card",
+      "day": 5,
+      "zh": "我昨天刚到，还在倒时差。",
+      "en": "I just flew in yesterday, so I'm still jet-lagged.",
+      "example": "I got in late last night."
+    },
+    {
+      "id": "w04-c72",
+      "type": "card",
+      "day": 5,
+      "zh": "我的航班晚点了两个小时。",
+      "en": "My flight was delayed by two hours.",
+      "example": "My flight got in right on time."
+    },
+    {
+      "id": "w04-c73",
+      "type": "card",
+      "day": 5,
+      "zh": "我住在展馆附近的酒店。",
+      "en": "I'm staying at a hotel near the venue.",
+      "example": "I'm staying just across the street."
+    },
+    {
+      "id": "w04-c74",
+      "type": "card",
+      "day": 5,
+      "zh": "我们在这儿待到周五。",
+      "en": "We'll be here until Friday.",
+      "example": "We're flying back on Saturday."
+    },
+    {
+      "id": "w04-c75",
+      "type": "card",
+      "day": 5,
+      "zh": "有机会来深圳，欢迎来我们公司看看。",
+      "en": "If you're ever in Shenzhen, come visit our office.",
+      "example": "You're welcome to visit us anytime."
+    },
+    {
+      "id": "w04-c76",
+      "type": "card",
+      "day": 6,
+      "zh": "今天的交流很有收获。",
+      "en": "Today's meeting was really productive.",
+      "example": "This has been really helpful."
+    },
+    {
+      "id": "w04-c77",
+      "type": "card",
+      "day": 6,
+      "zh": "我总结一下今天聊的内容。",
+      "en": "Let me sum up what we discussed today.",
+      "example": "Let me quickly recap."
+    },
+    {
+      "id": "w04-c78",
+      "type": "card",
+      "day": 6,
+      "zh": "接下来这样推进。",
+      "en": "Here are the next steps.",
+      "example": "Here's how we'll move forward."
+    },
+    {
+      "id": "w04-c79",
+      "type": "card",
+      "day": 6,
+      "zh": "我们下周前把报价发给您。",
+      "en": "We'll send you a quote by next week.",
+      "example": "We'll get back to you by Friday."
+    },
+    {
+      "id": "w04-c80",
+      "type": "card",
+      "day": 6,
+      "zh": "交货一般要四周左右。",
+      "en": "Delivery usually takes about four weeks.",
+      "example": "Lead time is usually about a month."
+    },
+    {
+      "id": "w04-c81",
+      "type": "card",
+      "day": 6,
+      "zh": "您还有什么顾虑吗？",
+      "en": "Do you have any other concerns?",
+      "example": "Is there anything else you'd like to know?"
+    },
+    {
+      "id": "w04-c82",
+      "type": "card",
+      "day": 6,
+      "zh": "我们约个视频会议接着聊吧。",
+      "en": "Let's set up a video call to follow up.",
+      "example": "Let's schedule a follow-up call."
+    },
+    {
+      "id": "w04-c83",
+      "type": "card",
+      "day": 6,
+      "zh": "下周二您方便吗？",
+      "en": "Does next Tuesday work for you?",
+      "example": "Does that time work for you?"
+    },
+    {
+      "id": "w04-c84",
+      "type": "card",
+      "day": 6,
+      "zh": "感谢您今天专程过来。",
+      "en": "Thanks for coming all the way here today.",
+      "example": "Thank you for taking the time to visit."
+    },
+    {
+      "id": "w04-c85",
+      "type": "card",
+      "day": 6,
+      "zh": "我给您叫了车。",
+      "en": "I've booked a car for you.",
+      "example": "Your car is waiting downstairs."
+    },
+    {
+      "id": "w04-c86",
+      "type": "card",
+      "day": 6,
+      "zh": "我送您下楼。",
+      "en": "I'll walk you out.",
+      "example": "Let me walk you downstairs."
+    },
+    {
+      "id": "w04-c87",
+      "type": "card",
+      "day": 6,
+      "zh": "祝您回程顺利。",
+      "en": "Have a safe trip back.",
+      "example": "Safe travels!"
+    },
+    {
+      "id": "w04-c88",
+      "type": "card",
+      "day": 6,
+      "zh": "期待和您合作。",
+      "en": "We look forward to working with you.",
+      "example": "I'm looking forward to working together."
+    },
+    {
+      "id": "w04-c89",
+      "type": "card",
+      "day": 6,
+      "zh": "到了给我发个消息。",
+      "en": "Drop me a message when you land.",
+      "example": "Let me know when you get there."
+    },
+    {
+      "id": "w04-c90",
+      "type": "card",
+      "day": 6,
+      "zh": "有问题随时联系我。",
+      "en": "Feel free to reach out if you have any questions.",
+      "example": "Don't hesitate to reach out anytime."
+    }
+  ],
+  "scenes": [
+    {
+      "id": "w04-s1",
+      "day": 1,
+      "level": "basic",
+      "title": "迎接来访客户",
+      "role": "David",
+      "role_zh": "David · 来访的德国客户",
+      "persona": "David, a friendly purchasing manager from a distributor in Berlin, visiting your company in Shenzhen for the first time. He has just arrived at the front desk after a long flight.",
+      "opening": "Hi, I'm David from Berlin. I have a meeting here at ten.",
+      "opening_zh": "你好，我是柏林来的 David，十点在这里有个会。",
+      "brief": "德国经销商的客户 David 第一次来公司拜访，你到前台接他。",
+      "tasks": [
+        {
+          "zh": "欢迎他并介绍自己",
+          "check": "the learner welcomes David and introduces themself"
+        },
+        {
+          "zh": "问问他路上是否顺利或时差",
+          "check": "the learner asks about his trip, his flight, finding the office, or jet lag",
+          "match": [
+            "how was (your|the) (trip|flight|journey)",
+            "jet ?lag",
+            "(trouble|easy to) find",
+            "find (us|the office|the place)"
+          ]
+        },
+        {
+          "zh": "问他想喝点什么",
+          "check": "the learner offers David something to drink",
+          "match": [
+            "something to drink",
+            "coffee or tea",
+            "get you (a|some|any)",
+            "like (some|a) (coffee|tea|water)"
+          ]
+        },
+        {
+          "zh": "说明今天的安排",
+          "check": "the learner explains the plan or schedule for the visit"
+        }
+      ],
+      "hints": [
+        {
+          "zh": "欢迎来深圳！今天由我来接待您。",
+          "en": "Welcome to Shenzhen! I'll be showing you around today."
+        },
+        {
+          "zh": "要喝点什么吗？咖啡还是茶？",
+          "en": "Can I get you something to drink? Coffee or tea?"
+        },
+        {
+          "zh": "我们先简单介绍公司，然后去展厅。",
+          "en": "We'll start with a quick overview, then visit the showroom."
+        }
+      ]
+    },
+    {
+      "id": "w04-s2",
+      "day": 2,
+      "level": "basic",
+      "title": "午饭聊聊工作",
+      "role": "Daniel",
+      "role_zh": "Daniel · 外籍同事",
+      "persona": "Daniel, a friendly British colleague who joined the overseas sales team a month ago, chatting with you over lunch in the company cafeteria",
+      "opening": "Hey, mind if I join you? How's your week going?",
+      "opening_zh": "嘿，介意我坐这儿吗？你这周过得怎么样？",
+      "brief": "午饭时，刚加入海外销售团队的外籍同事 Daniel 坐到你旁边，聊聊工作。",
+      "tasks": [
+        {
+          "zh": "说说你这周忙不忙、在忙什么",
+          "check": "the learner says how busy their week is or what they are working on"
+        },
+        {
+          "zh": "介绍你负责的工作",
+          "check": "the learner explains their own role or what they are responsible for"
+        },
+        {
+          "zh": "问问他适应得怎么样",
+          "check": "the learner asks Daniel how he is settling in or how his new job is going",
+          "match": [
+            "settling in",
+            "how('s| is) (the new job|your new|everything|it going)",
+            "(like|liking|enjoy|enjoying) (it|the job|working)",
+            "how about you|what about you"
+          ]
+        },
+        {
+          "zh": "约他之后一起喝咖啡或吃饭",
+          "check": "the learner suggests getting coffee or lunch together again",
+          "match": [
+            "grab (a )?(coffee|lunch|a bite)",
+            "(coffee|lunch) (sometime|together|again|next)"
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "zh": "最近挺忙的，在准备一个新品上市。",
+          "en": "It's been busy. We're getting ready for a product launch."
+        },
+        {
+          "zh": "我主要做产品规划。",
+          "en": "I mainly work on product planning."
+        },
+        {
+          "zh": "你适应得怎么样？",
+          "en": "How are you settling in?"
+        }
+      ]
+    },
+    {
+      "id": "w04-s3",
+      "day": 3,
+      "level": "basic",
+      "title": "会议室里介绍公司",
+      "role": "Sophie",
+      "role_zh": "Sophie · 新加坡的客户",
+      "persona": "Sophie, a business development manager from a system integrator in Singapore, sitting in your meeting room at the start of her visit. She is curious and asks short follow-up questions about the company.",
+      "opening": "Thanks for having me. So, could you tell me a bit about your company?",
+      "opening_zh": "谢谢你们的接待。那你能先介绍一下你们公司吗？",
+      "brief": "会议室里，新加坡集成商的客户 Sophie 请你先介绍一下公司。",
+      "tasks": [
+        {
+          "zh": "说说公司成立时间或总部在哪",
+          "check": "the learner says when the company was founded or where it is headquartered"
+        },
+        {
+          "zh": "说说公司主要做什么",
+          "check": "the learner explains what products or business the company mainly does"
+        },
+        {
+          "zh": "说说公司规模或市场（员工、国家、客户）",
+          "check": "the learner mentions the company's size, markets, countries or main customers"
+        },
+        {
+          "zh": "问她有没有问题",
+          "check": "the learner asks Sophie if she has any questions",
+          "match": [
+            "any questions",
+            "does (that|this) make sense",
+            "anything (you'd like|else you)"
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "zh": "我先简单介绍一下我们公司。",
+          "en": "Let me give you a quick intro to our company."
+        },
+        {
+          "zh": "我们主要做智能硬件和配套的软件。",
+          "en": "We mainly make smart devices and the software that runs them."
+        },
+        {
+          "zh": "到这里有什么问题吗？",
+          "en": "Any questions so far?"
+        }
+      ]
+    },
+    {
+      "id": "w04-s4",
+      "day": 4,
+      "level": "basic",
+      "title": "展厅讲解产品",
+      "role": "Ahmed",
+      "role_zh": "Ahmed · 迪拜的经销商",
+      "persona": "Ahmed, a practical distributor from Dubai who cares about price, installation and after-sales support. He asks direct questions while the learner shows him around the showroom. After two or three turns, ask one detailed technical question the learner probably can't answer on the spot, such as the exact power consumption or the warranty terms in the UAE.",
+      "opening": "Nice showroom! So, which product would you recommend for shopping malls?",
+      "opening_zh": "展厅不错！那你们有什么适合商场的产品推荐吗？",
+      "brief": "你带迪拜的经销商 Ahmed 参观展厅，他想找适合商场用的产品。",
+      "tasks": [
+        {
+          "zh": "推荐一款产品，说说用在哪里",
+          "check": "the learner recommends a product and says where it is used"
+        },
+        {
+          "zh": "说出它的一个主要卖点",
+          "check": "the learner mentions a key selling point or advantage of the product"
+        },
+        {
+          "zh": "说明怎么控制或管理（App、平台）",
+          "check": "the learner explains how the product is controlled or managed, such as an app or a platform",
+          "match": [
+            "\\bapp\\b",
+            "platform",
+            "dashboard",
+            "software",
+            "remotely"
+          ]
+        },
+        {
+          "zh": "答不上的问题，说会确认后回复",
+          "check": "the learner says they will check with the team or get back to him later",
+          "match": [
+            "check (with|on)",
+            "get back to you",
+            "follow up",
+            "find out",
+            "double-check",
+            "confirm"
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "zh": "这个型号卖得最好，主要用在商场和写字楼。",
+          "en": "This model is our best seller. It's mainly used in shopping malls and office buildings."
+        },
+        {
+          "zh": "它最大的卖点是安装简单。",
+          "en": "Its biggest selling point is that it's easy to install."
+        },
+        {
+          "zh": "这个我得跟技术同事确认一下。",
+          "en": "Let me check with our tech team on that."
+        }
+      ]
+    },
+    {
+      "id": "w04-s5",
+      "day": 5,
+      "level": "basic",
+      "title": "展会展位接待",
+      "role": "Maria",
+      "role_zh": "Maria · 展会访客",
+      "persona": "Maria, a buyer from a retail chain in Spain, walking past the learner's booth at a busy international trade show. She is interested but a little short on time.",
+      "opening": "Hi there! What's this device here? I've seen a few like it today.",
+      "opening_zh": "你好！这个设备是什么？我今天看到好几个类似的了。",
+      "brief": "在国际展会的展位上，一位西班牙零售连锁的采购 Maria 走过来问产品。",
+      "tasks": [
+        {
+          "zh": "了解她在找什么、做什么业务",
+          "check": "the learner asks what she is looking for or what her business does",
+          "match": [
+            "looking for",
+            "what (kind|line) of",
+            "what does your company",
+            "which company",
+            "interested in"
+          ]
+        },
+        {
+          "zh": "简单介绍这款产品",
+          "check": "the learner briefly introduces the product"
+        },
+        {
+          "zh": "交换名片或联系方式",
+          "check": "the learner offers a business card or asks for contact details",
+          "match": [
+            "\\bcard\\b",
+            "contact",
+            "email",
+            "linkedin",
+            "wechat",
+            "whatsapp",
+            "scan"
+          ]
+        },
+        {
+          "zh": "约好展会后跟进",
+          "check": "the learner suggests following up after the show",
+          "match": [
+            "follow up",
+            "get in touch",
+            "email you",
+            "send you",
+            "next week",
+            "after the show"
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "zh": "您在找什么样的产品？",
+          "en": "What kind of products are you looking for?"
+        },
+        {
+          "zh": "这是我的名片。能留个联系方式吗？",
+          "en": "Here's my card. Could we swap contact details?"
+        },
+        {
+          "zh": "我们之后邮件联系。",
+          "en": "Let's follow up by email."
+        }
+      ]
+    },
+    {
+      "id": "w04-s6",
+      "day": 6,
+      "level": "advanced",
+      "title": "挑战：送别客户、约定下一步",
+      "role": "David",
+      "role_zh": "David · 来访的德国客户",
+      "persona": "David, a purchasing manager from a distributor in Berlin, at the end of a half-day visit to the learner's company in Shenzhen. He has seen the showroom and liked it. He asks one practical question about delivery time, then gets ready to leave for the airport.",
+      "opening": "Thanks, that was a great tour. Before I go, how long does delivery usually take?",
+      "opening_zh": "谢谢，参观得很有收获。走之前问一下，交货一般要多久？",
+      "brief": "David 参观完准备离开。回答他最后一个问题，总结今天的内容，约定下一步，再送他离开。",
+      "tasks": [
+        {
+          "zh": "回答交货期（不确定就说会确认）",
+          "check": "the learner answers about delivery time or says they will confirm it"
+        },
+        {
+          "zh": "总结今天聊的内容",
+          "check": "the learner sums up what was discussed during the visit",
+          "match": [
+            "sum up",
+            "recap",
+            "to summari[sz]e",
+            "today we"
+          ]
+        },
+        {
+          "zh": "说明下一步（报价、资料等）",
+          "check": "the learner explains the next steps, such as sending a quote or materials",
+          "match": [
+            "quote",
+            "send you",
+            "next steps?",
+            "get back to you"
+          ]
+        },
+        {
+          "zh": "约下次视频会议",
+          "check": "the learner suggests a follow-up call or meeting",
+          "match": [
+            "(video|follow-up|follow up) (call|meeting)",
+            "set up a (call|meeting)",
+            "schedule a"
+          ]
+        },
+        {
+          "zh": "礼貌地送别",
+          "check": "the learner actually says goodbye, e.g. wishing him a safe trip",
+          "strict": true,
+          "match": [
+            "safe (trip|travels|flight)",
+            "have a (good|great|safe) (trip|flight)",
+            "\\bbye\\b|goodbye"
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "zh": "我总结一下今天聊的内容。",
+          "en": "Let me sum up what we discussed today."
+        },
+        {
+          "zh": "我们下周前把报价发给您。",
+          "en": "We'll send you a quote by next week."
+        },
+        {
+          "zh": "感谢您今天专程过来，祝您回程顺利。",
+          "en": "Thanks for coming all the way here today. Have a safe trip back."
+        }
+      ]
+    }
+  ],
+  "shadow": [
+    {
+      "id": "w04-sh1",
+      "day": 1,
+      "title": "迎接客户",
+      "sentences": [
+        {
+          "en": "Hi David, welcome to Shenzhen! I'm Utopia.",
+          "zh": "嗨 David，欢迎来深圳！我是 Utopia。"
+        },
+        {
+          "en": "How was your flight?",
+          "zh": "航班还顺利吗？"
+        },
+        {
+          "en": "Did you have any trouble finding us?",
+          "zh": "找到我们这儿容易吗？"
+        },
+        {
+          "en": "Can I get you something to drink? Coffee or tea?",
+          "zh": "要喝点什么吗？咖啡还是茶？"
+        },
+        {
+          "en": "Let's head to the meeting room first.",
+          "zh": "我们先去会议室。"
+        },
+        {
+          "en": "We'll start with a quick overview, then visit the showroom.",
+          "zh": "我们先简单介绍公司，然后去展厅。"
+        }
+      ]
+    },
+    {
+      "id": "w04-sh2",
+      "day": 2,
+      "title": "聊聊工作",
+      "sentences": [
+        {
+          "en": "What are you working on these days?",
+          "zh": "最近在忙什么？"
+        },
+        {
+          "en": "It's been pretty busy. We're getting ready for a product launch.",
+          "zh": "最近挺忙的，在准备一个新品上市。"
+        },
+        {
+          "en": "How's everything on your end?",
+          "zh": "你那边怎么样？"
+        },
+        {
+          "en": "I've been in back-to-back meetings all week.",
+          "zh": "我这一周都在连轴开会。"
+        },
+        {
+          "en": "Things should calm down after this week.",
+          "zh": "过了这周应该会轻松一点。"
+        },
+        {
+          "en": "Want to grab lunch together?",
+          "zh": "要一起吃午饭吗？"
+        }
+      ]
+    },
+    {
+      "id": "w04-sh3",
+      "day": 3,
+      "title": "介绍公司",
+      "sentences": [
+        {
+          "en": "Let me give you a quick intro to our company.",
+          "zh": "我先简单介绍一下我们公司。"
+        },
+        {
+          "en": "We were founded in 2010, and we're headquartered in Shenzhen.",
+          "zh": "我们成立于 2010 年，总部在深圳。"
+        },
+        {
+          "en": "We mainly make smart devices and the software that runs them.",
+          "zh": "我们主要做智能硬件和配套的软件。"
+        },
+        {
+          "en": "Our products are sold in over fifty countries.",
+          "zh": "我们的产品卖到五十多个国家。"
+        },
+        {
+          "en": "Most of our customers are distributors and system integrators.",
+          "zh": "我们的客户大多是经销商和集成商。"
+        },
+        {
+          "en": "Any questions so far?",
+          "zh": "到这里有什么问题吗？"
+        }
+      ]
+    },
+    {
+      "id": "w04-sh4",
+      "day": 4,
+      "title": "展厅讲解",
+      "sentences": [
+        {
+          "en": "This is our latest product, and it's our best seller in Europe.",
+          "zh": "这是我们最新的产品，也是在欧洲卖得最好的。"
+        },
+        {
+          "en": "It's mainly used in shopping malls and office buildings.",
+          "zh": "它主要用在商场和写字楼。"
+        },
+        {
+          "en": "Its biggest selling point is that it's easy to install.",
+          "zh": "它最大的卖点是安装简单。"
+        },
+        {
+          "en": "You can manage all your devices on one platform.",
+          "zh": "所有设备都能在一个平台上管理。"
+        },
+        {
+          "en": "That's a good question. Let me check with our tech team.",
+          "zh": "问得好，我跟技术同事确认一下。"
+        }
+      ]
+    },
+    {
+      "id": "w04-sh5",
+      "day": 5,
+      "title": "展会展位",
+      "sentences": [
+        {
+          "en": "Hi, thanks for stopping by our booth!",
+          "zh": "你好，欢迎来我们展位！"
+        },
+        {
+          "en": "What kind of products are you looking for?",
+          "zh": "您在找什么样的产品？"
+        },
+        {
+          "en": "Here's my card, and here's our product brochure.",
+          "zh": "这是我的名片，这是我们的产品手册。"
+        },
+        {
+          "en": "Could we swap contact details?",
+          "zh": "能留个联系方式吗？"
+        },
+        {
+          "en": "I'll follow up with you by email next week.",
+          "zh": "我下周发邮件跟您联系。"
+        }
+      ]
+    },
+    {
+      "id": "w04-sh6",
+      "day": 6,
+      "title": "送别客户",
+      "sentences": [
+        {
+          "en": "Today's meeting was really productive.",
+          "zh": "今天的交流很有收获。"
+        },
+        {
+          "en": "Let me quickly sum up what we discussed.",
+          "zh": "我简单总结一下今天聊的内容。"
+        },
+        {
+          "en": "We'll send you a quote by next Friday.",
+          "zh": "我们下周五前把报价发给您。"
+        },
+        {
+          "en": "Does next Tuesday work for a follow-up call?",
+          "zh": "下周二约个电话跟进，您方便吗？"
+        },
+        {
+          "en": "Thanks for coming all the way here. Have a safe trip back!",
+          "zh": "感谢您专程过来，祝您回程顺利！"
+        }
+      ]
+    }
+  ],
+  "topics": [
+    {
+      "id": "w04-t1",
+      "day": 1,
+      "zh": "你们公司的办公室是什么样的",
+      "en": "Describe your office. Where is it, and what's it like?",
+      "hints": [
+        "where it is",
+        "what it looks like",
+        "what you like about it"
+      ]
+    },
+    {
+      "id": "w04-t2",
+      "day": 2,
+      "zh": "说说你最近在忙的一个项目",
+      "en": "Talk about a project you're working on right now.",
+      "hints": [
+        "what it is",
+        "your role",
+        "how it's going"
+      ]
+    },
+    {
+      "id": "w04-t3",
+      "day": 3,
+      "zh": "用一分钟介绍你的公司",
+      "en": "Introduce your company in one minute.",
+      "hints": [
+        "when and where",
+        "what you make",
+        "who your customers are"
+      ]
+    },
+    {
+      "id": "w04-t4",
+      "day": 4,
+      "zh": "介绍一个你们的产品",
+      "en": "Pick one of your products and introduce it.",
+      "hints": [
+        "what it is",
+        "where it's used",
+        "why people choose it"
+      ]
+    },
+    {
+      "id": "w04-t5",
+      "day": 5,
+      "zh": "一次展会或出差经历（没有的话，说说你想去的展会或城市）",
+      "en": "Talk about a trade show or business trip you've been on, or one you'd like to go on.",
+      "hints": [
+        "where and when",
+        "what you did",
+        "one thing you remember"
+      ]
+    },
+    {
+      "id": "w04-t6",
+      "day": 6,
+      "zh": "客户问到你答不上的问题时，你会怎么办",
+      "en": "What do you do when a client asks something you can't answer?",
+      "hints": [
+        "what you say",
+        "who you ask",
+        "how you follow up"
+      ]
+    }
+  ]
+}

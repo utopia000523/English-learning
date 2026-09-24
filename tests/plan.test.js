@@ -6,6 +6,8 @@ import path from 'node:path';
 import fs from 'node:fs';
 import { createApp } from '../server/index.js';
 import { weightedPick } from '../server/plan.js';
+// 内置内容有几周（每周 6 个场景、6 组跟读），加新一周不用改测试
+const WEEKS = fs.readdirSync(new URL('../content', import.meta.url)).filter((f) => /^week\d+\.json$/.test(f)).length;
 
 let server; let base;
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'speak90-plan-'));
@@ -57,5 +59,5 @@ test('表达卡复习计入活动与连续打卡；日历与进度可用', async
   assert.ok(plan.days[0].ratio > 0);
   const pr = await get('/progress');
   assert.equal(pr.streak, 1);
-  assert.equal(pr.scenesTotal, 18);
+  assert.equal(pr.scenesTotal, 6 * WEEKS);
 });

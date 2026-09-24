@@ -6,6 +6,8 @@ import os from 'node:os';
 import path from 'node:path';
 import fs from 'node:fs';
 import { createApp } from '../server/index.js';
+// 内置内容有几周（每周 6 个场景、6 组跟读），加新一周不用改测试
+const WEEKS = fs.readdirSync(new URL('../content', import.meta.url)).filter((f) => /^week\d+\.json$/.test(f)).length;
 
 let server; let base;
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'speak90-rp-'));
@@ -21,8 +23,8 @@ after(() => server.close());
 
 test('场景列表：每周 6 个，第 1 天只解锁第 1 个', async () => {
   const list = await json(await fetch(base + '/roleplay/scenes'));
-  assert.equal(list.length, 18);
-  assert.deepEqual([1, 2, 3].map((w) => list.filter((s) => s.week === w).map((s) => s.day).join('')), ['123456', '123456', '123456']);
+  assert.equal(list.length, 6 * WEEKS);
+  for (let w = 1; w <= WEEKS; w++) assert.equal(list.filter((s) => s.week === w).map((s) => s.day).join(''), '123456');
   assert.deepEqual(list.filter((s) => s.status !== 'locked').map((s) => s.id), ['w01-s1']);
 });
 

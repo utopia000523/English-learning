@@ -7,8 +7,8 @@ import * as assessment from './assessment.js';
 
 const parse = (s, d) => { try { return JSON.parse(s) ?? d; } catch { return d; } };
 
-export const THEMES = ['自我介绍与近况', '日常闲聊', '吃饭点餐', '购物', '问路与交通', '酒店与旅行',
-  '工作寒暄', '电话与约时间', '表达观点', '讲一段经历', '解决问题', '综合复盘'];
+export const THEMES = ['自我介绍与近况', '日常闲聊', '吃饭点餐', '接待客户与介绍公司', '购物', '电话与约时间',
+  '出行与旅行', '开会与讨论', '表达观点', '讲一段经历', '解决问题', '综合复盘'];
 export const PHASES = [
   { no: 1, name: '敢开口', weeks: '1–4', focus: '句型和跟读为主', weights: { cards: 35, shadow: 35, roleplay: 15, mono: 15 } },
   { no: 2, name: '能对话', weeks: '5–8', focus: '场景对话为主', weights: { cards: 25, shadow: 20, roleplay: 40, mono: 15 } },
