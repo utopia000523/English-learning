@@ -97,8 +97,8 @@ export default function Today() {
             <div className="li" key={s.slot} style={{ cursor: 'pointer' }} onClick={() => go(s)}>
               <span className="num">{i + 1}</span>
               <div className="t"><b>{NAME[s.module]}</b>{s.detail && <span className="faint"> · {s.detail}</span>}</div>
-              <span className="faint" style={{ width: 110, whiteSpace: 'nowrap' }}>{s.label} {s.minutes} 分钟</span>
-              <span style={{ width: 70 }}>{ST[s.status]}</span>
+              <span className="faint" style={{ minWidth: 150, flexShrink: 0, whiteSpace: 'nowrap' }}>{s.label} {s.minutes} 分钟</span>
+              <span style={{ width: 70, flexShrink: 0 }}>{ST[s.status]}</span>
             </div>
           ))}
         </div>
