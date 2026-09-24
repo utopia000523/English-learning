@@ -7,3 +7,4 @@ models/*.bin
 *.log
 data/backups/
 data/evals/
+data/notion-peek.json

@@ -22,13 +22,18 @@ async function children(token, id) {
   return out;
 }
 
-/** 找「Vocabulary」标题后的第一个表格，按表头把列对上：词 / 中文 / 搭配 / 例句 */
+/**
+ * 读「Vocabulary」这一节：有表格按表头对列（词 / 中文 / 搭配 / 例句）；
+ * 没有表格时按段落读（ChatGPT 有时这样写）：「word — 中文」+「Common collocations: …」+「Original example: …」
+ */
 export async function vocabOf(token, pageId) {
   const blocks = await children(token, pageId);
   const h = blocks.findIndex((b) => /^heading_/.test(b.type) && /vocabulary|词汇/i.test(plain(b[b.type]?.rich_text)));
   if (h < 0) return [];
-  const table = blocks.slice(h + 1).find((b) => b.type === 'table' || /^heading_/.test(b.type));
-  if (!table || table.type !== 'table') return [];
+  const end = blocks.findIndex((b, i) => i > h && /^heading_/.test(b.type));
+  const section = blocks.slice(h + 1, end < 0 ? undefined : end);
+  const table = section.find((b) => b.type === 'table');
+  if (!table) return parseVocabLines(section.flatMap((b) => plain(b[b.type]?.rich_text).split('\n')));
   const rows = (await children(token, table.id)).filter((r) => r.type === 'table_row').map((r) => r.table_row.cells.map(plain));
   if (!rows.length) return [];
   const head = rows[0].map((x) => x.toLowerCase());
@@ -36,6 +41,28 @@ export async function vocabOf(token, pageId) {
   const c = { en: col(/word|phrase|词/, 0), zh: col(/中文|释义|meaning|chinese/, 1), co: col(/colloc|搭配/, 2), ex: col(/example|例句/, 3) };
   return rows.slice(1).map((r) => ({ en: r[c.en] || '', zh: r[c.zh] || '', collocations: r[c.co] || '', example: r[c.ex] || '' }))
     .filter((w) => w.en);
+}
+
+const hasZh = (t) => /[\u4e00-\u9fff]/.test(t);
+const unquote = (t) => t.trim().replace(/^[“"‘']+|[”"’']+$/g, '').trim();
+
+/** 段落格式的词汇：一行「英文 — 中文」开始一个词，后面的搭配、例句行归到这个词 */
+export function parseVocabLines(lines) {
+  const out = [];
+  for (const raw of lines) {
+    const l = raw.replace(/\*\*/g, '').trim();
+    if (!l) continue;
+    const co = l.match(/^(?:common\s+)?collocations?\s*[:：]\s*(.+)$/i);
+    const ex = l.match(/^original\s+(?:example|idea|sentence)s?\s*[:：]\s*(.+)$/i);
+    if (co || ex) {
+      if (out.length) out.at(-1)[co ? 'collocations' : 'example'] = co ? co[1].trim() : unquote(ex[1]);
+      continue;
+    }
+    // 「word — 中文」「1. word - 中文」「word: 中文」；英文里的连字符（trade-off）两边没有空格，不会被拆开
+    const w = l.replace(/^(?:\d+[.)]|[-•·])\s*/, '').match(/^(.+?)\s+[—–-]{1,2}\s+(.+)$/) || l.match(/^([^:：]+?)\s*[:：]\s*(.+)$/);
+    if (w && /[a-z]/i.test(w[1]) && !hasZh(w[1]) && hasZh(w[2])) out.push({ en: w[1].trim(), zh: w[2].trim(), collocations: '', example: '' });
+  }
+  return out;
 }
 
 let running = false;
