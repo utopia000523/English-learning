@@ -139,7 +139,8 @@ export function RoleplayChat() {
         else if (r.messages.length === 1) speak(r.messages[0].content, { voice: s.voice, rate: s.rate || 1 });
       }).catch((e) => setErr(e.message)));
   }, [id]);
-  useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [rp?.messages.length, busy]);
+  // 新消息只滚到刚好露出（停在输入框上方），不把整页顶上去
+  useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, [rp?.messages.length, busy, Object.keys(rp?.feedback || {}).length]);
 
   useEffect(() => {
     if (!rec) return undefined;
@@ -256,7 +257,7 @@ export function RoleplayChat() {
             </div>
           ))}
           {busy === 'reply' && <div className="ai"><div className="who">{sc.role_zh}</div><span className="faint">正在回复…</span></div>}
-          <div ref={endRef} />
+          <div ref={endRef} style={{ scrollMarginBottom: 150 }} />
         </div>
         {err && <p style={{ color: 'var(--bad)', fontSize: 13, marginBottom: 8 }}>{err}</p>}
         {!rp.ended && (
@@ -294,7 +295,7 @@ export function RoleplayChat() {
             <div className="pb">
               {rp.state.targets.map((t, i) => (
                 <div className={`chk ${t.used ? 'on' : ''}`} key={i}><span className={`cb ${t.used ? 'on' : ''}`} />
-                  <div>{t.zh}<details><summary className="faint">看英文</summary><b>{t.en}</b></details></div></div>
+                  {t.zh ? <div>{t.zh}<details><summary className="faint">看英文</summary><b>{t.en}</b></details></div> : <div><b>{t.en}</b></div>}</div>
               ))}
               <p className="faint" style={{ marginTop: 8 }}>优先挑了你这周没想起、想起但卡的表达。对话里自然用上就会打勾。</p>
             </div>
