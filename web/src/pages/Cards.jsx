@@ -24,6 +24,7 @@ export default function Cards() {
   const [checking, setChecking] = useState(false);
   const [rec, setRec] = useState(0);
   const recRef = useRef(null);
+  const turnRef = useRef(0); // 每换一张卡 +1；检查、识别的结果回来时卡已换掉就丢弃
 
   const load = async () => {
     try {
@@ -51,7 +52,9 @@ export default function Cards() {
       const rest = queue.slice(1);
       // 没想起：本轮末尾再出现一次
       setQueue(rating === 1 ? [...rest, { ...card, isNew: false, again: true }] : rest);
-      setSay(''); setCheck(null); setErr('');
+      turnRef.current += 1;
+      recRef.current?.cancel(); recRef.current = null; setRec(0);
+      setSay(''); setCheck(null); setErr(''); setChecking(false);
       if (rating !== 1) setDone((n) => n + 1);
       setFlipped(false);
       if (!rest.length && rating !== 1) api.get('/cards/today').then((d) => setData((o) => ({ ...o, stats: d.stats, reviewedToday: d.reviewedToday })));
@@ -78,22 +81,28 @@ export default function Cards() {
     }
     const r = recRef.current; recRef.current = null; setRec(0);
     if (r.seconds() < 0.6) { r.cancel(); return; }
+    const turn = turnRef.current;
     setChecking(true);
     try {
       const out = await transcribe(await r.stop());
+      if (turn !== turnRef.current) return;
       if (!out.text) setErr('没有听清，请再说一遍。');
       else setSay((t) => (t ? t + ' ' : '') + out.text);
-    } catch (e) { setErr(e.message); }
-    setChecking(false);
+    } catch (e) { if (turn === turnRef.current) setErr(e.message); }
+    if (turn === turnRef.current) setChecking(false);
   };
   useEffect(() => { const t = setInterval(() => { if (recRef.current) setRec(recRef.current.seconds()); }, 300); return () => clearInterval(t); }, []);
   useEffect(() => () => recRef.current?.cancel(), []);
 
   const runCheck = async () => {
     if (!card || !say.trim() || checking) return;
+    const turn = turnRef.current;
     setChecking(true); setCheck(null);
-    try { setCheck(await api.post(`/cards/${card.id}/check`, { text: say })); } catch (e) { setErr(e.message); }
-    setChecking(false);
+    try {
+      const r = await api.post(`/cards/${card.id}/check`, { text: say });
+      if (turn === turnRef.current) setCheck(r);
+    } catch (e) { if (turn === turnRef.current) setErr(e.message); }
+    if (turn === turnRef.current) setChecking(false);
   };
 
   const head = (
