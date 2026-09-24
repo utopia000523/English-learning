@@ -37,6 +37,7 @@ export function stats(pos) {
 /**
  * 今日队列：先到期复习卡，再补当天新卡。
  * 上限来自设置：cardsNewPerDay（每日新卡）、cardsDailyMax（每日总张数，0 = 不限）
+ * 第 7 天复习日只复习到期卡，不出内置和雅思新卡（顺延到下周第 1 天）；自己当场加的卡（AI 对话、独白、笔记本、手动）照常可学。
  */
 export function todayQueue(today = todayStr()) {
   const pos = planPosition(today);
@@ -47,7 +48,8 @@ export function todayQueue(today = todayStr()) {
     .slice(0, room === Infinity ? undefined : room);
   const introducedToday = get('SELECT COUNT(*) n FROM card WHERE introduced_at = ?', [today]).n;
   const limit = Math.max(0, Math.min(cardsNewPerDay - introducedToday, room - due.length));
-  const fresh = all(`SELECT * FROM card WHERE introduced_at IS NULL AND ${UNLOCK_SQL} ORDER BY week, day, id LIMIT ?`, [...unlockArgs(pos), limit]);
+  const reviewDay = pos.dayInWeek === 7 ? " AND source NOT IN ('内置', '雅思')" : '';
+  const fresh = all(`SELECT * FROM card WHERE introduced_at IS NULL AND ${UNLOCK_SQL}${reviewDay} ORDER BY week, day, id LIMIT ?`, [...unlockArgs(pos), limit]);
   return {
     ...pos,
     reviewedToday,

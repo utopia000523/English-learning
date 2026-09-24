@@ -72,3 +72,16 @@ test('自己先说：检查答案给出结论和更自然的说法', async () =>
   assert.equal(empty.verdict, 'wrong');
   assert.equal((await post('/cards/99999/check', { text: 'hi' })).status, 404);
 });
+
+test('第 7 天复习日：只出到期卡，不出内置和雅思新卡；当天自己加的卡照常可学', async () => {
+  const d = new Date(Date.now() - 6 * 864e5);
+  const start = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  await put('/settings', { startDate: start, cardsNewPerDay: 30, cardsDailyMax: 0 });
+  const added = await json(await post('/cards', { en: 'Count me in.', zh: '算我一个。', source: 'AI 对话' }));
+  const q = await json(await fetch(base + '/cards/today'));
+  assert.equal(q.dayInWeek, 7);
+  const fresh = q.cards.filter((c) => c.isNew);
+  assert.ok(fresh.some((c) => c.id === added.id));
+  assert.ok(fresh.every((c) => !['内置', '雅思'].includes(c.source)));
+  assert.ok(q.stats.newLeft > 1); // 还没学的内置卡没丢，顺延到下周
+});
