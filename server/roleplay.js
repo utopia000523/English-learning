@@ -155,6 +155,16 @@ export async function feedback(id, index) {
   if (!msg || msg.role !== 'user') return undefined;
   if (v.feedback[index]) return v.feedback[index];
   const prev = [...v.messages.slice(0, index)].reverse().find((m) => m.role === 'assistant');
+  const fb = await judgeLine(v.scene, prev?.content || '', msg.content);
+  // 读最新值再写，避免并发点评互相覆盖
+  const cur = parse(get('SELECT feedback FROM roleplay WHERE id = ?', [id]).feedback, {});
+  cur[index] = fb;
+  run('UPDATE roleplay SET feedback = ? WHERE id = ?', [JSON.stringify(cur), id]);
+  return fb;
+}
+
+// 点评一句话：{ok:true} 或 {ok:false, better, issue_zh, zh}。评测脚本 scripts/eval-feedback.mjs 也调用它
+export async function judgeLine(scene, prevLine, line, model = getSettings().llmModel) {
   const out = await llm.chatJSON([
     { role: 'system', content: `You are an English coach for a Chinese adult learning everyday spoken English.
 Check ONE line the learner said in a role-play. Judge only whether it is grammatical and natural spoken English in this context.
@@ -170,18 +180,13 @@ Rules for "better":
 - Punctuation is not part of speaking: if the words are fine and only the punctuation, capitalization or sentence break is off (including a Chinese 。), respond {"ok": true}.
 If the learner wrote Chinese, "better" is natural English for it and "issue_zh" is "用英语可以这样说".
 Respond ONLY with JSON.` },
-    { role: 'user', content: `Scene: ${v.scene.title} — ${v.scene.brief || ''}
-${v.scene.role} said: ${prev?.content || ''}
-Learner said: ${msg.content}` },
-  ], { model: getSettings().llmModel, temperature: 0.2, kind: 'feedback' }, () => ({ ok: true }));
+    { role: 'user', content: `Scene: ${scene.title} — ${scene.brief || ''}
+${scene.role} said: ${prevLine}
+Learner said: ${line}` },
+  ], { model, temperature: 0.2, kind: 'feedback' }, () => ({ ok: true }));
   const loose = (t) => String(t || '').toLowerCase().replace(/[’]/g, "'").replace(/[^a-z0-9' ]/g, ' ').replace(/\s+/g, ' ').trim();
-  const ok = out.ok === true || out.ok === 'true' || !out.better || loose(out.better) === loose(msg.content); // 只差大小写或标点，不算问题
-  const fb = ok ? { ok: true } : { ok: false, better: out.better.trim(), issue_zh: out.issue_zh || '', zh: out.zh || '' };
-  // 读最新值再写，避免并发点评互相覆盖
-  const cur = parse(get('SELECT feedback FROM roleplay WHERE id = ?', [id]).feedback, {});
-  cur[index] = fb;
-  run('UPDATE roleplay SET feedback = ? WHERE id = ?', [JSON.stringify(cur), id]);
-  return fb;
+  const ok = out.ok === true || out.ok === 'true' || !out.better || loose(out.better) === loose(line); // 只差大小写或标点，不算问题
+  return ok ? { ok: true } : { ok: false, better: String(out.better).trim(), issue_zh: out.issue_zh || '', zh: out.zh || '' };
 }
 
 export async function finish(id) {

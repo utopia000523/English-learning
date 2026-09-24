@@ -6,3 +6,4 @@ models/*.bin
 .DS_Store
 *.log
 data/backups/
+data/evals/
