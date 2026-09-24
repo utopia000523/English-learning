@@ -90,7 +90,11 @@ server/            本地服务（Express）
 web/               前端（React + Vite）
   src/pages/       各页面
   src/services/    api.js 请求封装、tts.js 朗读
-scripts/start.sh   启动脚本（阶段 6 增加 uninstall.sh）
+scripts/
+  start.sh         启动脚本
+  uninstall.sh     一键卸载（--dry-run 只列出不删除）
+  notion-peek.mjs  开发用：查看 Notion 数据库结构
+content/           内置学习内容（一周一个 JSON，见上文）
 tests/             接口测试（node --test）
 data/              本地数据库和录音（不提交）
 models/            语音识别模型（不提交）
