@@ -7,7 +7,7 @@ import { startRecording, transcribe } from '../services/recorder.js';
 import { Icon } from '../icons.jsx';
 
 const isZh = (t) => /[\u4e00-\u9fff]/.test(t || '');
-const LEVEL = { basic: '基础版', advanced: '进阶版' };
+const LEVEL = { basic: '基础版', advanced: '进阶版', review: '周复习 · 约 20 分钟' };
 const STATUS = {
   passed: <span className="st ok">已通关</span>,
   tried: <span className="st go">练习中</span>,
@@ -40,7 +40,7 @@ export function RoleplayList() {
           ))}
         </div>
       )}
-      <p className="faint" style={{ marginTop: 12 }}>每周 6 个场景，每天解锁一个，第 7 天复习。已解锁的场景随时可以回来再练。</p>
+      <p className="faint" style={{ marginTop: 12 }}>每周 6 个场景，每天解锁一个；第 7 天是周复习对话，把本周话题串起来，并优先练你没想起的表达。已解锁的场景随时可以回来再练。</p>
     </div>
   );
 }
@@ -61,6 +61,17 @@ function Review({ rp, onClose, onAgain }) {
           {!rp.passed && <span className="faint">（通关需完成全部任务，且对话 ≥ {rp.passTurns} 轮）</span>}</p>
         {r.comment_zh && <p style={{ marginTop: 10 }}>{r.comment_zh}</p>}
         {r.fluency && <p className="muted" style={{ marginTop: 6, fontSize: 13 }}>语音部分：语速 {r.fluency.wpm} 词/分 · 长停顿 {r.fluency.longPauses} 次 · 口头禅 {r.fluency.fillers} 次（{r.fluency.segments} 句语音）</p>}
+        {r.targets && <>
+          <div className="sec-t" style={{ marginTop: 22 }}>本周表达用上了 {r.targets.used} / {r.targets.total}</div>
+          {r.targets.missed.length > 0 && <div style={{ borderTop: '1px solid var(--line)' }}>
+            {r.targets.missed.map((t, i) => (
+              <div className="fix" key={i}>
+                <div><div className="n">{t.en}</div><div className="faint">{t.zh}</div></div>
+                <button className="link" onClick={() => speak(t.en)}>{Icon.speaker}</button>
+              </div>
+            ))}
+          </div>}
+        </>}
         {r.fixes.length === 0 && rp.turns > 0 && <p className="muted" style={{ marginTop: 16 }}>这次说的句子都很自然，没有需要改的。</p>}
         {r.fixes.length > 0 && <>
           <div className="sec-t" style={{ marginTop: 22 }}>需要改进的句子（{r.fixes.length}）</div>
@@ -271,19 +282,32 @@ export function RoleplayChat() {
           <div className="pb">
             {sc.tasks.map((t, i) => {
               const on = rp.tasksDone.includes(i + 1);
-              return <div className={`chk ${on ? 'on' : ''}`} key={i}><span className={`cb ${on ? 'on' : ''}`} /><span>{t.zh}</span></div>;
+              const now = rp.state && !rp.ended && rp.state.stage === i && !on;
+              return <div className={`chk ${on ? 'on' : ''}`} key={i}><span className={`cb ${on ? 'on' : ''}`} /><span>{t.zh}{now && <span className="faint"> · 正在聊</span>}</span></div>;
             })}
             <p className="faint" style={{ marginTop: 8 }}>通关：任务全部完成，且对话 ≥ {rp.passTurns} 轮（当前 {rp.turns} 轮）</p>
           </div>
         </details>
-        <details>
+        {rp.state && (
+          <details open>
+            <summary>本周表达 <span className="faint">{rp.state.targets.filter((t) => t.used).length} / {rp.state.targets.length}</span></summary>
+            <div className="pb">
+              {rp.state.targets.map((t, i) => (
+                <div className={`chk ${t.used ? 'on' : ''}`} key={i}><span className={`cb ${t.used ? 'on' : ''}`} />
+                  <div>{t.zh}<details><summary className="faint">看英文</summary><b>{t.en}</b></details></div></div>
+              ))}
+              <p className="faint" style={{ marginTop: 8 }}>优先挑了你这周没想起、想起但卡的表达。对话里自然用上就会打勾。</p>
+            </div>
+          </details>
+        )}
+        {(sc.hints || []).length > 0 && <details>
           <summary>提示</summary>
           <div className="pb">
             {(sc.hints || []).map((h, i) => (
               <div className="hintline" key={i}>{h.zh}<details><summary>看英文</summary><b>{h.en}</b></details></div>
             ))}
           </div>
-        </details>
+        </details>}
         <details open>
           <summary>场景</summary>
           <div className="pb muted">{sc.brief}</div>

@@ -1326,5 +1326,89 @@
         "how you follow up"
       ]
     }
-  ]
+  ],
+  "review": {
+    "title": "周复习：客户回国后的视频跟进",
+    "role": "David",
+    "role_zh": "David · 德国客户（视频跟进）",
+    "persona": "David, the purchasing manager from a distributor in Berlin who visited the learner's company in Shenzhen a month ago. Now you are on a follow-up video call. You want to move forward, and your boss, who didn't come on the trip, asked you to find out more",
+    "opening": "Hi! Good to see you again. Can you hear me okay?",
+    "opening_zh": "嗨！又见面了。你能听清我说话吗？",
+    "brief": "David 回柏林一个月了，约你开视频会议跟进。先寒暄，再帮他老板了解你们公司和产品，回答答不上的问题，邀请他来展会，最后约好下一步。",
+    "stages": [
+      {
+        "day": 1,
+        "topic": "寒暄：问候他回去后怎么样",
+        "focus": "Small talk: you got back to Berlin a month ago. Give the learner a chance to ask about your trip back or how things are.",
+        "task": {
+          "zh": "问候他回去后怎么样（旅途、时差、近况）",
+          "check": "the learner asks David about his trip back, jet lag, or how things have been",
+          "match": [
+            "trip back",
+            "jet ?lag",
+            "how (have you been|are things|is everything|was your (trip|flight))"
+          ]
+        }
+      },
+      {
+        "day": 2,
+        "topic": "你们最近在忙什么",
+        "focus": "Ask what the learner and their team have been busy with this month.",
+        "task": {
+          "zh": "说说你们团队最近在忙什么",
+          "check": "the learner says what they or their team have been working on"
+        }
+      },
+      {
+        "day": 3,
+        "topic": "给他老板介绍公司",
+        "focus": "Your boss didn't come on the trip. Ask the learner for a quick overview of their company that you can pass on.",
+        "task": {
+          "zh": "简单介绍公司：成立时间、做什么、客户是谁",
+          "check": "the learner gives an overview of their company, such as when it was founded, what it makes, or who its customers are"
+        }
+      },
+      {
+        "day": 4,
+        "topic": "产品卖点和答不上的问题",
+        "focus": "Ask about the product you liked in the showroom and its main selling point. Then ask one detailed technical question the learner probably can't answer on the spot, such as which EU certifications it has.",
+        "task": {
+          "zh": "说出产品的一个卖点；答不上的问题说会确认后回复",
+          "check": "the learner mentions a selling point of the product and says they will check or get back to David on the detailed question",
+          "match": [
+            "get back to you",
+            "check (with|on)",
+            "double-check",
+            "find out",
+            "confirm"
+          ]
+        }
+      },
+      {
+        "day": 5,
+        "topic": "邀请他来展会",
+        "focus": "Mention you'll attend an international trade show next month and ask if the learner's company will have a booth.",
+        "task": {
+          "zh": "邀请他来你们展位，约好在展会见",
+          "check": "the learner invites David to their booth or suggests meeting at the trade show",
+          "match": [
+            "booth",
+            "(see|meet) you (at|there)",
+            "stop by",
+            "come (by|and visit)"
+          ]
+        }
+      },
+      {
+        "day": 6,
+        "topic": "总结下一步并道别",
+        "focus": "Wrap up the call: ask what the next steps are, then say goodbye.",
+        "task": {
+          "zh": "总结下一步（报价、资料、下次会议），再道别",
+          "check": "the learner sums up next steps such as sending a quote or scheduling a call, and says goodbye",
+          "strict": true
+        }
+      }
+    ]
+  }
 }

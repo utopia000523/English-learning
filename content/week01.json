@@ -1287,5 +1287,80 @@
       ],
       "day": 6
     }
-  ]
+  ],
+  "review": {
+    "title": "周复习：英语角聊一圈",
+    "role": "Olivia",
+    "role_zh": "Olivia · 英语角主持人",
+    "persona": "Olivia, a friendly Canadian who hosts a weekly English corner at a café in Shenzhen. She moved to Shenzhen recently. She is chatting one-on-one with the learner, who is new to the group, and is good at keeping a relaxed conversation going",
+    "opening": "Hi, welcome! Is this your first time at our English corner?",
+    "opening_zh": "嗨，欢迎！你是第一次来我们英语角吗？",
+    "brief": "周末去咖啡馆的英语角，主持人 Olivia 陪你聊了一圈：自我介绍、最近怎么样、你住的城市、爱好、没听清时怎么办，最后聊到视频会议。尽量把这周学过的说法用上。",
+    "stages": [
+      {
+        "day": 1,
+        "topic": "介绍自己和工作",
+        "focus": "Get to know the learner: their name and what they do for work.",
+        "task": {
+          "zh": "介绍你的名字和工作",
+          "check": "the learner says their name and what their job is"
+        }
+      },
+      {
+        "day": 2,
+        "topic": "最近怎么样",
+        "focus": "Ask how things have been lately: busy with work? anything new?",
+        "task": {
+          "zh": "说说你最近在忙什么",
+          "check": "the learner talks about how they have been or what they have been busy with lately"
+        }
+      },
+      {
+        "day": 3,
+        "topic": "你住的城市",
+        "focus": "You are new to Shenzhen. Ask the learner about the city and for one recommendation (food or a place to visit).",
+        "task": {
+          "zh": "介绍深圳，推荐一个地方或吃的",
+          "check": "the learner describes the city or recommends a place or food"
+        }
+      },
+      {
+        "day": 4,
+        "topic": "聊爱好",
+        "focus": "Talk about weekends and hobbies; ask what the learner does for fun.",
+        "task": {
+          "zh": "说说你的一个爱好",
+          "check": "the learner talks about a hobby or what they do for fun"
+        }
+      },
+      {
+        "day": 5,
+        "topic": "没听清时请对方重复",
+        "focus": "Tell a short story about your own hobby. Speak a little fast and use one less common word (for example 'bouldering'), so the learner may need to ask you to repeat or explain.",
+        "task": {
+          "zh": "请对方重复、放慢或解释一个词",
+          "check": "the learner asks Olivia to repeat something, slow down, or explain a word",
+          "match": [
+            "say that again",
+            "didn't catch",
+            "slow down",
+            "(speak|talk) (a (little|bit) )?(more )?slowly",
+            "what does .* mean",
+            "could you repeat",
+            "pardon"
+          ]
+        }
+      },
+      {
+        "day": 6,
+        "topic": "聊视频会议，再道别",
+        "focus": "Mention that you work remotely with a team in London and have lots of video calls. Ask how the learner's video calls with overseas partners usually go. Then wrap up the English corner.",
+        "task": {
+          "zh": "说说你和海外同事开视频会议的情况，再道别",
+          "check": "the learner talks about their video calls or online meetings, and says goodbye",
+          "strict": true
+        }
+      }
+    ]
+  }
 }

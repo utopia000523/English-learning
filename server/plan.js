@@ -48,6 +48,7 @@ function randomWeights(week, dayNo, exclude = []) {
 
 /** 某周某天的内容（场景 / 跟读 / 话题），没有就返回 undefined */
 const sceneOfDay = (week, day) => get('SELECT id, title FROM content_scene WHERE week = ? AND day = ? ORDER BY id', [week, day]);
+const reviewSceneOf = (week) => get("SELECT id, title FROM content_scene WHERE week = ? AND level = 'review'", [week]);
 const itemOfDay = (type, week, day) => get('SELECT id, zh FROM content_item WHERE type = ? AND week = ? AND day = ? ORDER BY id', [type, week, day]);
 
 function generate(today) {
@@ -56,8 +57,13 @@ function generate(today) {
   const scene = sceneOfDay(week, dayInWeek);
   let slots;
   if (dayInWeek === 7) {
-    // 每周第 7 天：复习日
-    slots = [{ slot: 'warmup', module: 'cards', label: '复习日' }, { slot: 'wrap', module: 'review', label: '本周错句重说' }];
+    // 每周第 7 天：复习日。有周复习对话时加在中间（把本周话题和薄弱表达串成一段长对话）
+    const rv = reviewSceneOf(week);
+    slots = [
+      { slot: 'warmup', module: 'cards', label: '复习日' },
+      ...(rv ? [{ slot: 'scene', module: 'roleplay', label: '本周综合对话', sceneId: rv.id }] : []),
+      { slot: 'wrap', module: 'review', label: '本周错句重说' },
+    ];
   } else if (scene) {
     // 第 1–6 天：表达卡热身 → 当天场景对话（第 6 天是挑战）→ 跟读 / 独白随机一项 → 收尾
     // 跟读和独白轮着来：本周谁用得少就选谁，一样多时按阶段权重随机
@@ -114,7 +120,7 @@ function statusOf(slot, row, isToday) {
 }
 
 function withStatus(row, isToday) {
-  const slots = parse(row.modules, []).map((s) => ({ ...s, minutes: s.module === 'cards' && s.label === '复习日' ? 10 : MIN[s.module], status: statusOf(s, row, isToday) }));
+  const slots = parse(row.modules, []).map((s) => ({ ...s, minutes: s.module === 'cards' && s.label === '复习日' ? 10 : s.label === '本周综合对话' ? 20 : MIN[s.module], status: statusOf(s, row, isToday) }));
   const total = slots.reduce((n, s) => n + s.minutes, 0);
   const done = slots.filter((s) => s.status === 'done').reduce((n, s) => n + s.minutes, 0);
   return { slots, total, done, ratio: total ? done / total : 0 };
@@ -134,8 +140,9 @@ function suggestions(pos) {
 export function todayPlan(today = todayStr()) {
   const pos = planPosition(today);
   let row = get('SELECT * FROM plan_day WHERE day_no = ?', [pos.dayNo]);
-  // 旧版课程（没有「今日场景」）且当天有场景内容：按新规则重排
-  const stale = row && pos.dayInWeek < 7 && sceneOfDay(pos.week, pos.dayInWeek) && !parse(row.modules, []).some((s) => s.slot === 'scene');
+  // 旧版课程（没有「今日场景」/「本周综合对话」）且当天有对应内容：按新规则重排
+  const hasScene = row && parse(row.modules, []).some((s) => s.slot === 'scene');
+  const stale = row && !hasScene && (pos.dayInWeek < 7 ? sceneOfDay(pos.week, pos.dayInWeek) : reviewSceneOf(pos.week));
   if (!row || row.date !== today || stale) row = generate(today);
   const st = withStatus(row, true);
   const sug = suggestions(pos);

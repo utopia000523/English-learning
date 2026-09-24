@@ -45,6 +45,8 @@ bash scripts/start.sh
 
 **AI 对话场景**写在同一个文件的 `scenes` 数组里，格式见 `content/week01.json`。任务 `tasks` 的字段：`zh` 显示给学习者；`check` 是给模型判断用的英文描述；`strict: true` 表示必须真的做了才算（如道别）；`match` 是可选的正则数组，学习者任一句命中就直接算完成，用来兜住模型容易漏判的说法（如 “How about you?”）。
 
+**周复习对话**写在 `review` 字段（第 7 天用，格式见 `content/week04.json`）：`role` / `persona` / `opening` 是贯穿整段对话的人物，`stages` 是 6 段话题，每段 `day`（对应第几天的内容，决定这一段练哪些表达卡）、`topic`（中文小标题）、`focus`（英文，告诉 AI 这一段聊什么；不要写让 AI 说出目标表达的话）、`task`（同场景任务格式）。
+
 **也可以让 AI 帮你写：**把上面的格式和主题（比如"展厅接待外宾，30 张"）发给 Claude 或 WorkBuddy，让它生成 JSON 文件放进 `content/`。
 
 **音标数据：**`server/data/ipa_en_US.txt` 来自 [open-dict-data/ipa-dict](https://github.com/open-dict-data/ipa-dict)（MIT），用于笔记本和划词显示美式音标。

@@ -36,15 +36,27 @@ export function importContent(dir = path.join(config.root, 'content')) {
            ON CONFLICT(id) DO UPDATE SET week=excluded.week, en=excluded.en, zh=excluded.zh, extra=excluded.extra, day=excluded.day`,
         [t.id, pack.week, 'topic', t.en, t.zh, JSON.stringify({ hints: t.hints || [] }), pack.reviewed ? 1 : 0, t.day || 1]);
     }
-    for (const sc of pack.scenes || []) {
-      run(`INSERT INTO content_scene (id, week, title, level, role, brief, tasks, hints, approved, data, day) VALUES (?,?,?,?,?,?,?,?,?,?,?)
-           ON CONFLICT(id) DO UPDATE SET week=excluded.week, title=excluded.title, level=excluded.level, role=excluded.role,
-           brief=excluded.brief, tasks=excluded.tasks, hints=excluded.hints, data=excluded.data, day=excluded.day`,
-        [sc.id, pack.week, sc.title, sc.level, sc.role, sc.brief, JSON.stringify(sc.tasks), JSON.stringify(sc.hints || []),
-          pack.reviewed ? 1 : 0, JSON.stringify(sc), sc.day || 1]);
-    }
+    for (const sc of pack.scenes || []) upsertScene(sc, pack);
+    // 周复习对话：第 7 天，按 review.stages 把本周话题串成一段长对话（roleplay.js 分段引导）
+    if (pack.review?.stages?.length) upsertScene(reviewScene(pack), pack);
   }
   return added;
+}
+
+export function reviewScene(pack) {
+  const rv = pack.review;
+  return {
+    ...rv, id: `w${String(pack.week).padStart(2, '0')}-review`, day: 7, level: 'review',
+    title: rv.title || `周复习：${pack.theme}`, tasks: rv.stages.map((s) => s.task), hints: [],
+  };
+}
+
+function upsertScene(sc, pack) {
+  run(`INSERT INTO content_scene (id, week, title, level, role, brief, tasks, hints, approved, data, day) VALUES (?,?,?,?,?,?,?,?,?,?,?)
+       ON CONFLICT(id) DO UPDATE SET week=excluded.week, title=excluded.title, level=excluded.level, role=excluded.role,
+       brief=excluded.brief, tasks=excluded.tasks, hints=excluded.hints, data=excluded.data, day=excluded.day`,
+    [sc.id, pack.week, sc.title, sc.level, sc.role, sc.brief, JSON.stringify(sc.tasks), JSON.stringify(sc.hints || []),
+      pack.reviewed ? 1 : 0, JSON.stringify(sc), sc.day || 1]);
 }
 
 export const themeOfWeek = (week) =>

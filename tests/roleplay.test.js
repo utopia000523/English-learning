@@ -21,10 +21,10 @@ before(async () => {
 });
 after(() => server.close());
 
-test('场景列表：每周 6 个，第 1 天只解锁第 1 个', async () => {
+test('场景列表：每周 6 个 + 周复习，第 1 天只解锁第 1 个', async () => {
   const list = await json(await fetch(base + '/roleplay/scenes'));
-  assert.equal(list.length, 6 * WEEKS);
-  for (let w = 1; w <= WEEKS; w++) assert.equal(list.filter((s) => s.week === w).map((s) => s.day).join(''), '123456');
+  assert.equal(list.length, 7 * WEEKS); // 每周 6 个场景 + 1 个周复习对话
+  for (let w = 1; w <= WEEKS; w++) assert.equal(list.filter((s) => s.week === w).map((s) => s.day).join(''), '1234567');
   assert.deepEqual(list.filter((s) => s.status !== 'locked').map((s) => s.id), ['w01-s1']);
 });
 

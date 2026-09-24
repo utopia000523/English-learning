@@ -1244,5 +1244,77 @@
       ],
       "day": 6
     }
-  ]
+  ],
+  "review": {
+    "title": "周复习：和老朋友喝咖啡",
+    "role": "Jess",
+    "role_zh": "Jess · 老朋友",
+    "persona": "Jess, an old friend from university who moved to Shenzhen from Australia a few years ago. You meet the learner at a café for a relaxed catch-up. You are warm, chatty and curious",
+    "opening": "Hey, there you are! I was starting to think you forgot about me.",
+    "opening_zh": "嘿，你终于来了！我还以为你把我忘了呢。",
+    "brief": "和老朋友 Jess 约在咖啡馆叙旧。你迟到了一会儿，先道个歉，再聊周末、天气、最近看的剧、最近累不累，最后约下次见面。",
+    "stages": [
+      {
+        "day": 5,
+        "topic": "迟到了，先道歉",
+        "focus": "The learner arrived late. Tease them a little and let them explain why.",
+        "task": {
+          "zh": "为迟到道歉并说明原因",
+          "check": "the learner apologizes for being late and gives a reason",
+          "match": [
+            "sorry (i'm|i am|for being) late",
+            "sorry for the wait",
+            "traffic",
+            "got stuck"
+          ]
+        }
+      },
+      {
+        "day": 1,
+        "topic": "聊周末",
+        "focus": "Ask how the learner's weekend was and what they did.",
+        "task": {
+          "zh": "说说你上个周末做了什么",
+          "check": "the learner describes what they did last weekend"
+        }
+      },
+      {
+        "day": 2,
+        "topic": "聊天气",
+        "focus": "Comment on the weather (it has been hot with sudden rain) and how it messes up plans.",
+        "task": {
+          "zh": "聊一句天气",
+          "check": "the learner makes a comment about the weather"
+        }
+      },
+      {
+        "day": 3,
+        "topic": "推荐一部剧",
+        "focus": "Say you need something new to watch and ask the learner for a recommendation.",
+        "task": {
+          "zh": "推荐一部剧或电影，说说为什么好看",
+          "check": "the learner recommends a show or movie and says why they like it"
+        }
+      },
+      {
+        "day": 4,
+        "topic": "最近累不累",
+        "focus": "Notice the learner looks a bit tired and ask if everything is okay.",
+        "task": {
+          "zh": "说说你最近为什么累",
+          "check": "the learner explains why they are tired or how they have been feeling"
+        }
+      },
+      {
+        "day": 6,
+        "topic": "约下次见面并道别",
+        "focus": "Suggest doing something together next weekend, agree on a plan, then wrap up.",
+        "task": {
+          "zh": "约好下次见面的时间地点，再道别",
+          "check": "the learner agrees on a time or place to meet again and says goodbye",
+          "strict": true
+        }
+      }
+    ]
+  }
 }
