@@ -98,7 +98,7 @@ hr{border:none;border-top:1px solid var(--line);margin:28px 0}
 .send{width:32px;height:32px;border-radius:8px;background:var(--accent);color:#fff;display:grid;place-items:center}
 .send svg{width:16px;height:16px}
 
-.panel{border:1px solid var(--line);border-radius:12px;background:var(--panel);align-self:start;position:sticky;top:24px}
+.panel{border:1px solid var(--line);border-radius:12px;background:var(--panel);align-self:start;position:sticky;top:24px;max-height:calc(100vh - 48px);overflow-y:auto}
 .panel details{border-bottom:1px solid var(--line)}
 .panel details:last-child{border-bottom:none}
 .panel summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;font-weight:500}

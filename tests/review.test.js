@@ -51,6 +51,9 @@ test('目标表达：优先挑没想起、想起但卡的卡', () => {
   assert.ok(t.every((x) => x.stage >= 0 && x.stage < stages.length));
   // 同样熟练的卡各天轮流取，不挤在一天
   assert.ok(new Set(t.map((x) => x.stage)).size >= 5);
+  // 没有中文释义的卡（没法看中文想英文）不选，哪怕最薄弱
+  run("INSERT INTO card (en, zh, source, week, day, introduced_at, last_rating) VALUES ('Sounds like a plan.', '', 'AI 对话', 1, 1, ?, 1)", [now]);
+  assert.ok(pickTargets(1, stages).every((x) => x.zh));
 });
 
 test('表达是否用上：整句、关键词、两句卡说中一句', () => {

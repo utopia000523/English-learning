@@ -52,7 +52,8 @@ function view(rp) {
  */
 export function pickTargets(week, stages, n = TARGETS) {
   const score = (c) => (c.introduced_at == null ? 4 : c.last_rating == null ? 2.5 : c.last_rating);
-  const cards = all("SELECT id, en, zh, day, last_rating, streak, introduced_at FROM card WHERE week = ? AND COALESCE(source, '') <> '雅思'", [week])
+  // 看中文想英文：没有中文释义的卡不选（也不选雅思词汇）
+  const cards = all("SELECT id, en, zh, day, last_rating, streak, introduced_at FROM card WHERE week = ? AND COALESCE(source, '') <> '雅思' AND COALESCE(zh, '') <> ''", [week])
     .sort((a, b) => score(a) - score(b) || (a.streak || 0) - (b.streak || 0) || a.id - b.id);
   const rank = {}; const seen = {};
   for (const c of cards) { const d = c.day || 1; rank[c.id] = seen[d] = (seen[d] ?? -1) + 1; }
