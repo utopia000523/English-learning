@@ -299,8 +299,11 @@ export function guardFeedback(line, fb) {
   }
   // 只差大小写、标点、断句或 and / so 这类连接词，不算问题
   if (words(better).join(' ') === words(line).join(' ')) return { ok: true };
-  return { ok: false, better, issue_zh: issue, zh };
+  return { ok: false, better, issue_zh: meaningfulZh(issue) ? issue : '', zh: meaningfulZh(zh) ? zh : '' };
 }
+
+/** 模型偶尔只回一两个字（如「用」）当说明：少于 4 个字（不算标点空格）或没有中文就不显示 */
+export const meaningfulZh = (t) => /[\u4e00-\u9fff]/.test(t || '') && String(t).replace(/[\s\p{P}]/gu, '').length >= 4;
 
 export async function finish(id) {
   const rp = get('SELECT * FROM roleplay WHERE id = ?', [id]);

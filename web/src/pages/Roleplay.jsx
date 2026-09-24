@@ -6,6 +6,9 @@ import { speak } from '../services/tts.js';
 import { startRecording, transcribe } from '../services/recorder.js';
 import { Icon } from '../icons.jsx';
 
+// 模型偶尔只回一两个字当说明（如「用」）：太短的不显示
+const meaningful = (t) => /[\u4e00-\u9fff]/.test(t || '') && String(t).replace(/[\s\p{P}]/gu, '').length >= 4;
+
 const isZh = (t) => /[\u4e00-\u9fff]/.test(t || '');
 const LEVEL = { basic: '基础版', advanced: '进阶版', review: '周复习 · 约 20 分钟' };
 const STATUS = {
@@ -228,7 +231,8 @@ export function RoleplayChat() {
                   <div className="faint">{isZh(m.content) ? '用英语可以这样说' : '可以更地道'}</div>
                   <div className="n">{rp.feedback[i].better}</div>
                   {isZh(m.content) ? <div className="muted">试着把整句用英语再说一遍。</div>
-                    : rp.feedback[i].issue_zh && <div className="muted">{rp.feedback[i].issue_zh}</div>}
+                    : meaningful(rp.feedback[i].issue_zh) ? <div className="muted">{rp.feedback[i].issue_zh}</div>
+                      : meaningful(rp.feedback[i].zh) && <div className="muted">意思：{rp.feedback[i].zh}</div>}
                   <div className="row" style={{ gap: 2, marginTop: 2, marginLeft: -6 }}>
                     <button className="link" onClick={() => say(rp.feedback[i].better)}>{Icon.speaker}朗读</button>
                     <button className="link" disabled={added[i]} onClick={() => addCard(i, rp.feedback[i])}>{added[i] ? '已加入表达卡' : '+ 加入表达卡'}</button>
