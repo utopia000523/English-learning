@@ -44,9 +44,10 @@ export function topicList() {
     const id = parse(s.metrics, {}).topicId;
     if (id) doneAt[id] = s.started_at;
   }
-  return all(`SELECT * FROM content_item WHERE type = 'topic' AND ${UNLOCK_SQL} ORDER BY week DESC, day DESC, id`, unlockArgs(pos)).map((r) => ({
-    id: r.id, week: r.week, day: r.day || 1, zh: r.zh, en: r.en, hints: parse(r.extra, {}).hints || [], doneAt: doneAt[r.id] || '',
-  }));
+  return all(`SELECT * FROM content_item WHERE type = 'topic' AND ${UNLOCK_SQL} ORDER BY week DESC, day DESC, id`, unlockArgs(pos)).map((r) => {
+    const x = parse(r.extra, {});
+    return { id: r.id, week: r.week, day: r.day || 1, zh: r.zh, en: r.en, hints: x.hints || [], doneAt: doneAt[r.id] || '', source: x.source || '', date: x.date || '', group: x.group || '' };
+  });
 }
 
 export async function scoreMono(topicId, recordingId) {
@@ -57,11 +58,12 @@ export async function scoreMono(topicId, recordingId) {
   const f = fluency(words);
   saveMetrics(recordingId, f);
   let rw = { rewrite: '', phrases: [], comment_zh: '' };
+  const ielts = parse(topic.extra, {}).source === 'ielts';
   if (rec.transcript?.trim()) {
     rw = await llm.chatJSON([
       { role: 'system', content: `You are an English speaking coach for a Chinese adult learner.
-The learner spoke for about one minute on the topic "${topic.en}". Below is the speech-recognition transcript (it may contain recognition errors).
-1. Rewrite it into natural, fluent spoken American English at a similar length and a B1–B2 level. Keep their meaning and personal details; do not add new facts.
+${ielts ? `The learner answered the IELTS Speaking Part 3 question "${topic.en}" for about one minute.` : `The learner spoke for about one minute on the topic "${topic.en}".`} Below is the speech-recognition transcript (it may contain recognition errors).
+1. ${ielts ? 'Rewrite it into a natural, well-developed spoken answer at about IELTS band 7 (a clear position, a reason, and an example), at a similar length.' : 'Rewrite it into natural, fluent spoken American English at a similar length and a B1–B2 level.'} Keep their meaning and personal details; do not add new facts.
 2. Pick 3 useful phrases from your rewrite for them to learn, each with a Simplified Chinese meaning.
 3. Write one encouraging sentence of feedback in Simplified Chinese (one strength + one thing to improve).
 Respond ONLY with JSON: {"rewrite": "...", "phrases": [{"en": "...", "zh": "..."}], "comment_zh": "..."}` },

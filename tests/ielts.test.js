@@ -80,7 +80,7 @@ test('没填数据库时报错', async () => {
 test('导入 ④ Vocabulary（表格和段落两种写法）→ 表达卡（来源雅思、原文例句、搭配、音标），不重复导入', async () => {
   await put({ notionToken: 'secret_x', ieltsDb: 'https://app.notion.com/p/0123456789abcdef0123456789abcdef?v=fedcba9876543210fedcba9876543210' });
   const r = await (await post('/ielts/pull')).json();
-  assert.deepEqual(r, { pages: 2, added: 4, shadows: 1 });
+  assert.deepEqual(r, { pages: 2, added: 4, shadows: 1, questions: 6 });
   const q = await (await fetch(base + '/cards/today')).json();
   const c = q.cards.find((x) => x.en === 'straightforward');
   assert.ok(c && c.isNew);
@@ -97,7 +97,7 @@ test('导入 ④ Vocabulary（表格和段落两种写法）→ 表达卡（来�
   assert.equal(p.scene, '雅思 · Environment');
   assert.ok(q.cards.some((x) => x.en === 'trade-off'));
   const before = hits;
-  assert.deepEqual(await (await post('/ielts/pull')).json(), { pages: 0, added: 0, shadows: 0 });
+  assert.deepEqual(await (await post('/ielts/pull')).json(), { pages: 0, added: 0, shadows: 0, questions: 0 });
   assert.equal(hits - before, 1); // 只查了列表，没再读页面
 });
 
@@ -134,4 +134,18 @@ test('拆句与挑句：缩写不拆开，词尾变化和短语中间隔词都�
   assert.equal(picked.length, 6);
   assert.equal(picked.at(-1).zh, '生词：impose 强加'); // 按原文顺序，含生词的第 10 句排最后
   assert.equal(pickShadowSentences(['Too short.'], []), null);
+});
+
+test('雅思独白：每页 3 个 Part 3 问题进独白话题（带中文、生词提示），不合格的问题丢掉，不进每日课程', async () => {
+  const list = await (await fetch(base + '/mono/topics')).json();
+  const qs = list.filter((t) => t.source === 'ielts');
+  assert.equal(qs.length, 6); // 两页各 3 个，假模型第 4 个「太短」被丢掉
+  const env = qs.filter((t) => t.group === 'Environment');
+  assert.equal(env.length, 3);
+  assert.equal(env[0].date, '2026-09-23');
+  assert.ok(env.every((t) => /\?$/.test(t.en) && /[\u4e00-\u9fff]/.test(t.zh)));
+  assert.deepEqual(env[0].hints, ['resilient', 'trade-off']);
+  assert.ok(list.some((t) => t.source !== 'ielts')); // 日常话题还在
+  const plan = await (await fetch(base + '/plan/today')).json();
+  assert.ok(!JSON.stringify(plan).includes('ielts:'));
 });
