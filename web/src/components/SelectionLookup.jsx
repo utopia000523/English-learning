@@ -64,14 +64,21 @@ export default function SelectionLookup() {
   };
   const save = async (kind) => {
     try {
+      // 查词结果还没回来就点了「加入」：先等结果，免得存进去没有中文释义（卡片正面会是空的）
+      let data = info;
+      if (!data) {
+        setSaved((s) => ({ ...s, [kind]: '等查询结果…' }));
+        data = await Promise.resolve(fetchInfo()).catch(() => null);
+        if (data) setInfo(data);
+      }
       if (kind === 'note') {
-        const r = await api.post('/notes', { en: pick.text, zh: info?.zh || '', source, context: pick.context, detail: info || {} });
+        const r = await api.post('/notes', { en: pick.text, zh: data?.zh || '', source, context: pick.context, detail: data || {} });
         setSaved((s) => ({ ...s, note: r.duplicate ? '笔记本里已有' : '已加入笔记本' }));
       } else {
-        await api.post('/cards', { en: pick.text, zh: info?.zh || '', example: info?.example || '', source: '划词', scene: source });
+        await api.post('/cards', { en: pick.text, zh: data?.zh || '', example: data?.example || '', source: '划词', scene: source });
         setSaved((s) => ({ ...s, card: '已加入表达卡' }));
       }
-    } catch (e) { setErr(e.message); }
+    } catch (e) { setErr(e.message); setSaved((s) => ({ ...s, [kind]: undefined })); }
   };
 
   if (!pick) return null;

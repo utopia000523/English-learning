@@ -126,7 +126,9 @@ api.post('/lookup', wrap(async (req, res) => {
 api.get('/notes', (req, res) => res.json(notes.listNotes({ q: req.query.q || '', source: req.query.source || '' })));
 api.post('/notes', (req, res) => {
   if (!req.body?.en?.trim()) return res.status(400).json({ error: '英文不能为空' });
-  res.json(notes.addNote(req.body));
+  const n = notes.addNote(req.body);
+  if (!n.zh && !n.duplicate) notes.fillMissingZh().catch(() => {}); // 没有中文释义：后台补查，不耽误返回
+  res.json(n);
 });
 api.delete('/notes/:id', (req, res) => (notes.deleteNote(Number(req.params.id)) ? res.json({ ok: true }) : res.status(404).json({ error: '笔记不存在' })));
 
