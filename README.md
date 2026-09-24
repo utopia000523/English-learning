@@ -77,6 +77,7 @@ bash scripts/start.sh
 | `npm run build` | 构建页面到 `dist/` |
 | `npm start` | 正式运行（5173 同时提供页面和接口） |
 | `npm test` | 运行接口测试 |
+| `node scripts/eval-feedback.mjs` | 用真实模型跑对话点评评测集（`evals/feedback.json`），改点评提示词前后对比 |
 
 **目录：**
 
@@ -94,6 +95,8 @@ scripts/
   start.sh         启动脚本
   uninstall.sh     一键卸载（--dry-run 只列出不删除）
   notion-peek.mjs  开发用：查看 Notion 数据库结构
+  eval-feedback.mjs 开发用：对话点评评测
+evals/             评测集（对话点评例句）
 content/           内置学习内容（一周一个 JSON，见上文）
 tests/             接口测试（node --test）
 data/              本地数据库、录音、每日备份 backups/（不提交）

@@ -1,0 +1,36 @@
+{
+  "说明": "对话每句点评的评测集。expect = ok：本来就地道，不该被改；expect = fix：有问题，应该指出。better_must / better_not 是对改写的正则要求（不区分大小写）。scene 引用 content/ 里的场景 id。运行：node scripts/eval-feedback.mjs",
+  "cases": [
+    { "id": "ok-this-is-name", "scene": "w01-s6", "ai": "Hi there! Can you hear me okay?", "learner": "Yes, I can hear you. This is Utopia, I'm in charge of the product.", "expect": "ok", "note": "视频通话里 This is + 名字是标准说法（2026-09-23 真实误判）" },
+    { "id": "ok-this-is-name-run-on", "scene": "w01-s6", "ai": "Hi there! Can you hear me okay?", "learner": "This is utopia I'm in charge of the product。", "expect": "ok", "note": "只是连写和中文句号，口语不看标点（真实原句）" },
+    { "id": "ok-introduce-colleague", "scene": "w01-s6", "ai": "Great, looks like everyone's here.", "learner": "Let me introduce my colleague Mia, she's in charge of design.", "expect": "ok" },
+    { "id": "ok-nice-to-meet", "scene": "w01-s1", "ai": "Hi! I don't think we've met yet. I'm Jamie.", "learner": "Nice to meet you, Jamie. I'm Utopia.", "expect": "ok" },
+    { "id": "ok-work-in-product", "scene": "w01-s1", "ai": "So what do you do?", "learner": "I work in product at a tech company.", "expect": "ok" },
+    { "id": "ok-busy", "scene": "w01-s2", "ai": "Hey! How's it going?", "learner": "Not bad, just busy with work.", "expect": "ok" },
+    { "id": "ok-weekend-chill", "scene": "w02-s1", "ai": "Morning! How was your weekend?", "learner": "Pretty chill. I just stayed home and caught up on some sleep.", "expect": "ok" },
+    { "id": "ok-nothing-special", "scene": "w02-s1", "ai": "Morning! How was your weekend?", "learner": "It was alright, nothing special.", "expect": "ok" },
+    { "id": "ok-lowercase-typo", "scene": "w02-s3", "ai": "Crazy weather today, huh?", "learner": "yeah its so hot today", "expect": "ok", "note": "大小写和 its/it's 属于打字问题" },
+    { "id": "ok-didnt-sleep", "scene": "w02-s5", "ai": "You look a bit tired today.", "learner": "Yeah, I didn't sleep well last night.", "expect": "ok" },
+    { "id": "ok-running-late", "scene": "w02-s2", "ai": "Hey, where are you?", "learner": "Sorry, I'm running about ten minutes late.", "expect": "ok" },
+    { "id": "ok-say-again", "scene": "w01-s5", "ai": "So we're launching it next quarter in, uh, three markets.", "learner": "Sorry, could you say that again?", "expect": "ok" },
+    { "id": "ok-didnt-catch", "scene": "w01-s5", "ai": "So we're launching it next quarter in, uh, three markets.", "learner": "Sorry, I didn't catch that.", "expect": "ok" },
+    { "id": "ok-ill-have", "scene": "w03-s1", "ai": "Hi! What can I get for you?", "learner": "I'll have an oat latte, please.", "expect": "ok", "note": "不能因为 Can I get 更常见就改" },
+    { "id": "ok-less-ice", "scene": "w03-s1", "ai": "Hi! What can I get for you?", "learner": "Can I get an oat latte with less ice?", "expect": "ok" },
+    { "id": "ok-down-for-anything", "scene": "w03-s5", "ai": "What do you feel like eating tonight?", "learner": "I'm down for anything. How about hotpot?", "expect": "ok" },
+
+    { "id": "fix-wechat-reach-me", "scene": "w01-s5", "ai": "Let's keep in touch! How can I reach you?", "learner": "Please address me at utopia.", "expect": "fix", "better_not": ["reach me at utopia", "address me"], "note": "想说微信号；reach me at 接电话或邮箱（2026-09-22 真实误判）" },
+    { "id": "fix-am-work", "scene": "w01-s1", "ai": "So what do you do?", "learner": "I am work in a tech company.", "expect": "fix", "better_must": ["\\bwork (at|for|in)\\b"], "better_not": ["am work"] },
+    { "id": "fix-very-like", "scene": "w01-s4", "ai": "What do you like to do on weekends?", "learner": "I very like hiking.", "expect": "fix", "better_must": ["really (like|enjoy|love)|\\blove\\b|\\benjoy\\b|\\bbig\\b"] },
+    { "id": "fix-watching-movie", "scene": "w01-s4", "ai": "Got any hobbies?", "learner": "My hobby is watching movie.", "expect": "fix", "better_must": ["movies|films"] },
+    { "id": "fix-live-for-years", "scene": "w01-s3", "ai": "How long have you lived in Shenzhen?", "learner": "I live in Shenzhen for five years.", "expect": "fix", "better_must": ["have (lived|been)|'ve (lived|been)"] },
+    { "id": "fix-work-overtime-yesterday", "scene": "w02-s5", "ai": "You look a bit tired today.", "learner": "Yes, because I work overtime yesterday.", "expect": "fix", "better_must": ["worked|was working|had to work"] },
+    { "id": "fix-glad-to-know-you", "scene": "w01-s1", "ai": "Nice to meet you!", "learner": "Nice to meet you too. I am very glad to know you.", "expect": "fix", "better_not": ["glad to know you"], "note": "「很高兴认识你」直译" },
+    { "id": "fix-give-me-a-oat", "scene": "w03-s1", "ai": "Hi! What can I get for you?", "learner": "Give me a oat latte.", "expect": "fix", "better_must": ["an oat"], "better_not": ["^give me"] },
+    { "id": "fix-peanut", "scene": "w03-s3", "ai": "Any allergies I should know about?", "learner": "I am allergic to peanut.", "expect": "fix", "better_must": ["peanuts"] },
+    { "id": "fix-wait-me", "scene": "w02-s2", "ai": "Hey, where are you?", "learner": "I am on the way, please wait me ten minutes.", "expect": "fix", "better_not": ["wait me"] },
+    { "id": "fix-speak-slowly-a-little", "scene": "w01-s5", "ai": "So we're launching it next quarter in three markets.", "learner": "Can you speak slowly a little?", "expect": "fix", "better_must": ["slow down|slower|more slowly|a (little|bit) (more )?slowly"] },
+    { "id": "fix-where-we-meet", "scene": "w02-s6", "ai": "Want to go hiking on Saturday?", "learner": "OK, where we meet?", "expect": "fix", "better_must": ["where (should|do|shall|are) we (meet|meeting)"] },
+    { "id": "fix-order-dish", "scene": "w03-s4", "ai": "Here's your pasta. Enjoy!", "learner": "Sorry, this is not my order dish.", "expect": "fix", "better_not": ["order dish"] },
+    { "id": "fix-recommend-you-to", "scene": "w02-s4", "ai": "I need something new to watch. Any ideas?", "learner": "I recommend you to watch Friends.", "expect": "fix", "better_not": ["recommend you to"] }
+  ]
+}
