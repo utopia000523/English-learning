@@ -1,8 +1,10 @@
 // 雅思词汇导入：从 Notion「IELTS Listening Daily」数据库读每天的 ④ Vocabulary 表格，生成表达卡（来源「雅思」）。
 // 每个页面的每个词只导入一次（card.content_id = ielts:<页面ID>:<词>）；和已有卡片英文相同的词跳过。
 // 雅思跟读：从 ① Listening 原文挑含当天生词的 6–8 句，生成跟读材料（content_item id = ielts:<页面ID>，type = shadow）。
+// 雅思独白：按短文话题让模型出 3 个口语 Part 3 问题，存为独白话题（content_item id = ielts:<页面ID>:q1…，type = topic）。
 import { get, run, getSettings, updateSettings } from './db.js';
 import { call } from './services/notion.js';
+import * as llm from './services/llm.js';
 import { planPosition } from './cards.js';
 import { todayStr } from './util/date.js';
 
@@ -141,8 +143,30 @@ export function pickShadowSentences(sentences, vocab, { min = 6, max = 8 } = {})
   }));
 }
 
+// ---- 雅思独白（口语 Part 3） ----
+const PART3_PER_PULL = 3; // 每次拉取最多给几页出题（本地模型较慢，其余留到下次自动拉取）
+
+/** 让模型按短文话题出 3 个 Part 3 问题。返回 [{ en, zh }]，模型没给出合格问题时返回 [] */
+export async function part3Questions(topic, listening, vocab, model) {
+  const passage = listening.join(' ').slice(0, 2500);
+  const r = await llm.chatJSON([
+    { role: 'system', content: `You are an IELTS Speaking examiner. Using the listening passage below only as background (topic: "${topic}"), write 3 IELTS Speaking Part 3 questions.
+- Part 3 questions are abstract discussion questions about society and general trends related to the topic, not about details of the passage and not personal Part 1 questions.
+- Use three different types: one asking for an opinion with reasons (why / do you think), one comparing (past and present, or different groups of people), one about the future or possible solutions.
+- Each question is one sentence, at most 25 words, natural spoken English.
+- Give each question a Simplified Chinese translation.
+Respond ONLY with JSON: {"questions": [{"en": "...", "zh": "..."}]}` },
+    { role: 'user', content: `Passage: ${passage}${vocab.length ? `\nKey vocabulary: ${vocab.map((w) => w.en).join(', ')}` : ''}` },
+  ], { model, temperature: 0.5, kind: 'part3' }, () => ({ questions: [] }));
+  return (Array.isArray(r?.questions) ? r.questions : [])
+    .map((q) => ({ en: String(q?.en || '').trim(), zh: String(q?.zh || '').trim() }))
+    .filter((q) => { const n = wordCount(q.en); return n >= 4 && n <= 40 && !hasZh(q.en); })
+    .map((q) => ({ ...q, zh: hasZh(q.zh) ? q.zh : '' }))
+    .slice(0, 3);
+}
+
 let running = false;
-/** 拉取最近的雅思页面，导入词汇并生成跟读材料。返回 { pages, added, shadows } */
+/** 拉取最近的雅思页面，导入词汇、生成跟读材料和 Part 3 独白问题。返回 { pages, added, shadows, questions } */
 export async function pull(today = todayStr()) {
   const s = getSettings();
   const db = idOf(s.ieltsDb);
@@ -154,12 +178,13 @@ export async function pull(today = todayStr()) {
     const { week, dayInWeek } = planPosition(today);
     const done = [...(getSettings().ieltsPages || [])];
     const shadowDone = [...(getSettings().ieltsShadowPages || [])];
+    const part3Done = [...(getSettings().ieltsPart3Pages || [])];
     const day = Math.min(dayInWeek, 6);
-    let pages = 0; let added = 0; let shadows = 0;
+    let pages = 0; let added = 0; let shadows = 0; let questions = 0; let asked = 0;
     for (const p of (q.results || []).reverse()) {
       const pid = p.id.replace(/-/g, '');
       const vocabDone = done.includes(pid);
-      if (vocabDone && shadowDone.includes(pid)) continue; // 这一天已导入过
+      if (vocabDone && shadowDone.includes(pid) && part3Done.includes(pid)) continue; // 这一天已导入过
       const { vocab: words, listening } = await readPage(s.notionToken, p.id);
       if (!words.length) continue; // 还没写完，下次再看
       const title = plain(Object.values(p.properties || {}).find((v) => v.type === 'title')?.title);
@@ -187,8 +212,27 @@ export async function pull(today = todayStr()) {
         }
         shadowDone.push(pid);
       }
+      if (!part3Done.includes(pid) && asked < PART3_PER_PULL) {
+        asked++;
+        let qs = null;
+        try { qs = await part3Questions(topicName || title, listening, words, s.llmModel); } catch { /* 模型没开：下次再出题 */ }
+        if (qs?.length) {
+          const date = p.properties?.Date?.date?.start || title.match(/\d{4}-\d{2}-\d{2}/)?.[0] || '';
+          const hints = words.slice(0, 4).map((w) => w.en);
+          qs.forEach((x, i) => {
+            run(`INSERT INTO content_item (id, week, type, en, zh, extra, approved, day) VALUES (?,?,'topic',?,?,?,1,?)
+                 ON CONFLICT(id) DO NOTHING`,
+              [`ielts:${pid}:q${i + 1}`, week, x.en, x.zh || x.en, JSON.stringify({ hints, source: 'ielts', date, group: topicName || '雅思口语' }), day]);
+          });
+          questions += qs.length;
+          part3Done.push(pid);
+        }
+      }
     }
-    updateSettings({ ieltsPages: done.slice(-200), ieltsShadowPages: shadowDone.slice(-200), ieltsLastPull: new Date().toLocaleString('zh-CN', { hour12: false }) });
-    return { pages, added, shadows };
+    updateSettings({
+      ieltsPages: done.slice(-200), ieltsShadowPages: shadowDone.slice(-200), ieltsPart3Pages: part3Done.slice(-200),
+      ieltsLastPull: new Date().toLocaleString('zh-CN', { hour12: false }),
+    });
+    return { pages, added, shadows, questions };
   } finally { running = false; }
 }

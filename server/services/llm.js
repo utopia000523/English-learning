@@ -84,6 +84,14 @@ function fakeReply(kind) {
   if (kind === 'feedback') {
     return JSON.stringify({ ok: false, better: 'How do you know so much about both?', issue_zh: 'familiar 是形容词，要说 be familiar with', zh: '你怎么对两者都这么了解？' });
   }
+  if (kind === 'part3') {
+    return JSON.stringify({ questions: [
+      { en: 'Why do you think some cities are slow to prepare for extreme weather?', zh: '你认为为什么有些城市应对极端天气的准备很慢？' },
+      { en: 'How has the way people think about green space changed over the last twenty years?', zh: '过去二十年人们对绿地的看法有什么变化？' },
+      { en: 'What could governments do to make cities safer in the future?', zh: '未来政府可以做些什么让城市更安全？' },
+      { en: '太短', zh: '' },
+    ] });
+  }
   if (kind === 'review') {
     return JSON.stringify({ comment_zh: '任务都完成了，表达基本清楚。', fixes: [{ you: 'Can I have a oat latte?', better: 'Can I get an oat latte?', zh: '我要一杯燕麦拿铁。' }] });
   }

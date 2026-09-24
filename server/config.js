@@ -34,5 +34,6 @@ export const DEFAULT_SETTINGS = {
   ieltsLastPull: '',
   ieltsPages: [],                    // 已导入过的雅思页面 ID
   ieltsShadowPages: [],              // 已生成过雅思跟读的页面 ID
+  ieltsPart3Pages: [],               // 已出过雅思 Part 3 独白问题的页面 ID
   audioKeepDays: 30,                 // 录音文件保留天数，0 = 一直保留
 };

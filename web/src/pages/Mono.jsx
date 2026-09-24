@@ -39,7 +39,11 @@ export default function Mono() {
   const [params] = useSearchParams();
 
   // 优先给没练过的话题；都练过了就挑最久没说的（同样排除刚说完的那个）
-  const pick = (list, exclude) => {
+  // 日常话题和雅思 Part 3 分开抽：当前是雅思问题时「换个话题」换下一个雅思问题
+  const isIelts = (t) => t?.source === 'ielts';
+  const pick = (all, exclude, ielts = false) => {
+    const same = all.filter((t) => isIelts(t) === ielts);
+    const list = same.length ? same : all;
     const pool = list.filter((t) => t.id !== exclude);
     const use = pool.length ? pool : list;
     const fresh = use.filter((t) => !t.doneAt);
@@ -85,11 +89,11 @@ export default function Mono() {
   };
   const reset = (newTopic) => {
     mic.cancel(); setRes(null); setMyUrl(''); setErr(''); setAdded({});
-    if (newTopic) setTopic(pick(topics, topic?.id));
+    if (newTopic) setTopic(typeof newTopic === 'object' ? newTopic : pick(topics, topic?.id, isIelts(topic)));
     setStep('prep'); setPrepLeft(PREP);
   };
   const addCard = async (p, i) => {
-    await api.post('/cards', { en: p.en, zh: p.zh, source: '独白', scene: topic.zh });
+    await api.post('/cards', { en: p.en, zh: p.zh, source: '独白', scene: isIelts(topic) ? `雅思 · ${topic.group}` : topic.zh });
     setAdded((a) => ({ ...a, [i]: true }));
   };
 
@@ -97,16 +101,37 @@ export default function Mono() {
   if (!topic) return null;
   const left = step === 'prep' ? prepLeft : step === 'talk' ? Math.max(0, TALK - Math.floor(mic.seconds)) : 0;
   const clock = `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
+  const ieltsList = topics.filter(isIelts);
+  const short = (t) => (t.length > 60 ? `${t.slice(0, 58)}…` : t);
 
   return (
     <>
-      <div className="head"><div><h1>话题独白</h1><p className="sub">30 秒准备，说满 1 分钟。重点是说得久，不怕说错。</p></div></div>
+      <div className="head">
+        <div><h1>话题独白</h1><p className="sub">30 秒准备，说满 1 分钟。重点是说得久，不怕说错。</p></div>
+        {ieltsList.length > 0 && (
+          <select className="in" value={isIelts(topic) ? topic.id : ''} disabled={step === 'talk' || step === 'wait'}
+            onChange={(e) => reset(e.target.value ? topics.find((t) => t.id === e.target.value) : pick(topics, topic.id, false))}>
+            <option value="">日常话题（随机）</option>
+            <optgroup label="雅思口语 Part 3（来自 Notion 短文）">
+              {ieltsList.map((t) => <option key={t.id} value={t.id}>{t.date ? `${t.date.slice(5)} · ` : ''}{t.group} · {short(t.en)}{t.doneAt ? '（已练）' : ''}</option>)}
+            </optgroup>
+          </select>
+        )}
+      </div>
       <div className="two" style={{ gridTemplateColumns: '1fr 1fr' }}>
         <div style={{ textAlign: 'center', paddingTop: 10 }}>
-          <p className="faint">第 {topic.week} 周 · 1 分钟</p>
-          <h2 style={{ fontSize: 24, margin: '10px 0 4px' }}>{topic.zh}</h2>
-          <p className="muted">{topic.en}</p>
-          <p className="faint" style={{ marginTop: 12 }}>可以说说：{topic.hints.join(' · ')}</p>
+          {isIelts(topic) ? <>
+            <p className="faint">雅思口语 Part 3 · {topic.group}{topic.date ? ` · ${topic.date.slice(5)}` : ''} · 1 分钟</p>
+            <h2 className="serif" style={{ fontSize: 22, margin: '10px 0 4px' }}>{topic.en} <button className="link" onClick={() => speak(topic.en, voice)}>{Icon.speaker}</button></h2>
+            {topic.zh !== topic.en && <p className="muted">{topic.zh}</p>}
+            {topic.hints.length > 0 && <p className="faint" style={{ marginTop: 12 }}>试着用上：{topic.hints.join(' · ')}</p>}
+            <p className="faint" style={{ marginTop: 4 }}>先亮观点，再给理由和例子</p>
+          </> : <>
+            <p className="faint">第 {topic.week} 周 · 1 分钟</p>
+            <h2 style={{ fontSize: 24, margin: '10px 0 4px' }}>{topic.zh}</h2>
+            <p className="muted">{topic.en}</p>
+            <p className="faint" style={{ marginTop: 12 }}>可以说说：{topic.hints.join(' · ')}</p>
+          </>}
           <div className="timer">{step === 'done' ? '1:00' : clock}</div>
           <p className="faint">{{ prep: '准备中，时间到自动开始录音', talk: '正在录音…', wait: '正在识别和改写…', done: '已完成' }[step]}</p>
           <div className="row" style={{ justifyContent: 'center', marginTop: 18 }}>
