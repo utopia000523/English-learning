@@ -58,3 +58,17 @@ test('创建数据库 → 同步笔记和每日记录 → 无变化不重复同�
   assert.equal(r3.days, 1);
   assert.ok(calls.some((c) => c.method === 'PATCH'));
 });
+
+test('已同步的笔记补上中文后，更新 Notion 原页面，不新建', async () => {
+  const { fillMissingZh } = await import('../server/notes.js');
+  const { run } = await import('../server/db.js');
+  run("UPDATE note SET zh = '' WHERE en = 'hectic'");
+  assert.equal(await fillMissingZh(), 1);
+  const before = calls.length;
+  const r = await (await post('/notion/sync')).json();
+  assert.equal(r.notes, 1);
+  const noteCalls = calls.slice(before).filter((c) => c.body?.properties?.英文);
+  assert.equal(noteCalls.length, 1);
+  assert.equal(noteCalls[0].method, 'PATCH');
+  assert.match(noteCalls[0].url, /^\/v1\/pages\/id-/);
+});

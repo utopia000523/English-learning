@@ -88,15 +88,16 @@ export async function sync(ratioOf = () => 0) {
   let notes = 0; let days = 0;
   for (const n of all('SELECT * FROM note WHERE synced = 0 ORDER BY id')) {
     const d = parse(n.detail, {});
-    const page = await call(s.notionToken, '/v1/pages', 'POST', {
-      parent: { database_id: s.notionNotesDb },
-      properties: {
-        英文: { title: text(n.en) }, 中文: { rich_text: text(n.zh) }, 音标: { rich_text: text(ipaOf(n.en) || '') },
-        词性: { rich_text: text(d.pos || '') }, 来源: { select: { name: n.source || '其他' } }, 原句: { rich_text: text(n.context) },
-        日期: { date: { start: (n.created_at || '').slice(0, 10) || null } },
-      },
-    });
-    run('UPDATE note SET synced = 1, notion_page_id = ? WHERE id = ?', [page.id, n.id]);
+    const properties = {
+      英文: { title: text(n.en) }, 中文: { rich_text: text(n.zh) }, 音标: { rich_text: text(ipaOf(n.en) || '') },
+      词性: { rich_text: text(d.pos || '') }, 来源: { select: { name: n.source || '其他' } }, 原句: { rich_text: text(n.context) },
+      日期: { date: { start: (n.created_at || '').slice(0, 10) || null } },
+    };
+    // 已同步过、之后又改了（如补上中文释义）：更新原页面，不新建
+    const page = n.notion_page_id
+      ? await call(s.notionToken, `/v1/pages/${n.notion_page_id}`, 'PATCH', { properties })
+      : await call(s.notionToken, '/v1/pages', 'POST', { parent: { database_id: s.notionNotesDb }, properties });
+    run('UPDATE note SET synced = 1, notion_page_id = ? WHERE id = ?', [page.id || n.notion_page_id, n.id]);
     notes++;
   }
   const start = s.startDate;

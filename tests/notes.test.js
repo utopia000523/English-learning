@@ -56,3 +56,14 @@ test('查词缓存：第二次直接命中，不再调模型', async () => {
   const ipa = await (await fetch(base + '/ipa?text=hectic')).json();
   assert.equal(ipa.ipa, '/ˈhɛktɪk/');
 });
+
+test('没有中文释义的笔记（查词结果还没回来就点了加入）：后台自动补上', async () => {
+  const n = await (await post('/notes', { en: 'walk me through', zh: '', source: 'AI 对话', context: 'Could you walk me through the plan?' })).json();
+  assert.equal(n.zh, '');
+  let zh = '';
+  for (let i = 0; i < 20 && !zh; i++) {
+    await new Promise((r) => setTimeout(r, 50));
+    zh = (await (await fetch(base + '/notes?q=' + encodeURIComponent('walk me'))).json())[0]?.zh;
+  }
+  assert.ok(zh, '中文释义应被补上');
+});

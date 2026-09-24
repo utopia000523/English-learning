@@ -39,5 +39,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   setInterval(() => backupDb(), 3600 * 1000); // 数据库备份：每小时检查，当天已有就跳过（服务跨天运行时也能备份）
   setInterval(autoSync, 10 * 60 * 1000);
   setTimeout(autoSync, 30 * 1000);
+  const { fillMissingZh } = await import('./notes.js');
+  setTimeout(() => fillMissingZh().catch(() => {}), 20 * 1000); // 补上之前缺中文释义的笔记
   for (const sig of ['SIGINT', 'SIGTERM']) process.on(sig, () => { saveNow(); process.exit(0); });
 }

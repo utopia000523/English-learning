@@ -61,6 +61,23 @@ export function addNote({ en, zh = '', source = '其他', scene = '', context = 
   return toClient(get('SELECT * FROM note WHERE id = ?', [lastId]));
 }
 
+/**
+ * 中文释义为空的笔记（查词结果还没回来就点了「加入」，或手动添加没填中文）：后台补查。
+ * 已同步到 Notion 的标记为待同步，下次同步时更新原页面
+ */
+export async function fillMissingZh(limit = 20) {
+  const rows = all("SELECT id, en, context FROM note WHERE COALESCE(zh, '') = '' ORDER BY id DESC LIMIT ?", [limit]);
+  let n = 0;
+  for (const r of rows) {
+    let info;
+    try { info = await lookup(r.en, r.context || ''); } catch { break; } // 模型不可用：下次再补
+    if (!info.zh) continue;
+    run("UPDATE note SET zh = ?, detail = ?, synced = 0 WHERE id = ? AND COALESCE(zh, '') = ''", [info.zh, JSON.stringify(info), r.id]);
+    n++;
+  }
+  return n;
+}
+
 export function deleteNote(id) {
   const n = get('SELECT id FROM note WHERE id = ?', [id]);
   if (n) run('DELETE FROM note WHERE id = ?', [id]);
