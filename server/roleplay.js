@@ -6,9 +6,11 @@ import { fluency, mergeFluency } from './services/score.js';
 import { logEvent } from './activity.js';
 
 export const PASS_TURNS = 8; // 通关：任务全部完成 且 用户发言 ≥ 8 轮
+const STAGE_MAX_TURNS = 3; // 周复习对话：每段最多聊 3 轮就引到下一段，避免卡在一个话题
+const TARGETS = 12; // 周复习对话：本周表达挑几个
 
 // STRICT 任务（道别）兜底：用户确实说过告别类的话才算完成
-const BYE = /\b(bye|goodbye|see (you|ya)|take care|catch you later|talk (to you )?(later|soon)|have to go|gotta go|got to go|nice (meeting|talking|chatting)|great (meeting|talking|chatting)|good talking|(was|it's been) (nice|great|good) (meeting|talking|chatting)|have a (good|nice|great) (one|day|night|weekend))\b/i;
+const BYE = /\b(bye|goodbye|see (you|ya)|take care|catch you later|talk (to you )?(later|soon)|have to go|gotta go|got to go|nice (meeting|talking|chatting)|great (meeting|talking|chatting)|good talking|(was|it's been) (nice|great|good) (meeting|talking|chatting)|have a (good|nice|great|safe) (one|day|night|weekend|trip|flight)|safe travels)\b/i;
 const saidBye = (messages) => messages.filter((m) => m.role === 'user').some((m) => BYE.test(m.content));
 
 const sceneOf = (row) => row && { ...JSON.parse(row.data), week: row.week };
@@ -31,38 +33,114 @@ function view(rp) {
   const scene = sceneOf(get('SELECT * FROM content_scene WHERE id = ?', [rp.scene_id]));
   const messages = parse(rp.messages, []);
   const done = parse(rp.tasks_done, []);
+  const state = parse(rp.state, null);
+  const lines = messages.filter((m) => m.role === 'user').map((m) => m.content);
   return {
     id: rp.id, scene, messages, tasksDone: done,
-    turns: messages.filter((m) => m.role === 'user').length,
+    turns: lines.length,
     feedback: parse(rp.feedback, {}),
     passTurns: PASS_TURNS, review: parse(rp.review, null), passed: !!rp.passed, ended: !!rp.ended_at,
+    state: state && { ...state, targets: state.targets.map((t) => ({ ...t, used: usedExpression(t.en, lines) })) },
   };
+}
+
+// ---- 周复习对话 ----
+
+/**
+ * 从本周表达卡里挑目标表达：优先没想起（1）→ 想起但卡（2）→ 学过没评 → 脱口而出（3）→ 还没学的；
+ * 同样薄弱时各天轮流取，避免都挤在一天。按卡片所在的天分到对应的对话段
+ */
+export function pickTargets(week, stages, n = TARGETS) {
+  const score = (c) => (c.introduced_at == null ? 4 : c.last_rating == null ? 2.5 : c.last_rating);
+  const cards = all("SELECT id, en, zh, day, last_rating, streak, introduced_at FROM card WHERE week = ? AND COALESCE(source, '') <> '雅思'", [week])
+    .sort((a, b) => score(a) - score(b) || (a.streak || 0) - (b.streak || 0) || a.id - b.id);
+  const rank = {}; const seen = {};
+  for (const c of cards) { const d = c.day || 1; rank[c.id] = seen[d] = (seen[d] ?? -1) + 1; }
+  const stageOf = (day) => { const i = stages.findIndex((s) => s.day === day); return i >= 0 ? i : stages.length - 1; };
+  return cards.sort((a, b) => score(a) - score(b) || rank[a.id] - rank[b.id] || (a.day || 1) - (b.day || 1)).slice(0, n)
+    .map((c) => ({ cardId: c.id, en: c.en, zh: c.zh, stage: stageOf(c.day || 1) }))
+    .sort((a, b) => a.stage - b.stage);
+}
+
+// 太常见、没有区分度的词：不算关键词（否则 “I know what you mean … today” 会被当成说了 “What brings you here today?”）
+const STOP = new Set(("a an the i you we he she it they me my your our his her is are am was were be been to of in on at for and or so just do does did " +
+  "can could would will that this there here with it's i'm you're we're what how why when where who get got go going have has had " +
+  "really very today now some any all not no yes one up out about like as if then than too also please oh well by from into over back").split(' '));
+const norm = (t) => String(t || '').toLowerCase().replace(/[’‘]/g, "'").replace(/[^a-z0-9' ]/g, ' ').replace(/\s+/g, ' ').trim();
+
+/**
+ * 学习者有没有用上某个表达：整句出现，或关键词（去掉 I / the / to 这类）有三分之二以上出现在同一句里。
+ * 卡片有两句的（“Can I get you something to drink? Coffee or tea?”）说中其中一句就算
+ */
+export function usedExpression(en, lines) {
+  const parts = [en, ...String(en).split(/[.?!]+/)].map(norm).filter(Boolean);
+  const said = lines.map((l) => { const n = norm(l); return { n, set: new Set(n.split(' ')) }; });
+  return parts.some((p) => {
+    const words = p.split(' ');
+    const key = words.filter((w) => !STOP.has(w));
+    return said.some(({ n, set }) => {
+      if (n.includes(p)) return true;
+      const has = (ws) => ws.filter((w) => set.has(w)).length;
+      // 关键词只有 1 个（“How was your trip over?” 只剩 trip）：关键词在，且整句大部分词也在
+      if (key.length <= 1) return key.every((w) => set.has(w)) && has(words) >= Math.ceil(words.length * 0.6);
+      return has(key) >= Math.ceil(key.length * 2 / 3);
+    });
+  });
+}
+
+/** 当前段的任务完成了、或这一段已经聊满 STAGE_MAX_TURNS 轮，就进入下一段 */
+export function advanceStage(sc, state, done) {
+  let { stage, stageTurns } = state;
+  while (stage < sc.stages.length - 1 && (done.includes(stage + 1) || stageTurns >= STAGE_MAX_TURNS)) { stage++; stageTurns = 0; }
+  return { ...state, stage, stageTurns };
+}
+
+function reviewPrompt(sc, state) {
+  const k = state.stage; const cur = sc.stages[k];
+  // 只提示当前段还没用上的表达
+  const targets = state.targets.filter((t) => t.stage === k && !t.used).map((t) => `"${t.en}"`);
+  return `
+This is a longer, relaxed conversation (about 15 exchanges) that moves through these topics in order:
+${sc.stages.map((s, i) => `${i + 1}. ${s.focus}`).join('\n')}
+RIGHT NOW you are on topic ${k + 1}: ${cur.focus}
+${k < sc.stages.length - 1 ? `As soon as ${cur.task.check}, move on naturally to topic ${k + 2}. Do not jump ahead before that.` : 'This is the last topic; let the learner wrap up the conversation.'}
+${targets.length ? `The learner is practicing these phrases: ${targets.join(', ')}. Your job is to set up situations where THE LEARNER would naturally say them.
+Do NOT use these phrases or close versions of them yourself, not even as questions to the learner.` : ''}`.trim();
 }
 
 export function start(sceneId) {
   const row = get('SELECT * FROM content_scene WHERE id = ?', [sceneId]);
   if (!row) return null;
   const sc = sceneOf(row);
+  let state = null;
+  if (sc.level === 'review') {
+    // 周复习对话较长：今天没聊完的，回来接着聊
+    const open = get("SELECT id FROM roleplay WHERE scene_id = ? AND ended_at IS NULL AND date(created_at) = date('now','localtime') ORDER BY id DESC", [sceneId]);
+    if (open) return load(open.id);
+    state = { targets: pickTargets(sc.week, sc.stages), stage: 0, stageTurns: 0 };
+  }
   const messages = [{ role: 'assistant', content: sc.opening, zh: sc.opening_zh }];
-  const { lastId } = run('INSERT INTO roleplay (scene_id, messages, tasks_done) VALUES (?,?,?)', [sceneId, JSON.stringify(messages), '[]']);
+  const { lastId } = run('INSERT INTO roleplay (scene_id, messages, tasks_done, state) VALUES (?,?,?,?)',
+    [sceneId, JSON.stringify(messages), '[]', state && JSON.stringify(state)]);
   return view(get('SELECT * FROM roleplay WHERE id = ?', [lastId]));
 }
 
 export const load = (id) => { const r = get('SELECT * FROM roleplay WHERE id = ?', [id]); return r && view(r); };
 
-function systemPrompt(sc) {
-  const level = sc.level === 'advanced'
+function systemPrompt(sc, state) {
+  const review = sc.level === 'review' && state;
+  const level = sc.level === 'advanced' || review
     ? 'Use natural everyday American English with a few common idioms, and ask natural follow-up questions.'
     : 'Use simple, common words and short sentences.';
   return `You are ${sc.persona}. Stay in character in a realistic role-play.
 You are talking with an adult Chinese learner of English who reads well but is slow at speaking.
 Rules:
-- Keep every reply under 20 words. Ask at most one question per reply. ${level}
+- Keep every reply under ${review ? 25 : 20} words. Ask at most one question per reply. ${level}
 - Never correct the learner's grammar during the conversation; just respond naturally.
 - If the learner writes in Chinese, understand it and reply naturally in English as usual.
 - ONLY if the learner explicitly asks in English how to say something, put the English phrase they asked for in "coach". In every other case "coach" MUST be an empty string.
 - Gently steer the conversation so the learner gets chances to complete their tasks, but do not list the tasks.
-The learner's tasks (numbered):
+${review ? reviewPrompt(sc, state) + '\n' : ''}The learner's tasks (numbered):
 ${sc.tasks.map((t, i) => `${i + 1}. ${t.check}`).join('\n')}
 After each learner message, list the numbers of ALL tasks the learner has completed so far in the whole conversation.
 Respond ONLY with JSON: {"reply": "your in-character reply", "reply_zh": "Simplified Chinese translation of reply", "coach": "", "completed": [numbers]}`;
@@ -90,8 +168,11 @@ export async function turn(id, text, recordingId) {
   const prevAI = [...v.messages].reverse().find((m) => m.role === 'assistant')?.content || '';
   const zhHelp = hasCJK(text) ? await translateLine(text, prevAI, v.scene) : '';
   const messages = [...v.messages, { role: 'user', content: text, ...(recordingId ? { recordingId: Number(recordingId) } : {}) }];
+  // 周复习对话：先按已完成的任务决定这一轮聊哪一段
+  let state = v.state && advanceStage(v.scene, v.state, [...v.tasksDone, ...matchedTasks(v.scene, messages)]);
+  if (state) state = { ...state, targets: state.targets.map((t) => ({ ...t, used: t.used || usedExpression(t.en, [text]) })) };
   const out = await llm.chatJSON(
-    [{ role: 'system', content: systemPrompt(v.scene) }, ...messages.map((m) => ({ role: m.role, content: m.content }))],
+    [{ role: 'system', content: systemPrompt(v.scene, state) }, ...messages.map((m) => ({ role: m.role, content: m.content }))],
     { model: getSettings().llmModel, kind: 'turn' },
     (t) => ({ reply: t, completed: [] }),
   );
@@ -104,6 +185,10 @@ export async function turn(id, text, recordingId) {
   const coach = !zhHelp && askedHow ? String(out.coach || '').trim() : '';
   messages.push({ role: 'assistant', content: String(out.reply || '').trim(), zh: out.reply_zh || '', coach });
   run('UPDATE roleplay SET messages = ?, tasks_done = ? WHERE id = ?', [JSON.stringify(messages), JSON.stringify(done), id]);
+  if (state) {
+    const { stage, stageTurns } = state;
+    run('UPDATE roleplay SET state = ? WHERE id = ?', [JSON.stringify({ ...parse(rp.state, {}), stage, stageTurns: stageTurns + 1 }), id]);
+  }
   logEvent('roleplay_turn');
   if (zhHelp) {
     const fb = parse(get('SELECT feedback FROM roleplay WHERE id = ?', [id]).feedback, {});
@@ -214,8 +299,12 @@ export async function finish(id) {
       .map((m) => parse(get('SELECT words FROM recording WHERE id = ?', [m.recordingId])?.words, []))
       .map((w) => fluency(w));
     review.fluency = mergeFluency(flu);
+    if (v.state) {
+      const t = v.state.targets;
+      review.targets = { used: t.filter((x) => x.used).length, total: t.length, missed: t.filter((x) => !x.used).map(({ en, zh }) => ({ en, zh })) };
+    }
   }
-  const passed = v.tasksDone.length === v.scene.tasks.length && v.turns >= PASS_TURNS ? 1 : 0;
+  const passed = v.tasksDone.length === v.scene.tasks.length && v.turns >= v.passTurns ? 1 : 0;
   run("UPDATE roleplay SET review = ?, passed = ?, ended_at = datetime('now','localtime') WHERE id = ?", [JSON.stringify(review), passed, id]);
   logEvent('roleplay');
   return load(id);

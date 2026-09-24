@@ -1277,5 +1277,79 @@
       ],
       "day": 6
     }
-  ]
+  ],
+  "review": {
+    "title": "周复习：和老朋友喝咖啡、约晚饭",
+    "role": "Jess",
+    "role_zh": "Jess · 老朋友",
+    "persona": "Jess, the learner's old friend from Australia who lives in Shenzhen. You meet at a new café, order drinks at the counter together, chat about food, and then decide where to have dinner tonight",
+    "opening": "This place is new! What are you going to get?",
+    "opening_zh": "这家店是新开的！你要点什么？",
+    "brief": "和老朋友 Jess 去一家新开的咖啡馆：点饮料、聊口味和忌口、讲点餐踩过的坑、商量谁付钱，最后一起决定晚饭吃什么。",
+    "stages": [
+      {
+        "day": 1,
+        "topic": "点你的饮料",
+        "focus": "You are in line at the café counter. Ask what the learner is getting and how they like it.",
+        "task": {
+          "zh": "说出你要点的饮料和具体要求（冰量、甜度等）",
+          "check": "the learner says what drink they want with some detail such as size, ice or sugar"
+        }
+      },
+      {
+        "day": 2,
+        "topic": "口味和忌口",
+        "focus": "Talk about food: ask what the learner likes and anything they don't eat.",
+        "task": {
+          "zh": "说说你爱吃什么、不吃什么",
+          "check": "the learner says what food they like and what they don't or can't eat"
+        }
+      },
+      {
+        "day": 3,
+        "topic": "讲一次上错菜",
+        "focus": "Share a funny story about a restaurant getting your order wrong, then ask if that has ever happened to the learner.",
+        "task": {
+          "zh": "讲一次菜上错或点单出问题的经历",
+          "check": "the learner describes a time an order went wrong or something went wrong at a restaurant"
+        }
+      },
+      {
+        "day": 4,
+        "topic": "谁来付钱",
+        "focus": "When it's time to pay, offer to pay for both of you.",
+        "task": {
+          "zh": "商量怎么付钱（请客、AA 或下次你请）",
+          "check": "the learner talks about paying, e.g. offers to pay, suggests splitting the bill, or says next time is on them",
+          "match": [
+            "split",
+            "my treat",
+            "on me",
+            "next time",
+            "i'll get (this|it)",
+            "\\bpay\\b"
+          ]
+        }
+      },
+      {
+        "day": 5,
+        "topic": "晚饭吃什么",
+        "focus": "Ask what the learner feels like having for dinner tonight and where to go.",
+        "task": {
+          "zh": "商量晚饭吃什么、去哪家",
+          "check": "the learner suggests a type of food or a place for dinner"
+        }
+      },
+      {
+        "day": 6,
+        "topic": "约好时间再道别",
+        "focus": "Agree on a time to meet for dinner, then say bye for now.",
+        "task": {
+          "zh": "约好几点见，再道别",
+          "check": "the learner agrees on a time to meet and says goodbye",
+          "strict": true
+        }
+      }
+    ]
+  }
 }

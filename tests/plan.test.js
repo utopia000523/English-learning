@@ -59,5 +59,5 @@ test('表达卡复习计入活动与连续打卡；日历与进度可用', async
   assert.ok(plan.days[0].ratio > 0);
   const pr = await get('/progress');
   assert.equal(pr.streak, 1);
-  assert.equal(pr.scenesTotal, 6 * WEEKS);
+  assert.equal(pr.scenesTotal, 7 * WEEKS); // 含周复习对话
 });

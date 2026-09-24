@@ -20,7 +20,7 @@ test('连续 7 天课程：每天一个新场景，跟读 / 独白各至少 2 �
     const n = { roleplay: 0, shadow: 0, mono: 0 };
     days.forEach((d, i) => {
       const p = todayPlan(d);
-      if (i === 6) { assert.deepEqual(p.slots.map((s) => s.module), ['cards', 'review']); return; }
+      if (i === 6) { assert.deepEqual(p.slots.map((s) => s.sceneId || s.module), ['cards', 'w01-review', 'review']); return; } // 复习日：复习卡 + 周复习对话 + 错句重说
       assert.equal(p.slots.find((s) => s.module === 'roleplay').sceneId, ['w01-s1', 'w01-s2', 'w01-s3', 'w01-s4', 'w01-s5', 'w01-s6'][i]);
       for (const s of p.slots) if (s.module in n) n[s.module]++;
     });

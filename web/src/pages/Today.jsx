@@ -89,8 +89,8 @@ export default function Today() {
       </div>
       <div className="sec">
         <div className="sec-t">
-          <span>今日练习{p.slots.length > 2 ? ' · 中间两项按阶段权重随机抽取' : ' · 第 7 天复习日'}</span>
-          {p.slots.length > 2 && <button className="link" onClick={swap} disabled={!canSwap} style={canSwap ? {} : { opacity: 0.5 }}>{Icon.shuffle}{p.swapped ? '今日已换过' : '换一个'}</button>}
+          <span>今日练习{p.dayInWeek === 7 ? ' · 第 7 天复习日' : p.slots.some((s) => s.slot === 'scene') ? ' · 今日场景 + 跟读或独白（轮流）' : ' · 中间两项按阶段权重随机抽取'}</span>
+          {p.slots.some((s) => s.label === '随机') && <button className="link" onClick={swap} disabled={!canSwap} style={canSwap ? {} : { opacity: 0.5 }}>{Icon.shuffle}{p.swapped ? '今日已换过' : '换一个'}</button>}
         </div>
         <div className="list">
           {p.slots.map((s, i) => (

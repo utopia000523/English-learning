@@ -65,7 +65,7 @@ const COLUMNS = {
   card: ['content_id TEXT', 'introduced_at TEXT', 'reviewed_at TEXT', 'last_rating INTEGER', 'day INTEGER DEFAULT 1', 'note TEXT'],
   content_scene: ['data TEXT', 'day INTEGER DEFAULT 1'],
   content_item: ['day INTEGER DEFAULT 1'],
-  roleplay: ['ended_at TEXT', 'feedback TEXT'],
+  roleplay: ['ended_at TEXT', 'feedback TEXT', 'state TEXT'],
   note: ['context TEXT', 'detail TEXT'],
   plan_day: ['cards_target INTEGER DEFAULT 0', 'wrap_done INTEGER DEFAULT 0'],
 };
