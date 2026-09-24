@@ -32,3 +32,12 @@ test('其他正常的修改不受影响', () => {
   assert.deepEqual(guardFeedback('I go to school yesterday.', fb('I went to school yesterday.')), fb('I went to school yesterday.'));
   assert.deepEqual(guardFeedback('Nice to meet you', fb('Nice to meet you.')), { ok: true });
 });
+
+test('说明只有一两个字（如「用」）时不显示，中文意思同理', () => {
+  const r = guardFeedback("yeah I just came to this new company I'm getting used to it",
+    { ok: false, better: "Yeah, I just joined this new company, so I'm still getting used to it.", issue_zh: '用', zh: '嗯' });
+  assert.equal(r.issue_zh, '');
+  assert.equal(r.zh, '');
+  const ok = guardFeedback('I go to school yesterday.', { ok: false, better: 'I went to school yesterday.', issue_zh: '昨天的事要用过去时。', zh: '我昨天去上学了。' });
+  assert.equal(ok.issue_zh, '昨天的事要用过去时。');
+});
