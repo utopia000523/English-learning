@@ -67,14 +67,19 @@ export function pickTargets(week, stages, n = TARGETS) {
 const STOP = new Set(("a an the i you we he she it they me my your our his her is are am was were be been to of in on at for and or so just do does did " +
   "can could would will that this there here with it's i'm you're we're what how why when where who get got go going have has had " +
   "really very today now some any all not no yes one up out about like as if then than too also please oh well by from into over back").split(' '));
-const norm = (t) => String(t || '').toLowerCase().replace(/[’‘]/g, "'").replace(/[^a-z0-9' ]/g, ' ').replace(/\s+/g, ' ').trim();
+const norm = (t) => String(t || '').toLowerCase().replace(/[’‘]/g, "'").replace(/[^a-z0-9' ]/g, ' ').replace(/\s+/g, ' ').trim()
+  // 缩写统一成一种写法：is not / isn't、do not / don't 算同一个说法
+  .replace(/\b(is|are|was|were|do|does|did|can|could|would|should|have|has)\s+not\b/g, "$1n't").replace(/\bcannot\b/g, "can't");
 
 /**
  * 学习者有没有用上某个表达：整句出现，或关键词（去掉 I / the / to 这类）有三分之二以上出现在同一句里。
- * 卡片有两句的（“Can I get you something to drink? Coffee or tea?”）说中其中一句就算
+ * 卡片有两句的（“Can I get you something to drink? Coffee or tea?”）说中其中一句就算；
+ * 一句里用逗号分成两半、这一半有 3 个以上关键词的（“My English isn't perfect, so could you speak a little slower?”），说中其中一半也算
  */
 export function usedExpression(en, lines) {
-  const parts = [en, ...String(en).split(/[.?!]+/)].map(norm).filter(Boolean);
+  const halves = String(en).split(/[.?!,;]+/).map(norm).map((h) => h.replace(/^(so|and|but)\s+/, ''))
+    .filter((h) => h.split(' ').filter((w) => !STOP.has(w)).length >= 3);
+  const parts = [...new Set([en, ...String(en).split(/[.?!]+/)].map(norm).concat(halves))].filter(Boolean);
   const said = lines.map((l) => { const n = norm(l); return { n, set: new Set(n.split(' ')) }; });
   return parts.some((p) => {
     const words = p.split(' ');
