@@ -8,6 +8,8 @@ import fs from 'node:fs';
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'speak90-pr-'));
 process.env.SPEAK90_DATA_DIR = tmp;
 const { createApp } = await import('../server/index.js');
+// 内置内容有几周（每周 6 个场景、6 组跟读），加新一周不用改测试
+const WEEKS = fs.readdirSync(new URL('../content', import.meta.url)).filter((f) => /^week\d+\.json$/.test(f)).length;
 
 let server; let base;
 const post = (u, b) => fetch(base + u, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b || {}) });
@@ -20,9 +22,9 @@ before(async () => {
 });
 after(() => server.close());
 
-test('跟读材料：18 组，第 1 天只解锁第 1 组', async () => {
+test('跟读材料：每周 6 组，第 1 天只解锁第 1 组', async () => {
   const l = await (await fetch(base + '/shadow')).json();
-  assert.equal(l.length, 18);
+  assert.equal(l.length, 6 * WEEKS);
   assert.deepEqual(l.filter((m) => !m.locked).map((m) => m.id), ['w01-sh1']);
   assert.ok(l.every((m) => m.sentences.length >= 5 && m.day >= 1 && m.day <= 6));
 });
