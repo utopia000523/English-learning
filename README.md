@@ -10,6 +10,14 @@ bash scripts/start.sh
 
 首次运行会检查并提示安装：Node.js 20+、Ollama 及对话模型、whisper.cpp 及语音识别模型。然后自动打开 http://localhost:5173 。
 
+**更新到最新版**：先在启动窗口按 Ctrl+C 停掉服务，再执行
+
+```bash
+bash scripts/update.sh
+```
+
+它会检查本地没有未提交的修改，从 GitHub 拉取 master 最新版，然后自动启动（等于再跑一次 start.sh）。想试用还没合并的分支：`bash scripts/update.sh <分支名>`。
+
 ## 如何添加学习内容
 
 所有内置内容都在 **`content/`** 文件夹，一周一个文件。改完后**重新运行 `bash scripts/start.sh`** 即自动导入，已学过的卡片进度不受影响。
@@ -95,6 +103,7 @@ web/               前端（React + Vite）
   src/services/    api.js 请求封装、tts.js 朗读
 scripts/
   start.sh         启动脚本
+  update.sh        从 GitHub 拉取最新版并启动（可带分支名）
   uninstall.sh     一键卸载（--dry-run 只列出不删除）
   notion-peek.mjs  开发用：查看 Notion 数据库结构
   eval-feedback.mjs 开发用：对话点评评测
