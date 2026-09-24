@@ -5,3 +5,4 @@ data/audio/
 models/*.bin
 .DS_Store
 *.log
+data/backups/

@@ -96,7 +96,7 @@ scripts/
   notion-peek.mjs  开发用：查看 Notion 数据库结构
 content/           内置学习内容（一周一个 JSON，见上文）
 tests/             接口测试（node --test）
-data/              本地数据库和录音（不提交）
+data/              本地数据库、录音、每日备份 backups/（不提交）
 models/            语音识别模型（不提交）
 docs/              PRD 与原型
 ```
