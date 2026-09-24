@@ -269,9 +269,36 @@ Respond ONLY with JSON.` },
 ${scene.role} said: ${prevLine}
 Learner said: ${line}` },
   ], { model, temperature: 0.2, kind: 'feedback' }, () => ({ ok: true }));
-  const loose = (t) => String(t || '').toLowerCase().replace(/[’]/g, "'").replace(/[^a-z0-9' ]/g, ' ').replace(/\s+/g, ' ').trim();
-  const ok = out.ok === true || out.ok === 'true' || !out.better || loose(out.better) === loose(line); // 只差大小写或标点，不算问题
-  return ok ? { ok: true } : { ok: false, better: String(out.better).trim(), issue_zh: out.issue_zh || '', zh: out.zh || '' };
+  if (out.ok === true || out.ok === 'true' || !out.better) return { ok: true };
+  return guardFeedback(line, { ok: false, better: String(out.better).trim(), issue_zh: out.issue_zh || '', zh: out.zh || '' });
+}
+
+const loose = (t) => String(t || '').toLowerCase().replace(/[’]/g, "'").replace(/[^a-z0-9'@. ]/g, ' ').replace(/\.(?=\s|$)/g, ' ').replace(/\s+/g, ' ').trim();
+const FILLER = new Set(['and', 'so', 'yes', 'yeah', 'oh', 'well', 'um', 'uh']);
+const words = (t) => loose(t).split(' ').filter((w) => w && !FILLER.has(w));
+
+/**
+ * 模型点评之后的代码兜底，压住提示词压不住的两类误判（评测集 ok-this-is-name*、fix-wechat-reach-me）：
+ * 1. 学员用「This is + 名字」自我介绍，模型改成 I'm / I am / My name is + 名字：改回 This is；改完和原话只差标点、连词就算没问题。
+ * 2. 模型把用户名（不是邮箱、电话）写成 reach me at / contact me at：换成留微信号的说法。
+ */
+export function guardFeedback(line, fb) {
+  if (fb.ok) return fb;
+  let { better, issue_zh: issue, zh } = fb;
+  const intro = String(line).match(/\bthis is\s+([a-z][\w'-]*)/i);
+  if (intro) {
+    const name = intro[1].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    better = better.replace(new RegExp(`\\b(?:I'm|I am|My name is|Im)\\s+(${name})\\b`, 'i'), (_m, n) => `This is ${n}`);
+  }
+  const reach = better.match(/\b(?:you can )?(?:reach|contact) me at\s+([^\s,.!?]+)(?:\s+on\s+wechat)?/i);
+  if (reach && !/@/.test(reach[1]) && (reach[1].match(/\d/g) || []).length < 5) {
+    better = better.replace(reach[0], `${/^you can/i.test(reach[0]) ? 'You can a' : 'A'}dd me on WeChat. My WeChat ID is ${reach[1]}`);
+    issue = '留微信号不用 reach me at（它后面接电话或邮箱），直接说 My WeChat ID is …';
+    zh = `加我微信吧，我的微信号是 ${reach[1]}。`;
+  }
+  // 只差大小写、标点、断句或 and / so 这类连接词，不算问题
+  if (words(better).join(' ') === words(line).join(' ')) return { ok: true };
+  return { ok: false, better, issue_zh: issue, zh };
 }
 
 export async function finish(id) {
