@@ -14,7 +14,7 @@ export default function Plan() {
   return (
     <>
       <div className="head">
-        <div><h1>学习计划</h1><p className="sub">从 {p.startDate} 开始 · 每周 6 天练习 · 周日轻复习</p></div>
+        <div><h1>学习计划</h1><p className="sub">从 {p.startDate} 开始 · 每 7 天一轮：前 6 天练习 · 第 7 天复习</p></div>
         <Link className="btn line sm" to="/settings">调整每日设置</Link>
       </div>
       <div className="phases">

@@ -21,7 +21,7 @@ export const DEFAULT_SETTINGS = {
   dailyMinutes: 30,
   cardsNewPerDay: 30,               // 表达卡：每日新卡上限
   cardsDailyMax: 0,                  // 表达卡：每日总张数上限（复习+新卡），0 = 不限
-  practiceDays: [1, 2, 3, 4, 5, 6],  // 周一至周六，周日轻复习
+  practiceDays: [1, 2, 3, 4, 5, 6],  // 未使用：课程按开始日期每 7 天一轮，第 7 天为复习日（plan.js）
   reminderTime: '21:00',
   startDate: '',                     // 第 1 天的日期，首次测评完成时写入
   notionToken: '',
