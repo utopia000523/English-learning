@@ -19,9 +19,10 @@ function saveMetrics(id, f) {
 // ---- 跟读 ----
 export function shadowList() {
   const pos = planPosition();
-  return all("SELECT * FROM content_item WHERE type = 'shadow' ORDER BY week, day, id").map((r) => ({
-    id: r.id, week: r.week, day: r.day || 1, title: r.zh, sentences: parse(r.extra, {}).sentences || [], locked: !isUnlocked(r.week, r.day, pos),
-  }));
+  return all("SELECT * FROM content_item WHERE type = 'shadow' ORDER BY week, day, id").map((r) => {
+    const x = parse(r.extra, {});
+    return { id: r.id, week: r.week, day: r.day || 1, title: r.zh, sentences: x.sentences || [], source: x.source || '', date: x.date || '', locked: !isUnlocked(r.week, r.day, pos) };
+  });
 }
 
 /** 跟读评分：recordingId 的识别结果对比 reference 原文 */

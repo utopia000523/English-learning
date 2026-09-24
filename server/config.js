@@ -33,5 +33,6 @@ export const DEFAULT_SETTINGS = {
   ieltsDb: '',                       // 雅思数据库（IELTS Listening Daily）的 ID，从链接里取
   ieltsLastPull: '',
   ieltsPages: [],                    // 已导入过的雅思页面 ID
+  ieltsShadowPages: [],              // 已生成过雅思跟读的页面 ID
   audioKeepDays: 30,                 // 录音文件保留天数，0 = 一直保留
 };

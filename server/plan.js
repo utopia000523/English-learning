@@ -49,7 +49,8 @@ function randomWeights(week, dayNo, exclude = []) {
 /** 某周某天的内容（场景 / 跟读 / 话题），没有就返回 undefined */
 const sceneOfDay = (week, day) => get('SELECT id, title FROM content_scene WHERE week = ? AND day = ? ORDER BY id', [week, day]);
 const reviewSceneOf = (week) => get("SELECT id, title FROM content_scene WHERE week = ? AND level = 'review'", [week]);
-const itemOfDay = (type, week, day) => get('SELECT id, zh FROM content_item WHERE type = ? AND week = ? AND day = ? ORDER BY id', [type, week, day]);
+// 只排内置内容；雅思跟读（id 以 ielts: 开头）在跟读页自选
+const itemOfDay = (type, week, day) => get("SELECT id, zh FROM content_item WHERE type = ? AND week = ? AND day = ? AND id NOT LIKE 'ielts:%' ORDER BY id", [type, week, day]);
 
 function generate(today) {
   const { dayNo, week, dayInWeek } = planPosition(today);
@@ -132,7 +133,7 @@ function suggestions(pos) {
   const scenes = all('SELECT id, title FROM content_scene WHERE week = ? ORDER BY day, id', [pos.week]);
   const scene = sceneOfDay(pos.week, d) ||
     scenes.find((s) => !get('SELECT COUNT(*) n FROM roleplay WHERE scene_id = ? AND passed = 1', [s.id]).n) || scenes[0];
-  const shadow = itemOfDay('shadow', pos.week, d) || get("SELECT id, zh FROM content_item WHERE type = 'shadow' AND week = ? ORDER BY day, id", [pos.week]);
+  const shadow = itemOfDay('shadow', pos.week, d) || get("SELECT id, zh FROM content_item WHERE type = 'shadow' AND week = ? AND id NOT LIKE 'ielts:%' ORDER BY day, id", [pos.week]);
   const topic = itemOfDay('topic', pos.week, d);
   return { scene, shadow, topic };
 }
