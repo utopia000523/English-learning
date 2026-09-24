@@ -9,7 +9,20 @@ import fs from 'node:fs';
 const rt = (s) => [{ plain_text: s }];
 const row = (...c) => ({ type: 'table_row', table_row: { cells: c.map(rt) } });
 const routes = {
-  'POST /v1/databases/0123456789abcdef0123456789abcdef/query': { results: [{ id: 'page-1', properties: { Title: { type: 'title', title: rt('2026-09-20 | Business | Shorter Meetings') }, Topic: { type: 'select', select: { name: 'Business' } } } }] },
+  'POST /v1/databases/0123456789abcdef0123456789abcdef/query': { results: [{ id: 'page-1', properties: { Title: { type: 'title', title: rt('2026-09-20 | Business | Shorter Meetings') }, Topic: { type: 'select', select: { name: 'Business' } } } },
+    { id: 'page-2', properties: { Title: { type: 'title', title: rt('2026-09-23 | Environment | City Planning') }, Topic: { type: 'select', select: { name: 'Environment' } } } }] },
+  // ChatGPT 有时不用表格，用段落写词汇
+  'GET /v1/blocks/page-2/children?page_size=100': { results: [
+    { type: 'heading_1', heading_1: { rich_text: rt('④ Vocabulary') } },
+    { type: 'paragraph', paragraph: { rich_text: rt('resilient — 有韧性的；能迅速恢复的') } },
+    { type: 'paragraph', paragraph: { rich_text: rt('Common collocations: resilient system; remain resilient') } },
+    { type: 'paragraph', paragraph: { rich_text: rt('Original example: “The new design makes the network more resilient.”') } },
+    { type: 'paragraph', paragraph: { rich_text: rt('trade-off — 权衡；取舍') } },
+    { type: 'paragraph', paragraph: { rich_text: rt('Common collocations: a trade-off between A and B') } },
+    { type: 'paragraph', paragraph: { rich_text: rt('Original example: “Every design choice involves a trade-off.”') } },
+    { type: 'heading_1', heading_1: { rich_text: rt('⑤ Review') } },
+    { type: 'paragraph', paragraph: { rich_text: rt('Review note: 这里不是词汇') } },
+  ] },
   'GET /v1/blocks/page-1/children?page_size=100': { results: [
     { type: 'heading_2', heading_2: { rich_text: rt('① Listening') } },
     { type: 'paragraph', paragraph: { rich_text: rt('Over the past decade...') } },
@@ -52,10 +65,10 @@ test('没填数据库时报错', async () => {
   assert.equal((await post('/ielts/pull')).status, 400);
 });
 
-test('导入 ④ Vocabulary → 表达卡（来源雅思、原文例句、搭配、音标），不重复导入', async () => {
+test('导入 ④ Vocabulary（表格和段落两种写法）→ 表达卡（来源雅思、原文例句、搭配、音标），不重复导入', async () => {
   await put({ notionToken: 'secret_x', ieltsDb: 'https://app.notion.com/p/0123456789abcdef0123456789abcdef?v=fedcba9876543210fedcba9876543210' });
   const r = await (await post('/ielts/pull')).json();
-  assert.deepEqual(r, { pages: 1, added: 2 });
+  assert.deepEqual(r, { pages: 2, added: 4 });
   const q = await (await fetch(base + '/cards/today')).json();
   const c = q.cards.find((x) => x.en === 'straightforward');
   assert.ok(c && c.isNew);
@@ -65,6 +78,12 @@ test('导入 ④ Vocabulary → 表达卡（来源雅思、原文例句、搭配
   assert.equal(c.source, '雅思');
   assert.equal(c.scene, '雅思 · Business');
   assert.ok(c.ipa.startsWith('/'));
+  const p = q.cards.find((x) => x.en === 'resilient');
+  assert.equal(p.zh, '有韧性的；能迅速恢复的');
+  assert.equal(p.example, 'The new design makes the network more resilient.');
+  assert.equal(p.note, '搭配：resilient system; remain resilient');
+  assert.equal(p.scene, '雅思 · Environment');
+  assert.ok(q.cards.some((x) => x.en === 'trade-off'));
   const before = hits;
   assert.deepEqual(await (await post('/ielts/pull')).json(), { pages: 0, added: 0 });
   assert.equal(hits - before, 1); // 只查了列表，没再读页面
