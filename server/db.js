@@ -4,6 +4,7 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import initSqlJs from 'sql.js';
 import { config, DEFAULT_SETTINGS } from './config.js';
+import { todayStr } from './util/date.js';
 
 const require = createRequire(import.meta.url);
 let db;
@@ -14,12 +15,49 @@ export async function initDb(file = path.join(config.dataDir, 'speak90.db')) {
   const SQL = await initSqlJs({ locateFile: (f) => require.resolve(`sql.js/dist/${f}`) });
   dbFile = file;
   fs.mkdirSync(path.dirname(file), { recursive: true });
-  db = fs.existsSync(file) ? new SQL.Database(fs.readFileSync(file)) : new SQL.Database();
   const schema = fs.readFileSync(new URL('./schema.sql', import.meta.url), 'utf8');
-  db.run(schema);
+  db = open(SQL, schema);
+  backupDb(); // 每天第一次启动留一份（迁移之前的状态）
   migrate();
   saveNow();
   return db;
+}
+
+// 打开数据库；文件损坏时改名保留，并从最近一份备份恢复（没有备份就新建）
+function open(SQL, schema) {
+  const load = (buf) => { const d = buf ? new SQL.Database(buf) : new SQL.Database(); d.run(schema); return d; };
+  if (!fs.existsSync(dbFile)) return load();
+  try {
+    return load(fs.readFileSync(dbFile));
+  } catch (e) {
+    const bad = `${dbFile}.corrupt-${Date.now()}`;
+    fs.renameSync(dbFile, bad);
+    const latest = backupFiles().at(-1);
+    console.warn(`数据库文件无法读取（${e.message}），已改名为 ${path.basename(bad)}。` +
+      (latest ? `已从备份 ${latest} 恢复。` : '没有可用备份，已新建空数据库。'));
+    return latest ? load(fs.readFileSync(path.join(backupDir(), latest))) : load();
+  }
+}
+
+// ---- 备份：data/backups/speak90-YYYY-MM-DD.db，每天一份，保留最近 keep 份 ----
+const backupDir = () => path.join(path.dirname(dbFile), 'backups');
+const backupFiles = () => (fs.existsSync(backupDir()) ? fs.readdirSync(backupDir()) : [])
+  .filter((f) => /^speak90-\d{4}-\d{2}-\d{2}\.db$/.test(f)).sort();
+
+export function backupDb(keep = 7) {
+  if (!db || !dbFile) return null;
+  fs.mkdirSync(backupDir(), { recursive: true });
+  const target = path.join(backupDir(), `speak90-${todayStr()}.db`);
+  if (!fs.existsSync(target)) writeAtomic(target, Buffer.from(db.export()));
+  for (const f of backupFiles().slice(0, -keep)) fs.unlinkSync(path.join(backupDir(), f));
+  return target;
+}
+
+// 先写临时文件再改名替换：写到一半断电或崩溃，原文件仍然完好
+function writeAtomic(file, buf) {
+  const tmp = `${file}.tmp`;
+  fs.writeFileSync(tmp, buf);
+  fs.renameSync(tmp, file);
 }
 
 // 已有数据库的增量字段（新库在 schema.sql 里也有）。只加不删
@@ -58,7 +96,7 @@ function scheduleSave() {
   saveTimer = setTimeout(saveNow, 300);
 }
 export function saveNow() {
-  if (db && dbFile) fs.writeFileSync(dbFile, Buffer.from(db.export()));
+  if (db && dbFile) writeAtomic(dbFile, Buffer.from(db.export()));
 }
 
 // ---- 设置 ----

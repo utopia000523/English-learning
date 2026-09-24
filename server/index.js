@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import express from 'express';
 import { config } from './config.js';
-import { initDb, saveNow } from './db.js';
+import { initDb, saveNow, backupDb } from './db.js';
 import { api } from './routes/api.js';
 import { importContent } from './content.js';
 
@@ -36,6 +36,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const { autoSync } = await import('./autosync.js');
   const { cleanupAudio } = await import('./maintenance.js');
   cleanupAudio(); setInterval(cleanupAudio, 24 * 3600 * 1000); // 录音过期清理：启动时和每天一次
+  setInterval(() => backupDb(), 3600 * 1000); // 数据库备份：每小时检查，当天已有就跳过（服务跨天运行时也能备份）
   setInterval(autoSync, 10 * 60 * 1000);
   setTimeout(autoSync, 30 * 1000);
   for (const sig of ['SIGINT', 'SIGTERM']) process.on(sig, () => { saveNow(); process.exit(0); });
