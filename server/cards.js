@@ -6,11 +6,15 @@ import { logEvent } from './activity.js';
 import { ipaOf } from './services/ipa.js';
 import * as llm from './services/llm.js';
 
-/** 第几天、第几周。首次使用时以当天为第 1 天（入门测评在阶段 6 会重设） */
+/**
+ * 第几天、第几周。首次使用时以当天为第 1 天（入门测评在阶段 6 会重设）。
+ * 只算真正练过的日子：今天 = 开始以来有练习记录（daily_log）的天数 + 1。中间休息几天，回来接着上次的下一天，不会一下解锁好几天的内容。
+ */
 export function planPosition(today = todayStr()) {
   let { startDate } = getSettings();
   if (!startDate) startDate = updateSettings({ startDate: today }).startDate;
-  const dayNo = Math.max(1, diffDays(startDate, today) + 1);
+  const studied = get('SELECT COUNT(DISTINCT date) n FROM daily_log WHERE date >= ? AND date < ?', [startDate, today]).n;
+  const dayNo = Math.max(1, Math.min(studied + 1, diffDays(startDate, today) + 1));
   const week = Math.min(12, Math.ceil(dayNo / 7));
   const dayInWeek = dayNo > 84 ? 7 : ((dayNo - 1) % 7) + 1; // 1–6 学新内容，7 复习日
   return { startDate, dayNo, week, dayInWeek };

@@ -16,13 +16,15 @@ test('连续 7 天课程：每天一个新场景，跟读 / 独白各至少 2 �
   const days = Array.from({ length: 7 }, (_, i) => `2026-09-${14 + i}`);
   let worst = Infinity;
   for (let r = 0; r < 200; r++) {
-    run('DELETE FROM plan_day');
+    run('DELETE FROM plan_day'); run('DELETE FROM daily_log');
     const n = { roleplay: 0, shadow: 0, mono: 0 };
     days.forEach((d, i) => {
       const p = todayPlan(d);
+      assert.equal(p.dayNo, i + 1);
       if (i === 6) { assert.deepEqual(p.slots.map((s) => s.sceneId || s.module), ['cards', 'w01-review', 'review']); return; } // 复习日：复习卡 + 周复习对话 + 错句重说
       assert.equal(p.slots.find((s) => s.module === 'roleplay').sceneId, ['w01-s1', 'w01-s2', 'w01-s3', 'w01-s4', 'w01-s5', 'w01-s6'][i]);
       for (const s of p.slots) if (s.module in n) n[s.module]++;
+      run("INSERT INTO daily_log (date, module, count) VALUES (?, 'cards', 1)", [d]); // 这一天练过了
     });
     worst = Math.min(worst, ...Object.values(n));
   }

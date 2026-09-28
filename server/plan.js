@@ -140,6 +140,8 @@ function suggestions(pos) {
 
 export function todayPlan(today = todayStr()) {
   const pos = planPosition(today);
+  // 以前按日历算天数时留下的「未来」课程（休息期间跳过的天）：按练习天数算后不会再有，清掉
+  run('DELETE FROM plan_day WHERE day_no > ?', [pos.dayNo]);
   let row = get('SELECT * FROM plan_day WHERE day_no = ?', [pos.dayNo]);
   // 旧版课程（没有「今日场景」/「本周综合对话」）且当天有对应内容：按新规则重排
   const hasScene = row && parse(row.modules, []).some((s) => s.slot === 'scene');
@@ -210,7 +212,9 @@ export function planOverview(today = todayStr()) {
   const rows = new Map(all('SELECT * FROM plan_day').map((r) => [r.day_no, r]));
   const days = Array.from({ length: 90 }, (_, i) => {
     const r = rows.get(i + 1);
-    return { dayNo: i + 1, date: addDays(pos.startDate, i), ratio: r ? withStatus(r, r.date === today).ratio : 0 };
+    // 练过的天用当天的日期；今天以后按每天练一次估算
+    const date = r ? r.date : i + 1 >= pos.dayNo ? addDays(today, i + 1 - pos.dayNo) : '';
+    return { dayNo: i + 1, date, ratio: r ? withStatus(r, r.date === today).ratio : 0 };
   });
   const weekDone = (w) => days.filter((d) => Math.ceil(d.dayNo / 7) === w).reduce((n, d) => n + d.ratio, 0) / 7;
   return {
