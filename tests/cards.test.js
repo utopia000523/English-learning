@@ -5,6 +5,8 @@ import os from 'node:os';
 import path from 'node:path';
 import fs from 'node:fs';
 import { createApp } from '../server/index.js';
+import { run } from '../server/db.js';
+import { todayStr, addDays } from '../server/util/date.js';
 
 let server; let base;
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'speak90-cards-'));
@@ -74,9 +76,8 @@ test('自己先说：检查答案给出结论和更自然的说法', async () =>
 });
 
 test('第 7 天复习日：只出到期卡，不出内置和雅思新卡；当天自己加的卡照常可学', async () => {
-  const d = new Date(Date.now() - 6 * 864e5);
-  const start = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-  await put('/settings', { startDate: start, cardsNewPerDay: 30, cardsDailyMax: 0 });
+  await put('/settings', { startDate: addDays(todayStr(), -6), cardsNewPerDay: 30, cardsDailyMax: 0 });
+  for (let i = 1; i <= 6; i++) run("INSERT INTO daily_log (date, module, count) VALUES (?, 'cards', 1) ON CONFLICT DO NOTHING", [addDays(todayStr(), -i)]);
   const added = await json(await post('/cards', { en: 'Count me in.', zh: '算我一个。', source: 'AI 对话' }));
   const q = await json(await fetch(base + '/cards/today'));
   assert.equal(q.dayInWeek, 7);
@@ -84,4 +85,16 @@ test('第 7 天复习日：只出到期卡，不出内置和雅思新卡；当�
   assert.ok(fresh.some((c) => c.id === added.id));
   assert.ok(fresh.every((c) => !['内置', '雅思'].includes(c.source)));
   assert.ok(q.stats.newLeft > 1); // 还没学的内置卡没丢，顺延到下周
+});
+
+test('中间休息的日子不算：开始 10 天、只练了 2 天 → 今天是第 3 天，只解锁到第 3 天', async () => {
+  run('DELETE FROM daily_log');
+  await put('/settings', { startDate: addDays(todayStr(), -10) });
+  for (const i of [10, 9]) run("INSERT INTO daily_log (date, module, count) VALUES (?, 'cards', 1)", [addDays(todayStr(), -i)]);
+  const q = await json(await fetch(base + '/cards/today'));
+  assert.equal(q.dayNo, 3);
+  assert.equal(q.dayInWeek, 3);
+  assert.ok(q.cards.filter((c) => c.isNew && c.source === '内置').every((c) => c.week === 1));
+  const plan = await json(await fetch(base + '/plan/today'));
+  assert.equal(plan.dayNo, 3);
 });

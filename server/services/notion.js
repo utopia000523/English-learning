@@ -101,8 +101,10 @@ export async function sync(ratioOf = () => 0) {
     notes++;
   }
   const start = s.startDate;
+  let studied = 0; // 第几天只算练过的日子（和 planPosition 一致）
   for (const { date } of all('SELECT DISTINCT date FROM daily_log ORDER BY date')) {
-    const dayNo = start ? Math.round((new Date(date) - new Date(start)) / 86400000) + 1 : 0;
+    if (start && date >= start) studied++;
+    const dayNo = start ? Math.max(1, studied) : 0;
     const rec = dayRecord(date, ratioOf(date));
     const hash = JSON.stringify(rec);
     const prev = get('SELECT * FROM notion_sync WHERE date = ?', [date]);

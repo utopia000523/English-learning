@@ -23,8 +23,9 @@ before(async () => {
   const app = await createApp({ dbFile: path.join(tmp, 'rv.db') });
   await new Promise((r) => { server = app.listen(0, r); });
   base = `http://127.0.0.1:${server.address().port}/api`;
-  // 今天 = 第 1 周第 7 天
+  // 今天 = 第 1 周第 7 天（前 6 天每天都练过）
   await fetch(base + '/settings', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ startDate: addDays(todayStr(), -6) }) });
+  for (let i = 1; i <= 6; i++) run("INSERT INTO daily_log (date, module, count) VALUES (?, 'cards', 1)", [addDays(todayStr(), -i)]);
 });
 after(() => server.close());
 
