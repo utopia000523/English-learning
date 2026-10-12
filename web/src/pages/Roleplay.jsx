@@ -5,6 +5,7 @@ import { api } from '../services/api.js';
 import { speak } from '../services/tts.js';
 import { startRecording, transcribe } from '../services/recorder.js';
 import { Icon } from '../icons.jsx';
+import { isPhone } from '../services/device.js';
 
 // 模型偶尔只回一两个字当说明（如「用」）：太短的不显示
 const meaningful = (t) => /[\u4e00-\u9fff]/.test(t || '') && String(t).replace(/[\s\p{P}]/gu, '').length >= 4;
@@ -36,7 +37,7 @@ export function RoleplayList() {
         <div className="list">
           {list.map((s) => (
             <div key={s.id} className="li" style={s.status === 'locked' ? { opacity: 0.55 } : { cursor: 'pointer' }} onClick={() => open(s)}>
-              <span className="faint" style={{ width: 104, whiteSpace: 'nowrap' }}>第 {s.week} 周 · 第 {s.day} 天</span>
+              <span className="faint scene-day" style={{ width: 104, whiteSpace: 'nowrap' }}><span className="d-only">第 {s.week} 周 · </span>第 {s.day} 天</span>
               <div className="t"><b>{s.title}</b><div className="faint">AI 角色：{s.roleZh} · {LEVEL[s.level]}</div></div>
               {STATUS[s.status]}
             </div>
@@ -110,6 +111,7 @@ export function RoleplayChat() {
   const [voice, setVoice] = useState({});
   const [showZh, setShowZh] = useState({});
   const [showReview, setShowReview] = useState(false);
+  const [showPanel, setShowPanel] = useState(false); // 手机：任务面板从底部弹出
   const endRef = useRef(null);
   const inputRef = useRef(null);
   const recRef = useRef(null);
@@ -215,6 +217,7 @@ export function RoleplayChat() {
             <b style={{ fontWeight: 500 }}>{sc.title} · {LEVEL[sc.level]}</b><span className="faint">第 {sc.week} 周 · 第 {sc.day || 1} 天</span>
           </div>
           <div className="row">
+            <button className="btn line sm panel-toggle" onClick={() => setShowPanel(true)}>任务 {rp.tasksDone.length}/{sc.tasks.length}{rp.state ? ` · 表达 ${rp.state.targets.filter((t) => t.used).length}/${rp.state.targets.length}` : ''}</button>
             <div className="seg">{[0.8, 1].map((r) => <button key={r} className={rate === r ? 'on' : ''} onClick={() => setRate(r)}>{r === 1 ? '1.0' : r}x</button>)}</div>
             {!rp.ended && <button className="btn line sm" disabled={!!busy} onClick={finish}>{busy === 'review' ? '正在复盘…' : '结束并复盘'}</button>}
             {rp.ended && <button className="btn line sm" onClick={() => setShowReview(true)}>查看复盘</button>}
@@ -268,7 +271,7 @@ export function RoleplayChat() {
           <div className="composer">
             <input ref={inputRef} value={text} onChange={(e) => setText(e.target.value)} disabled={!!busy || !!rec} autoFocus
               onKeyDown={(e) => { if (e.key === 'Enter' && !e.nativeEvent.isComposing) send(); }}
-              placeholder={rec ? `正在听… ${Math.floor(rec)} 秒，说完再点一次麦克风` : busy === 'asr' ? '正在识别…' : '点麦克风用英语说，识别后可修改；也可以直接输入，按回车发送'} />
+              placeholder={rec ? `正在听… ${Math.floor(rec)} 秒，说完再点一次麦克风` : busy === 'asr' ? '正在识别…' : (isPhone() ? '点麦克风说，或直接输入' : '点麦克风用英语说，识别后可修改；也可以直接输入，按回车发送')} />
             <div className="bar2">
               <span className="faint">说不出来可以直接打中文，AI 会告诉你英文怎么说</span>
               <div className="row" style={{ gap: 6 }}>
@@ -281,7 +284,8 @@ export function RoleplayChat() {
           </div>
         )}
       </div>
-      <aside className="panel">
+      {showPanel && <div className="panel-mask" onClick={() => setShowPanel(false)} />}
+      <aside className={`panel${showPanel ? ' open' : ''}`}>
         <details open>
           <summary>任务 <span className="faint">{rp.tasksDone.length} / {sc.tasks.length}</span></summary>
           <div className="pb">

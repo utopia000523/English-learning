@@ -9,6 +9,7 @@ export const Icon = {
   cal: <svg {...P}><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M3 10h18M8 3v4M16 3v4" /></svg>,
   note: <svg {...P}><path d="M6 3h9l4 4v14H6z" /><path d="M9 11h7M9 15h7" /></svg>,
   chart: <svg {...P}><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /></svg>,
+  more: <svg {...P}><circle cx="5" cy="12" r="1.2" /><circle cx="12" cy="12" r="1.2" /><circle cx="19" cy="12" r="1.2" /></svg>,
   gear: <svg {...P}><circle cx="12" cy="12" r="3" /><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" /></svg>,
   back: <svg {...P} strokeWidth={1.8} width={15} height={15}><path d="M15 6l-6 6 6 6" /></svg>,
   plus: <svg {...P} strokeWidth={1.8} width={15} height={15}><path d="M12 5v14M5 12h14" /></svg>,

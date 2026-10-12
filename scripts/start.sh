@@ -39,6 +39,28 @@ fi
 echo "== 构建页面"
 if [ ! -f dist/index.html ] || [ -n "$(find web package.json -newer dist/index.html -type f 2>/dev/null | head -1)" ]; then npm run build; fi
 
+echo "== 手机访问（Tailscale）"
+# 手机浏览器要 https 才能录音：用 Tailscale 把 https://<这台 Mac>.ts.net 转发到本机服务，只有同一账号下的设备能访问
+TS=$(command -v tailscale || true)
+if [ -z "$TS" ] && [ -x /Applications/Tailscale.app/Contents/MacOS/Tailscale ]; then TS=/Applications/Tailscale.app/Contents/MacOS/Tailscale; fi
+if [ -z "$TS" ]; then
+  echo "  未安装 Tailscale（只在电脑上用可以忽略）。想用手机练：见 README「在手机上使用」。"
+else
+  TS_INFO=$("$TS" status --json 2>/dev/null | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{const j=JSON.parse(s);const host=(j.Self&&j.Self.DNSName||"").replace(/\.$/,"");console.log(j.BackendState==="Running"&&host?host+" "+((j.CertDomains||[]).length?"https":"nohttps"):"")}catch(e){console.log("")}})')
+  TS_HOST=${TS_INFO% *}
+  if [ -z "$TS_INFO" ]; then
+    echo "  Tailscale 没有登录或没有连接：打开 Tailscale 登录后，重新运行本脚本。"
+  elif [ "${TS_INFO#* }" != "https" ]; then
+    echo "  还没开启 HTTPS 证书：打开 https://login.tailscale.com/admin/dns ，启用 MagicDNS 和 HTTPS Certificates，再重新运行本脚本。"
+  elif "$TS" serve --bg --https=443 "http://127.0.0.1:$PORT" >/dev/null 2>&1; then
+    echo "  手机打开：https://$TS_HOST （手机装 Tailscale 并登录同一账号；Safari 打开后「分享 → 添加到主屏幕」）"
+  else
+    echo "  开启 https 转发失败：手动执行 $TS serve --bg --https=443 http://127.0.0.1:$PORT 查看原因。"
+  fi
+fi
+
 echo "== 启动：http://localhost:$PORT"
 (sleep 1.5 && open "http://localhost:$PORT") &
+# 服务运行期间不让 Mac 闲置休眠（手机才连得上）；合上盖子仍会休眠
+if command -v caffeinate >/dev/null; then PORT=$PORT exec caffeinate -i node server/index.js; fi
 PORT=$PORT node server/index.js

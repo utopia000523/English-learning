@@ -18,6 +18,19 @@ bash scripts/update.sh
 
 它会检查本地没有未提交的修改，从 GitHub 拉取 master 最新版，然后自动启动（等于再跑一次 start.sh）。想试用还没合并的分支：`bash scripts/update.sh <分支名>`。
 
+## 在手机上使用（iPhone / 安卓）
+
+模型和语音识别都跑在 Mac 上，手机只是用浏览器打开 Mac 上的页面，所以 **Mac 要开着、启动脚本的窗口要开着**（脚本运行期间 Mac 不会闲置休眠，但合上盖子仍会休眠）。手机浏览器只有 https 地址才允许录音，用 Tailscale（免费）提供 https，在家、在外面都能连。
+
+一次性设置：
+
+1. Mac 和手机都安装 [Tailscale](https://tailscale.com/download)，用**同一个账号**登录。
+2. 打开 [Tailscale 管理后台 → DNS](https://login.tailscale.com/admin/dns)，启用 **MagicDNS** 和 **HTTPS Certificates**。
+3. 在 Mac 上运行 `bash scripts/start.sh`，「手机访问」一栏会打印网址，形如 `https://你的Mac名.xxx.ts.net`。
+4. 手机 Safari 打开这个网址，点「分享 → 添加到主屏幕」，以后从桌面图标打开，像 App 一样全屏使用。第一次录音时允许使用麦克风。
+
+只有登录同一个 Tailscale 账号的设备能打开这个网址。不想再让手机访问：`tailscale serve --https=443 off`（卸载脚本也会关掉）。
+
 ## 如何添加学习内容
 
 所有内置内容都在 **`content/`** 文件夹，一周一个文件。改完后**重新运行 `bash scripts/start.sh`** 即自动导入，已学过的卡片进度不受影响。

@@ -202,3 +202,85 @@ a.btn{text-decoration:none}
 .lookup-pill{background:var(--ink);color:#fff;border-radius:16px;padding:4px 12px;font-size:12.5px;box-shadow:0 4px 14px rgba(0,0,0,.15)}
 .lookup-card{width:300px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;box-shadow:0 8px 28px rgba(0,0,0,.12);font-size:14px;text-align:left}
 .link{white-space:nowrap}
+
+/* ---------- 手机（iPhone 等，宽度 ≤ 760px） ---------- */
+.tabbar,.m-only,.panel-toggle{display:none}
+@media (max-width:760px){
+  body{font-size:15px;-webkit-tap-highlight-color:transparent}
+  .app{display:block;min-height:100dvh}
+  .side{display:none}
+  .main{padding:calc(20px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) calc(84px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-left));max-width:none}
+  .m-only{display:revert}
+  .d-only{display:none!important}
+
+  /* 底部标签栏 */
+  .tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(250,249,245,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+  .tabbar a{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 0;color:var(--ink3);text-decoration:none;font-size:11px}
+  .tabbar a svg{width:22px;height:22px}
+  .tabbar a.active{color:var(--accent)}
+  .more-li{text-decoration:none;color:var(--ink);padding:16px 4px}
+  .more-li svg{width:20px;height:20px;color:var(--ink2)}
+
+  /* 通用 */
+  h1{font-size:23px}
+  .head{flex-wrap:wrap;align-items:flex-start;margin-bottom:20px;gap:10px}
+  .head>.row,.head>div:last-child:not(:first-child){flex-wrap:wrap}
+  .row{flex-wrap:wrap}
+  .sec{margin-top:28px}
+  .li{gap:10px;padding:14px 2px}
+  .two,.phases,.weeks{grid-template-columns:1fr!important;gap:24px!important}
+  .two>div[style*="border-left"]{border-left:none!important;padding-left:0!important;border-top:1px solid var(--line);padding-top:20px}
+  .btn{padding:10px 14px}
+  .link{padding:8px 8px}
+  /* iOS 输入框字号小于 16px 会自动放大页面 */
+  input.in,select.in,.composer input,input,textarea,select{font-size:16px}
+  .modal{padding:20px 18px;max-height:85dvh}
+  table{display:block;overflow-x:auto}
+  .field{flex-wrap:wrap}
+  .field>div:first-child{flex:1 1 200px}
+
+  /* 今日 */
+  .today-meta{flex-wrap:wrap;gap:8px 14px}
+  .today-meta .bar{flex:1 1 100%;max-width:none;order:3}
+  .slot-time{display:none}
+  .slot-st{width:auto!important}
+
+  /* 表达卡 */
+  .fc{height:240px}
+  .fc .face{padding:20px}
+  .fc .big{font-size:22px}
+  .rate{gap:8px}
+  .rate button{padding:10px 4px}
+
+  /* 对话 */
+  .scene-day{width:auto!important;min-width:48px}
+  .chat-head{flex-wrap:wrap;gap:8px;align-items:flex-start}
+  .chat-head .ttl{flex:1 1 100%;font-size:15px}
+  .chat-head .ttl>.faint{display:none}
+  .chat-head>.row{gap:8px;flex:1 1 100%}
+  .composer .bar2>.faint{display:none}
+  .composer .bar2{justify-content:flex-end}
+  .composer .bar2 .row{flex-wrap:nowrap}
+  .chat-page{display:block;min-height:0}
+  .msgs{gap:18px;padding:12px 0 20px}
+  .ai{font-size:16px}
+  .me{max-width:88%}
+  .composer{bottom:calc(72px + env(safe-area-inset-bottom));padding:10px 10px 8px 14px}
+  .panel-toggle{display:inline-flex}
+  .panel{display:none}
+  .panel.open{display:block;position:fixed;left:0;right:0;bottom:0;top:auto;z-index:50;max-height:75dvh;border-radius:16px 16px 0 0;padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -8px 30px rgba(0,0,0,.12)}
+  .panel-mask{position:fixed;inset:0;background:rgba(31,30,29,.3);z-index:45}
+
+  /* 跟读 / 独白 */
+  .sent{font-size:21px;margin:16px 0 4px}
+  .timer{font-size:52px}
+
+  /* 计划 / 进度 */
+  .cal{grid-template-columns:repeat(10,1fr);gap:4px}
+  .kpis{grid-template-columns:1fr 1fr}
+  .kpis>div{border-right:none;border-bottom:1px solid var(--line)}
+  .kpis>div:nth-child(odd){border-right:1px solid var(--line)}
+
+  /* 划词浮窗 */
+  .lookup,.lookup-card{width:min(300px,calc(100vw - 24px))}
+}

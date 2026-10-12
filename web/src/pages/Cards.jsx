@@ -6,6 +6,7 @@ import { api } from '../services/api.js';
 import { speak } from '../services/tts.js';
 import { startRecording, transcribe } from '../services/recorder.js';
 import { Icon } from '../icons.jsx';
+import { isPhone } from '../services/device.js';
 
 const dayLabel = (n) => (n <= 1 ? '明天' : `约 ${n} 天后`);
 
@@ -140,7 +141,7 @@ export default function Cards() {
           <div className="face">
             <span className="faint">第 {card.week} 周 · {card.scene || card.source}{card.isNew ? ' · 新卡' : ''}{card.again ? ' · 再来一次' : ''}</span>
             <div className="big">{card.zh || card.en}</div>
-            <div className="faint">先用英语说出来，再点卡片或按空格翻面</div>
+            <div className="faint">先用英语说出来，再点卡片{isPhone() ? '' : '或按空格'}翻面</div>
           </div>
           <div className="face back">
             <div className="big">{card.en}</div>
@@ -158,7 +159,7 @@ export default function Cards() {
           </div>
         </div>
         <div className="row" style={{ gap: 6, maxWidth: 480, margin: '16px auto 0' }}>
-          <input className="in" style={{ flex: 1 }} placeholder="先自己说说看：打字或点麦克风，检查行不行"
+          <input className="in" style={{ flex: 1 }} placeholder={isPhone() ? '先自己说说看（打字或点麦克风）' : '先自己说说看：打字或点麦克风，检查行不行'}
                 value={say} onChange={(e) => { setSay(e.target.value); setErr(''); }}
                 onKeyDown={(e) => { if (e.key === 'Enter') runCheck(); }} />
               <button className={`micbtn${rec ? ' rec' : ''}`} title={rec ? '点击结束' : '用麦克风说'} onClick={toggleMic}>{Icon.mic}</button>
