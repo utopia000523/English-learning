@@ -20,16 +20,24 @@ bash scripts/update.sh
 
 ## 在手机上使用（iPhone / 安卓）
 
-模型和语音识别都跑在 Mac 上，手机只是用浏览器打开 Mac 上的页面，所以 **Mac 要开着、启动脚本的窗口要开着**（脚本运行期间 Mac 不会闲置休眠，但合上盖子仍会休眠）。手机浏览器只有 https 地址才允许录音，用 Tailscale（免费）提供 https，在家、在外面都能连。
+模型和语音识别都跑在 Mac 上，手机只是用浏览器打开 Mac 上的页面，所以 **Mac 要开着、启动脚本的窗口要开着**（脚本运行期间 Mac 不会闲置休眠，但合上盖子仍会休眠）。手机浏览器只有 https 地址才允许录音，下面两种方式任选一种：
 
-一次性设置：
+**方式 A：局域网 / 贝锐蒲公英（国内推荐）**
 
-1. Mac 和手机都安装 [Tailscale](https://tailscale.com/download)，用**同一个账号**登录。
+1. Mac 上执行 `brew install mkcert`，然后运行 `bash scripts/start.sh`。
+2. 第一次会自动打开一个文件夹：把里面的 `rootCA.pem` 隔空投送到 iPhone → 「设置」里安装描述文件 → 设置 → 通用 → 关于本机 → 证书信任设置 → 打开 mkcert 那一项。只需做一次。
+3. 启动窗口「手机访问（局域网 / 蒲公英）」会列出网址，形如 `https://192.168.1.8:5443/?key=123456`。在家连同一个 Wi‑Fi 用 192.168 开头的；在外面先打开手机上的蒲公英，用蒲公英分配给这台 Mac 的虚拟 IP。
+4. macOS 问「是否允许 node 接受传入连接」时选「允许」。
+
+这个端口对局域网开放，所以有 6 位访问码（网址里的 `key=`），打开一次后手机会记住；从主屏幕图标打开时可能要再输一次。连续输错 10 次锁 10 分钟。访问码存在 `data/certs/access-key.txt`，删掉这个文件重启即换新的。
+
+**方式 B：Tailscale**
+
+1. Mac 和手机都安装 [Tailscale](https://tailscale.com/download)，用同一个账号登录。
 2. 打开 [Tailscale 管理后台 → DNS](https://login.tailscale.com/admin/dns)，启用 **MagicDNS** 和 **HTTPS Certificates**。
-3. 在 Mac 上运行 `bash scripts/start.sh`，「手机访问」一栏会打印网址，形如 `https://你的Mac名.xxx.ts.net`。
-4. 手机 Safari 打开这个网址，点「分享 → 添加到主屏幕」，以后从桌面图标打开，像 App 一样全屏使用。第一次录音时允许使用麦克风。
+3. 运行 `bash scripts/start.sh`，「手机访问（Tailscale）」会打印 `https://你的Mac名.xxx.ts.net`。只有同一账号的设备能打开，不需要访问码。不想再用：`tailscale serve --https=443 off`。
 
-只有登录同一个 Tailscale 账号的设备能打开这个网址。不想再让手机访问：`tailscale serve --https=443 off`（卸载脚本也会关掉）。
+两种方式打开后，都可以在 Safari 点「分享 → 添加到主屏幕」，以后从桌面图标打开，像 App 一样全屏使用。第一次录音时允许使用麦克风。
 
 ## 如何添加学习内容
 

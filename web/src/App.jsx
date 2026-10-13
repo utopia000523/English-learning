@@ -69,7 +69,7 @@ export default function App() {
         <div className="side-foot"><div className="avatar">U</div><div style={{ flex: 1 }}>Utopia</div></div>
       </aside>
       <main className="main">
-        {!window.isSecureContext && <div className="todo-note" style={{ marginBottom: 16 }}>当前地址不是 https，浏览器不允许录音（跟读、独白、语音输入用不了）。手机上请打开启动脚本里打印的 https 网址（Tailscale），电脑上用 http://localhost:5173。</div>}
+        {!window.isSecureContext && <div className="todo-note" style={{ marginBottom: 16 }}>当前地址不是 https，浏览器不允许录音（跟读、独白、语音输入用不了）。手机上请打开启动脚本「手机访问」一栏打印的 https 网址，电脑上用 http://localhost:5173。</div>}
         <Routes>
           <Route path="/" element={<Navigate to="/today" replace />} />
           <Route path="/today" element={<Today />} />

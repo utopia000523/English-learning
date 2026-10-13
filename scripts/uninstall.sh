@@ -23,6 +23,7 @@ echo "不会删除："
 echo "  · Notion 里已同步的数据（如需清除，请在 Notion 里手动删除「口语笔记」「每日练习记录」）"
 echo "  · macOS 系统朗读声音（如需删除：系统设置 → 辅助功能 → 朗读内容 → 管理声音）"
 echo "  · Tailscale 本身（只关掉本工具的手机访问转发；不用了可自行卸载 Tailscale）"
+echo "  · mkcert 生成的根证书（手机局域网访问用；如需删除：rm -rf \"$(mkcert -CAROOT 2>/dev/null)\"，并在 iPhone 设置里删除该描述文件）"
 echo
 
 # 1) 先导出备份

@@ -44,7 +44,7 @@ echo "== 手机访问（Tailscale）"
 TS=$(command -v tailscale || true)
 if [ -z "$TS" ] && [ -x /Applications/Tailscale.app/Contents/MacOS/Tailscale ]; then TS=/Applications/Tailscale.app/Contents/MacOS/Tailscale; fi
 if [ -z "$TS" ]; then
-  echo "  未安装 Tailscale（只在电脑上用可以忽略）。想用手机练：见 README「在手机上使用」。"
+  echo "  未安装 Tailscale（可选，和下面的局域网 / 蒲公英方式二选一即可）。"
 else
   TS_INFO=$("$TS" status --json 2>/dev/null | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{const j=JSON.parse(s);const host=(j.Self&&j.Self.DNSName||"").replace(/\.$/,"");console.log(j.BackendState==="Running"&&host?host+" "+((j.CertDomains||[]).length?"https":"nohttps"):"")}catch(e){console.log("")}})')
   TS_HOST=${TS_INFO% *}
@@ -59,8 +59,35 @@ else
   fi
 fi
 
+echo "== 手机访问（局域网 / 蒲公英）"
+# 同一 Wi-Fi 或同一个蒲公英网络里的手机：用 mkcert 生成包含本机所有 IP 的证书，服务额外开 https 端口（带访问码）
+HTTPS_PORT=${HTTPS_PORT:-5443}
+CERTS=data/certs
+if ! command -v mkcert >/dev/null; then
+  echo "  想用手机练（家里 Wi-Fi / 蒲公英）：先执行 brew install mkcert，再重新运行本脚本。只在电脑上用可以忽略。"
+  HTTPS_PORT=0
+else
+  IPS=$(ifconfig 2>/dev/null | awk '/inet /{print $2}' | grep -v '^127\.' | sort -u | tr '\n' ' ')
+  mkdir -p "$CERTS"
+  if [ ! -f "$CERTS/cert.pem" ] || [ "$(cat "$CERTS/ips.txt" 2>/dev/null)" != "$IPS" ]; then
+    # shellcheck disable=SC2086
+    mkcert -cert-file "$CERTS/cert.pem" -key-file "$CERTS/key.pem" localhost 127.0.0.1 $IPS >/dev/null 2>&1 && echo "$IPS" > "$CERTS/ips.txt"
+  fi
+  KEY=$(node -e "import('./server/lan.js').then(m=>console.log(m.accessKey('$CERTS')))")
+  echo "  手机打开（任选一个能连上的；网址里已带访问码 $KEY）："
+  for ip in $IPS; do echo "    https://$ip:$HTTPS_PORT/?key=$KEY"; done
+  echo "  家里 Wi-Fi 用 192.168 开头的；在外面先打开手机上的蒲公英，用蒲公英分配给这台 Mac 的那个 IP。"
+  if [ ! -f "$CERTS/.ca-shown" ]; then
+    echo "  第一次使用：把即将打开的文件夹里的 rootCA.pem 隔空投送到 iPhone → 设置里安装描述文件 →"
+    echo "    设置 → 通用 → 关于本机 → 证书信任设置 → 打开 mkcert 那一项。只需做一次。"
+    open "$(mkcert -CAROOT)" 2>/dev/null; touch "$CERTS/.ca-shown"
+  fi
+  echo "  macOS 弹出「是否允许 node 接受传入连接」时选「允许」。"
+fi
+
 echo "== 启动：http://localhost:$PORT"
 (sleep 1.5 && open "http://localhost:$PORT") &
 # 服务运行期间不让 Mac 闲置休眠（手机才连得上）；合上盖子仍会休眠
+export SPEAK90_HTTPS_PORT=$HTTPS_PORT
 if command -v caffeinate >/dev/null; then PORT=$PORT exec caffeinate -i node server/index.js; fi
 PORT=$PORT node server/index.js
