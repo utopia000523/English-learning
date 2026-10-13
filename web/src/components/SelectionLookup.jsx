@@ -41,10 +41,19 @@ export default function SelectionLookup() {
     };
     const onDown = (e) => { if (!box.current?.contains(e.target)) { setOpen(false); } };
     const onKey = (e) => { if (e.key === 'Escape') { setPick(null); setOpen(false); } };
+    // 手机：长按选词不会触发 mouseup，改为选区停止变化 0.5 秒后弹出「查词」
+    let t = 0;
+    const touch = window.matchMedia('(pointer: coarse)').matches;
+    const onSel = () => { clearTimeout(t); t = setTimeout(() => onUp({ target: document.body }), 500); };
     document.addEventListener('mouseup', onUp);
     document.addEventListener('mousedown', onDown);
     document.addEventListener('keydown', onKey);
-    return () => { document.removeEventListener('mouseup', onUp); document.removeEventListener('mousedown', onDown); document.removeEventListener('keydown', onKey); };
+    if (touch) document.addEventListener('selectionchange', onSel);
+    return () => {
+      clearTimeout(t);
+      document.removeEventListener('mouseup', onUp); document.removeEventListener('mousedown', onDown); document.removeEventListener('keydown', onKey);
+      document.removeEventListener('selectionchange', onSel);
+    };
   }, [open]);
   useEffect(() => { setPick(null); setOpen(false); }, [loc.pathname]);
 
@@ -83,11 +92,12 @@ export default function SelectionLookup() {
 
   if (!pick) return null;
   const left = Math.min(Math.max(12, pick.x - 150), window.innerWidth - 312);
-  const top = Math.min(pick.y + 8, window.innerHeight - (open ? 280 : 50));
+  const bottomBar = window.matchMedia('(max-width: 760px)').matches ? 80 : 0; // 手机底部标签栏
+  const top = Math.min(pick.y + 8, window.innerHeight - bottomBar - (open ? 280 : 50));
   return (
     <div ref={box} className="lookup" style={{ left, top }} onMouseDown={(e) => e.preventDefault()}>
       {!open ? (
-        <button className="lookup-pill" onMouseEnter={fetchInfo} onClick={doLookup}>查词 · {pick.text.length > 24 ? pick.text.slice(0, 24) + '…' : pick.text}</button>
+        <button className="lookup-pill" onMouseEnter={fetchInfo} onTouchStart={fetchInfo} onClick={doLookup}>查词 · {pick.text.length > 24 ? pick.text.slice(0, 24) + '…' : pick.text}</button>
       ) : (
         <div className="lookup-card">
           <div className="row between">

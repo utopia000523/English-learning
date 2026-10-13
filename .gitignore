@@ -8,3 +8,4 @@ models/*.bin
 data/backups/
 data/evals/
 data/notion-peek.json
+data/certs/

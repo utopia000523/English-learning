@@ -22,6 +22,8 @@ echo
 echo "不会删除："
 echo "  · Notion 里已同步的数据（如需清除，请在 Notion 里手动删除「口语笔记」「每日练习记录」）"
 echo "  · macOS 系统朗读声音（如需删除：系统设置 → 辅助功能 → 朗读内容 → 管理声音）"
+echo "  · Tailscale 本身（只关掉本工具的手机访问转发；不用了可自行卸载 Tailscale）"
+echo "  · mkcert 生成的根证书（手机局域网访问用；如需删除：rm -rf \"$(mkcert -CAROOT 2>/dev/null)\"，并在 iPhone 设置里删除该描述文件）"
 echo
 
 # 1) 先导出备份
@@ -43,6 +45,10 @@ fi
 
 # 停止正在运行的本地服务
 PIDS=$(lsof -ti tcp:${PORT:-5173} -sTCP:LISTEN 2>/dev/null); [ -n "$PIDS" ] && [ $DRY = 0 ] && kill $PIDS && echo "  已停止本地服务"
+
+# 手机访问用的 Tailscale https 转发（start.sh 开的）：关掉；Tailscale 本身不动
+TS=$(command -v tailscale || true); [ -z "$TS" ] && [ -x /Applications/Tailscale.app/Contents/MacOS/Tailscale ] && TS=/Applications/Tailscale.app/Contents/MacOS/Tailscale
+if [ -n "$TS" ] && "$TS" serve status 2>/dev/null | grep -q "${PORT:-5173}"; then run "$TS" serve --https=443 off && echo "  已关闭手机访问（Tailscale https 转发）"; fi
 
 echo "== 删除学习数据、模型和依赖"
 run rm -rf "$ROOT/data" "$ROOT/models" "$ROOT/node_modules" "$ROOT/dist"

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { NavLink, Route, Routes, Navigate, useLocation } from 'react-router-dom';
+import { Link, NavLink, Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import { Icon } from './icons.jsx';
 import Today from './pages/Today.jsx';
 import Settings from './pages/Settings.jsx';
@@ -30,6 +30,29 @@ const NAV = [
   { to: '/settings', label: '设置', icon: Icon.gear },
 ];
 
+// 手机底部标签栏：常用的 5 项 + 「更多」（其余页面）
+const TABS = [
+  { to: '/today', label: '今日', icon: Icon.home },
+  { to: '/roleplay', label: '对话', icon: Icon.chat },
+  { to: '/cards', label: '表达卡', icon: Icon.card },
+  { to: '/shadow', label: '跟读', icon: Icon.wave },
+  { to: '/mono', label: '独白', icon: Icon.mic },
+];
+const MORE = ['/plan', '/notes', '/progress', '/settings', '/assessment'];
+
+function More() {
+  return (
+    <div className="narrow">
+      <div className="head"><div><h1>更多</h1></div></div>
+      <div className="list">
+        {NAV.filter((n) => n.to && !TABS.some((t) => t.to === n.to)).map((n) => (
+          <Link key={n.to} to={n.to} className="li more-li">{n.icon}<div className="t">{n.label}</div><span className="faint">›</span></Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const loc = useLocation();
   // 切换页面时停止正在播放的朗读
@@ -46,6 +69,7 @@ export default function App() {
         <div className="side-foot"><div className="avatar">U</div><div style={{ flex: 1 }}>Utopia</div></div>
       </aside>
       <main className="main">
+        {!window.isSecureContext && <div className="todo-note" style={{ marginBottom: 16 }}>当前地址不是 https，浏览器不允许录音（跟读、独白、语音输入用不了）。手机上请打开启动脚本「手机访问」一栏打印的 https 网址，电脑上用 http://localhost:5173。</div>}
         <Routes>
           <Route path="/" element={<Navigate to="/today" replace />} />
           <Route path="/today" element={<Today />} />
@@ -59,11 +83,16 @@ export default function App() {
           <Route path="/mono" element={<Mono />} />
           <Route path="/roleplay" element={<RoleplayList />} />
           <Route path="/roleplay/:id" element={<RoleplayChat />} />
+          <Route path="/more" element={<More />} />
           {NAV.filter((n) => n.stage).map((n) => (
             <Route key={n.to} path={n.to} element={<Placeholder title={n.label} stage={n.stage} />} />
           ))}
         </Routes>
       </main>
+      <nav className="tabbar">
+        {TABS.map((t) => <NavLink key={t.to} to={t.to}>{t.icon}<span>{t.label}</span></NavLink>)}
+        <NavLink to="/more" className={() => (loc.pathname === '/more' || MORE.includes(loc.pathname) ? 'active' : '')}>{Icon.more}<span>更多</span></NavLink>
+      </nav>
       <SelectionLookup />
     </div>
   );

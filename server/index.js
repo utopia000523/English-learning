@@ -32,6 +32,11 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   app.listen(config.port, '127.0.0.1', () => {
     console.log(`开口 90 天 已启动：http://localhost:${config.port}`);
   });
+  // 手机（局域网 / 蒲公英）：start.sh 生成了证书时，额外开 https 端口，带访问码
+  const { startLan } = await import('./lan.js');
+  const certs = path.join(config.dataDir, 'certs');
+  const key = startLan(app, { port: Number(process.env.SPEAK90_HTTPS_PORT || 0), certFile: path.join(certs, 'cert.pem'), keyFile: path.join(certs, 'key.pem'), dataDir: config.dataDir });
+  if (key) console.log(`手机访问码：${key}（第一次在手机上打开时输入，或直接用上面带 ?key= 的网址）`);
   // Notion 自动同步：每 10 分钟一次，未同步的内容自动排队（断网时跳过）
   const { autoSync } = await import('./autosync.js');
   const { cleanupAudio } = await import('./maintenance.js');

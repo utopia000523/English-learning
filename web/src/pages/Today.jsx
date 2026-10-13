@@ -96,9 +96,9 @@ export default function Today() {
           {p.slots.map((s, i) => (
             <div className="li" key={s.slot} style={{ cursor: 'pointer' }} onClick={() => go(s)}>
               <span className="num">{i + 1}</span>
-              <div className="t"><b>{NAME[s.module]}</b>{s.detail && <span className="faint"> · {s.detail}</span>}</div>
-              <span className="faint" style={{ minWidth: 150, flexShrink: 0, whiteSpace: 'nowrap' }}>{s.label} {s.minutes} 分钟</span>
-              <span style={{ width: 70, flexShrink: 0 }}>{ST[s.status]}</span>
+              <div className="t"><b>{NAME[s.module]}</b>{s.detail && <span className="faint"> · {s.detail}</span>}<div className="faint m-only">{s.label} {s.minutes} 分钟</div></div>
+              <span className="faint slot-time" style={{ minWidth: 150, flexShrink: 0, whiteSpace: 'nowrap' }}>{s.label} {s.minutes} 分钟</span>
+              <span className="slot-st" style={{ width: 70, flexShrink: 0 }}>{ST[s.status]}</span>
             </div>
           ))}
         </div>
